@@ -16,7 +16,7 @@ class mpgGlobals
 					'MONERIS_US_FILE' => '/gateway_us/servlet/MpgRequest',
 					'MONERIS_MPI_FILE' => '/mpi/servlet/MpiServlet',
 					'MONERIS_US_MPI_FILE' => '/mpi/servlet/MpiServlet',
-                  	'API_VERSION'  =>'PHP NA - 1.0.5',
+                  	'API_VERSION'  =>'PHP NA - 1.0.8',
                   	'CLIENT_TIMEOUT' => '30'
                  	);
 
@@ -110,7 +110,7 @@ class mpgHttpsPost
   		$this->isMPI=$mpgRequestOBJ->getIsMPI();
   		$dataToSend=$this->toXML();
   		
-		$url = 'https://www3.moneris.com:443/gateway2/servlet/MpgRequest';
+		$url = $this->mpgRequest->getURL();
 		
   		$httpsPost= new httpsPost($url, $dataToSend);	
   		$response = $httpsPost->getHttpsResponse();
@@ -1732,7 +1732,7 @@ class mpgRequest
  				'card_verification' =>array('order_id','cust_id','pan','expdate', 'crypt_type'),
  				'cavv_preauth' =>array('order_id','cust_id', 'amount', 'pan','expdate', 'cavv','crypt_type','dynamic_descriptor', 'wallet_indicator'),
  				'cavv_purchase' => array('order_id','cust_id', 'amount', 'pan','expdate', 'cavv','crypt_type','dynamic_descriptor', 'wallet_indicator'),
- 				'completion' => array('order_id', 'comp_amount','txn_number', 'crypt_type', 'cust_id', 'dynamic_descriptor', 'mcp_amount', 'mcp_currency_code'),
+ 				'completion' => array('order_id', 'comp_amount','txn_number', 'crypt_type', 'cust_id', 'dynamic_descriptor', 'mcp_amount', 'mcp_currency_code', 'ship_indicator'),
  				'contactless_purchase' => array('order_id','cust_id','amount','track2','pan','expdate', 'pos_code','dynamic_descriptor'),
  				'contactless_purchasecorrection' => array('order_id','txn_number'),
  				'contactless_refund' => array('order_id','amount','txn_number'),
@@ -1752,7 +1752,7 @@ class mpgRequest
  				'enc_ind_refund' => array('order_id','cust_id','amount','enc_track2','device_type','crypt_type','dynamic_descriptor'),
  				'enc_preauth' => array('order_id','cust_id','amount','enc_track2','device_type','crypt_type','dynamic_descriptor'),
  				'enc_purchase' => array('order_id','cust_id','amount','enc_track2','device_type','crypt_type','dynamic_descriptor'),
- 				'enc_res_add_cc' => array('cust_id','phone','email','note','enc_track2','device_type','crypt_type'),
+ 				'enc_res_add_cc' => array('cust_id','phone','email','note','enc_track2','device_type','crypt_type', 'data_key_format'),
  				'enc_res_update_cc' => array('data_key','cust_id','phone','email','note','enc_track2','device_type','crypt_type'),
  				'enc_track2_forcepost' => array('order_id','cust_id','amount','enc_track2','pos_code','device_type','auth_code','dynamic_descriptor'),
  				'enc_track2_ind_refund' => array('order_id','cust_id','amount','enc_track2','pos_code','device_type','dynamic_descriptor'),
@@ -1764,8 +1764,8 @@ class mpgRequest
 	 			'idebit_refund' =>array('order_id','amount','txn_number'),
  			
  				//Vault
- 				'res_add_cc' => array('cust_id','phone','email','note','pan','expdate','crypt_type'),
-				'res_add_token' => array('data_key','cust_id','phone','email','note','expdate','crypt_type'),
+ 				'res_add_cc' => array('cust_id','phone','email','note','pan','expdate','crypt_type', 'data_key_format'),
+				'res_add_token' => array('data_key','cust_id','phone','email','note','expdate','crypt_type', 'data_key_format'),
  				'res_card_verification_cc' => array('data_key','order_id', 'crypt_type', 'expdate'),
  				'res_cavv_preauth_cc' => array('data_key','order_id','cust_id','amount','cavv','crypt_type','dynamic_descriptor','expdate'),
  				'res_cavv_purchase_cc' => array('data_key','order_id','cust_id','amount','cavv','crypt_type','dynamic_descriptor','expdate'),
@@ -1778,10 +1778,11 @@ class mpgRequest
  				'res_mpitxn' => array('data_key','xid','amount','MD','merchantUrl','accept','userAgent','expdate'),
  				'res_preauth_cc' => array('data_key','order_id','cust_id','amount','crypt_type','dynamic_descriptor','expdate'),
 				'res_purchase_cc' => array('data_key','order_id','cust_id','amount','crypt_type','dynamic_descriptor','expdate'),
- 				'res_temp_add' => array('pan','expdate','crypt_type','duration'),
+ 				'res_temp_add' => array('pan','expdate','crypt_type','duration', 'data_key_format'),
  				'res_temp_tokenize' => array('order_id', 'txn_number', 'duration', 'crypt_type'),
-				'res_tokenize_cc' => array('order_id','txn_number','cust_id','phone','email','note'),
+				'res_tokenize_cc' => array('order_id','txn_number','cust_id','phone','email','note', 'data_key_format'),
 				'res_update_cc' => array('data_key','cust_id','phone','email','note','pan','expdate','crypt_type'),
+ 				'res_forcepost_cc' => array('order_id','cust_id','amount','data_key','auth_code', 'crypt_type','dynamic_descriptor'),
  				
  				//Track2
  				'track2_completion' => array('order_id', 'comp_amount','txn_number','pos_code','dynamic_descriptor'),
@@ -1821,7 +1822,7 @@ class mpgRequest
  				'us_card_verification' => array('order_id','cust_id','pan','expdate'),
  				'us_cavv_preauth' => array('order_id','cust_id', 'amount', 'pan','expdate', 'cavv','crypt_type','dynamic_descriptor', 'wallet_indicator'),
  				'us_cavv_purchase'=> array('order_id','cust_id','amount','pan','expdate', 'cavv', 'commcard_invoice','commcard_tax_amount','crypt_type', 'dynamic_descriptor', 'wallet_indicator'),
- 				'us_completion' => array('order_id', 'comp_amount','txn_number', 'crypt_type', 'commcard_invoice','commcard_tax_amount'),
+ 				'us_completion' => array('order_id', 'comp_amount','txn_number', 'crypt_type', 'commcard_invoice','commcard_tax_amount', 'ship_indicator'),
  				'us_contactless_purchase' => array('order_id','cust_id','amount','track2','pan','expdate','commcard_invoice','commcard_tax_amount','pos_code','dynamic_descriptor'),
  				'us_contactless_purchasecorrection' => array('order_id','txn_number'),
  				'us_contactless_refund' => array('order_id','amount','txn_number'),
@@ -1843,7 +1844,7 @@ class mpgRequest
  				'us_enc_ind_refund' => array('order_id','cust_id','amount','enc_track2','device_type','crypt_type','dynamic_descriptor'),
  				'us_enc_preauth' => array('order_id','cust_id','amount','enc_track2','device_type','crypt_type','dynamic_descriptor'),
  				'us_enc_purchase' => array('order_id','cust_id','amount','enc_track2','device_type','crypt_type','commcard_invoice','commcard_tax_amount','dynamic_descriptor'),
-	 			'us_enc_res_add_cc' => array('cust_id','phone','email','note','enc_track2','device_type','crypt_type'),
+	 			'us_enc_res_add_cc' => array('cust_id','phone','email','note','enc_track2','device_type','crypt_type', 'data_key_format'),
 	 			'us_enc_res_update_cc' => array('data_key','cust_id','phone','email','note','enc_track2','device_type','crypt_type'),
  				'us_enc_track2_forcepost' => array('order_id','cust_id','amount','enc_track2','pos_code','device_type','auth_code','dynamic_descriptor'),
  				'us_enc_track2_ind_refund' => array('order_id','cust_id','amount','enc_track2','pos_code','device_type','dynamic_descriptor'),
@@ -1851,10 +1852,10 @@ class mpgRequest
 	 			'us_enc_track2_purchase' => array('order_id','cust_id','amount','enc_track2','pos_code','device_type','commcard_invoice','commcard_tax_amount','dynamic_descriptor'),
  				
  				//US Vault
- 				'us_res_add_cc' => array('cust_id','phone','email','note','pan','expdate','crypt_type'),
+ 				'us_res_add_cc' => array('cust_id','phone','email','note','pan','expdate','crypt_type', 'data_key_format'),
  				'us_res_add_ach' => array('cust_id','phone','email','note'),
  				'us_res_add_pinless' => array('cust_id','phone','email','note','pan','expdate','presentation_type','p_account_number'),
- 				'us_res_add_token' => array('cust_id','phone','email','note','data_key','crypt_type','expdate'),
+ 				'us_res_add_token' => array('cust_id','phone','email','note','data_key','crypt_type','expdate', 'data_key_format'),
  				'us_res_delete' => array('data_key'),
  				'us_res_get_expiring' => array(),
  				'us_res_ind_refund_ach' => array('data_key','order_id','cust_id','amount'),
@@ -1866,8 +1867,8 @@ class mpgRequest
  				'us_res_purchase_ach' => array('data_key','order_id','cust_id','amount'),
  				'us_res_purchase_cc' => array('data_key','order_id','cust_id','amount','crypt_type','commcard_invoice','commcard_tax_amount','dynamic_descriptor'),
  				'us_res_purchase_pinless' => array('data_key','order_id','cust_id','amount','intended_use','p_account_number'),
- 				'us_res_temp_add' => array('pan','expdate','duration','crypt_type'),	
- 				'us_res_tokenize_cc' => array('order_id','txn_number','cust_id','phone','email','note'),
+ 				'us_res_temp_add' => array('pan','expdate','duration','crypt_type', 'data_key_format'),	
+ 				'us_res_tokenize_cc' => array('order_id','txn_number','cust_id','phone','email','note', 'data_key_format'),
  				'us_res_update_cc' => array('data_key','cust_id','phone','email','note','pan','expdate','crypt_type'),
  				'us_res_update_ach' => array('data_key','cust_id','phone','email','note'),
  				'us_res_update_pinless' => array('data_key','cust_id','phone','email','note','pan','expdate','presentation_type','p_account_number'),
@@ -1896,18 +1897,18 @@ class mpgRequest
 	 			'iscorporatecard' => array('pan','expdate'),
 	 				
 	 			//Amex General level23
-	 			'axcompletion' => array('order_id', 'comp_amount', 'txn_number'),
-	 			'axrefund' => array('order_id', 'amount', 'txn_number'),
-	 			'axind_refund' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate'),
+	 			'axcompletion' => array('order_id', 'comp_amount', 'txn_number', 'crypt_type'),
+	 			'axrefund' => array('order_id', 'amount', 'txn_number', 'crypt_type'),
+	 			'axind_refund' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate', 'crypt_type'),
 	 			'axpurchasecorrection' => array('order_id', 'txn_number', 'crypt_type'),
-	 			'axforcepost' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate', 'auth_code'),
+	 			'axforcepost' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate', 'auth_code', 'crypt_type'),
 	 			
 	 			//Amex Air & Rail level23
-	 			'axracompletion' => array('order_id', 'comp_amount', 'txn_number'),
-	 			'axrarefund' => array('order_id', 'amount', 'txn_number'),
-	 			'axraind_refund' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate'),
-	 			'axrapurchasecorrection' => array('order_id', 'txn_number'),
-	 			'axraforcepost' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate', 'auth_code'),
+	 			'axracompletion' => array('order_id', 'comp_amount', 'txn_number', 'crypt_type'),
+	 			'axrarefund' => array('order_id', 'amount', 'txn_number', 'crypt_type'),
+	 			'axraind_refund' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate', 'crypt_type'),
+	 			'axrapurchasecorrection' => array('order_id', 'txn_number', 'crypt_type'),
+	 			'axraforcepost' => array('order_id', 'cust_id', 'amount', 'pan', 'expdate', 'auth_code', 'crypt_type'),
 	 				
 	 			//Visa General, Air & Rail Level23
 	 			'vscompletion' => array('order_id', 'comp_amount', 'txn_number', 'crypt_type', 'national_tax', 'merchant_vat_no', 'local_tax', 'customer_vat_no', 'cri', 'customer_code', 'invoice_number', 'local_tax_no'),
@@ -3443,7 +3444,13 @@ class mpgAxLevel23
 class axN1Loop
 {
 	private $template = array (
-			'n101' => null , 'n102' => null , 'n301' => null , 'n401' => null , 'n402' => null , 'n403' => null , 'ref' => null
+							'n101' => null ,
+							'n102' => null , 
+							'n301' => null , 
+							'n401' => null , 
+							'n402' => null , 
+							'n403' => null , 
+							'ref' => null
 	);
 
 	private $data;
@@ -3540,10 +3547,18 @@ class axIt106s
 
 	private $data;
 
-	public function __construct($it10618, $it10719)
+	public function __construct()
 	{
 		$this->data = $this->template;
+	}
+	
+	public function setIt10618($it10618)
+	{
 		$this->data['it10618'] = $it10618;
+	}
+	
+	public function setIt10719($it10719)
+	{
 		$this->data['it10719'] = $it10719;
 	}
 
@@ -4619,7 +4634,7 @@ class mcCorpas
 		$this->template['dest_city_airport_code'] = $dest_city_airport_code;
 		$this->template['stop_over_code'] = $stop_over_code;
 		$this->template['conjunction_ticket_number1'] = $conjunction_ticket_number1;
-		$this->template['exchange_ticket_number'] = $exchange_ticket_number1;
+		$this->template['exchange_ticket_number1'] = $exchange_ticket_number1;
 		$this->template['coupon_number1'] = $coupon_number1;
 		$this->template['fare_basis_code1'] = $fare_basis_code1;
 		$this->template['flight_number'] = $flight_number;
