@@ -147,7 +147,47 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		if ( $this->supports( 'default_credit_card_form' ) ) {
 			$this->credit_card_form(); // Deprecated, will be removed in a future version.
 		}
-
 	}
+
+    /**
+     * Validate card
+     */
+	public function validate_fields() {
+        date_default_timezone_set(get_option('timezone_string'));
+	    $moneris_approved_response_code_array = array('000','001','002','003','004','005','006','007','008','009','023','024','025','026','027','028','029');
+        $store_id = $this->store_id;
+        $api_token = $this->api_token;
+        $environment = ( $this->sandbox == "yes" ) ? 'true' : 'false';
+        list($month, $year) = explode("/", $_POST[$this->id.'-card-expiry']); //MMYY
+        $newexpdate = $year.$month; //YYMM
+
+        $txnArray=array('type'=>'card_verification',
+            'order_id'=>'ord-'.date("dmy-G:i:s"),
+            'cust_id'=> get_current_user_id(),
+            'pan'=> $_POST[$this->id.'-card-number'],
+            'expdate'=> $newexpdate,
+            'crypt_type'=> $this->crypt_type
+        );
+
+        $mpgTxn = new mpgTransaction($txnArray);
+
+        $mpgRequest = new mpgRequest($mpgTxn);
+        $mpgRequest->setProcCountryCode($this->country_code);
+        $mpgRequest->setTestMode($environment);
+
+        $mpgHttpPost = new mpgHttpsPost($store_id,$api_token,$mpgRequest);
+
+        $mpgResponse = $mpgHttpPost->getMpgResponse();
+        $responsecode = $mpgResponse->getResponseCode();
+        $responsemsg = $mpgResponse->getMessage();
+        if(!empty($responsecode) && in_array($responsecode,$moneris_approved_response_code_array)) {
+            return true;
+        }else{
+            if(!empty($responsemsg)){
+                wc_add_notice( $mpgResponse->getMessage(), 'error' );
+            }
+            return false;
+        }
+    }
 
 }
