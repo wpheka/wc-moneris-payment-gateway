@@ -20,7 +20,6 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		$this->supports           = array(
 			'products',
 			'default_credit_card_form',
-			'tokenization',
 			'refunds',
 			'pre-orders',
 		);
@@ -45,10 +44,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		$this->init_moneris_api();
 
 		// Hooks
-//		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-//		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-//		add_action( 'woocommerce_api_wc_gateway_simplify_commerce', array( $this, 'return_handler' ) );
 	}
 
 	function init_moneris_api() {
@@ -149,45 +145,183 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		}
 	}
 
-    /**
-     * Validate card
-     */
-	public function validate_fields() {
-        date_default_timezone_set(get_option('timezone_string'));
-	    $moneris_approved_response_code_array = array('000','001','002','003','004','005','006','007','008','009','023','024','025','026','027','028','029');
-        $store_id = $this->store_id;
-        $api_token = $this->api_token;
-        $environment = ( $this->sandbox == "yes" ) ? 'true' : 'false';
-        list($month, $year) = explode("/", $_POST[$this->id.'-card-expiry']); //MMYY
-        $newexpdate = $year.$month; //YYMM
+	public function process_payment($order_id) {
+		global $MPG_Moneris_Payment_Gateway,$woocommerce;
+		$customer_order = new WC_Order($order_id);
 
-        $txnArray=array('type'=>'card_verification',
-            'order_id'=>'ord-'.date("dmy-G:i:s"),
-            'cust_id'=> get_current_user_id(),
-            'pan'=> $_POST[$this->id.'-card-number'],
-            'expdate'=> $newexpdate,
-            'crypt_type'=> $this->crypt_type
-        );
+		/************************ Request Variables ***************************/
+		$store_id = $this->store_id;
+		$api_token = $this->api_token;
 
-        $mpgTxn = new mpgTransaction($txnArray);
+		/********************* Transactional Variables ************************/
+		$type='purchase';
+		$cust_id = $customer_order->get_user_id();
+		$amount = $customer_order->order_total;
+		$pan = str_replace( array(' ', '-' ), '', $_POST[$this->id.'-card-number'] );
+		$expiry_date = $_POST[$this->id.'-card-expiry'];
+		if(!empty($expiry_date)) {
+			$expiry_date = explode('/',$expiry_date);
+			list($cardmonth, $cardyear) = $expiry_date;
+			$expiry_date = $cardyear.$cardmonth;
+		}
+		$crypt = $this->crypt_type;
+		$dynamic_descriptor = ( isset( $_POST[$this->id.'-card-cvc'] ) ) ? $_POST[$this->id.'-card-cvc'] : '';
+		$payment_mode = ( $this->sandbox == 'yes' ) ? true : false;
+		$status_check = 'false';
 
-        $mpgRequest = new mpgRequest($mpgTxn);
-        $mpgRequest->setProcCountryCode($this->country_code);
-        $mpgRequest->setTestMode($environment);
+		/******************* Customer Information Variables ********************/
 
-        $mpgHttpPost = new mpgHttpsPost($store_id,$api_token,$mpgRequest);
+		$first_name = $customer_order->get_billing_first_name();
+		$last_name = $customer_order->get_billing_last_name();
+		$company_name = $customer_order->get_billing_company();
+		$address = $customer_order->get_billing_address_1().' '.$customer_order->get_billing_address_2();
+		$city = $customer_order->get_billing_city();
+		$province = $customer_order->get_billing_state();
+		$postal_code = $customer_order->get_billing_postcode();
+		$country = $customer_order->get_billing_country();
+		$phone_number = $customer_order->get_billing_phone();
+//		$fax = '453-989-9877';
+//		$tax1 = '1.01';
+//		$tax2 = '1.02';
+//		$tax3 = '1.03';
+		$shipping_cost = wc_format_decimal( $customer_order->get_shipping_total(), 2 );
+		$email = $customer_order->get_billing_email();
+		$instructions = $customer_order->get_customer_note();
 
-        $mpgResponse = $mpgHttpPost->getMpgResponse();
-        $responsecode = $mpgResponse->getResponseCode();
-        $responsemsg = $mpgResponse->getMessage();
-        if(!empty($responsecode) && in_array($responsecode,$moneris_approved_response_code_array)) {
-            return true;
-        }else{
-            if(!empty($responsemsg)){
-                wc_add_notice( $mpgResponse->getMessage(), 'error' );
-            }
-            return false;
-        }
-    }
+		/******************** Customer Information Object *********************/
+
+		$mpgCustInfo = new mpgCustInfo();
+
+		/********************** Set Customer Information **********************/
+
+		$billing = array(
+			'first_name' => $first_name,
+			'last_name' => $last_name,
+			'company_name' => $company_name,
+			'address' => $address,
+			'city' => $city,
+			'province' => $province,
+			'postal_code' => $postal_code,
+			'country' => $country,
+			'phone_number' => $phone_number,
+//			'fax' => $fax,
+//			'tax1' => $tax1,
+//			'tax2' => $tax2,
+//			'tax3' => $tax3,
+			'shipping_cost' => $shipping_cost
+		);
+
+		$mpgCustInfo->setBilling($billing);
+
+		$shipping = array(
+			'first_name' => $customer_order->get_shipping_first_name(),
+			'last_name' => $customer_order->get_shipping_last_name(),
+			'company_name' => $customer_order->get_shipping_company(),
+			'address' => $customer_order->get_shipping_address_1().' '.$customer_order->get_shipping_address_2(),
+			'city' => $customer_order->get_shipping_city(),
+			'province' => $customer_order->get_shipping_state(),
+			'postal_code' => $customer_order->get_shipping_postcode(),
+			'country' => $customer_order->get_shipping_country(),
+			'phone_number' => $phone_number,
+//			'fax' => $fax,
+//			'tax1' => $tax1,
+//			'tax2' => $tax2,
+//			'tax3' => $tax3,
+			'shipping_cost' => $shipping_cost
+		);
+
+		$mpgCustInfo->setShipping($shipping);
+
+		$mpgCustInfo->setEmail($email);
+		$mpgCustInfo->setInstructions($instructions);
+
+		/*********************** Set Line Item Information *********************/
+
+		$i = 0;
+		$items = $customer_order->get_items();
+
+		foreach ( $items as $item ) {
+			$itemsArray = array();
+			$product_id = ( $item['variation_id'] > 0 ) ? $item['variation_id'] : $item['product_id'];
+			$itemsArray[$i] = array(
+				'name' => get_the_title( $item['product_id'] ),
+				'quantity' => $item['qty'],
+				'product_code' => $product_id,
+				'extended_amount' => $item['line_total']
+			);
+			$mpgCustInfo->setItems( $itemsArray[$i] );
+			$i++;
+		}
+
+		/***************** Transactional Associative Array ********************/
+
+		$txnArray=array(
+			'type'=> $type,
+			'order_id'=> $order_id,
+			'cust_id'=> $cust_id,
+			'amount'=> $amount,
+			'pan'=> $pan,
+			'expdate'=> $expiry_date,
+			'crypt_type'=> $crypt
+		);
+
+		/********************** Transaction Object ****************************/
+
+		$mpgTxn = new mpgTransaction($txnArray);
+
+		/******************** Set Customer Information ************************/
+
+		$mpgTxn->setCustInfo($mpgCustInfo);
+
+		/************************* Request Object *****************************/
+
+		$mpgRequest = new mpgRequest($mpgTxn);
+		$mpgRequest->setProcCountryCode($this->country_code);
+		if($this->sandbox == 'yes') {
+			$mpgRequest->setTestMode(true);
+		}
+
+		/************************ HTTPS Post Object ***************************/
+
+//		$mpgHttpPost = new mpgHttpsPost($store_id,$api_token,$mpgRequest);
+		$mpgHttpPost = new mpgHttpsPostStatus($store_id,$api_token,$status_check,$mpgRequest);
+
+		/*************************** Response *********************************/
+
+		$mpgResponse = $mpgHttpPost->getMpgResponse();
+		if ( ( $mpgResponse->getResponseCode() != 'null' ) && ( $mpgResponse->getResponseCode() < 50 ) && $mpgResponse->getComplete() ) {
+			// Payment has been successful
+			$customer_order->add_order_note( __( 'Moneris payment completed.', $MPG_Moneris_Payment_Gateway->text_domain ) );
+
+			// Add Transaction details
+			$_date = $mpgResponse->getTransDate() . ' ' . $mpgResponse->getTransTime();
+			add_post_meta( $order_id, '_paid_date', $_date, true );
+			add_post_meta( $order_id, '_transaction_id', $mpgResponse->getTxnNumber(), true );
+			add_post_meta( $order_id, '_completed_date', $_date, true );
+			add_post_meta( $order_id, '_reference_no', $mpgResponse->getReferenceNum(), true );
+			add_post_meta( $order_id, '_response_code', $mpgResponse->getResponseCode(), true );
+			add_post_meta( $order_id, '_iso_code', $mpgResponse->getISO(), true );
+			add_post_meta( $order_id, '_authorization_code', $mpgResponse->getAuthCode(), true );
+			add_post_meta( $order_id, '_transaction_type', $mpgResponse->getTransType(), true );
+			add_post_meta( $order_id, '_card_type', $mpgResponse->getCardType(), true );
+			add_post_meta( $order_id, '_dynamic_descriptor', $dynamic_descriptor, true );
+
+			// Mark order as Paid
+			$customer_order->payment_complete();
+
+			// Empty the cart (Very important step)
+			$woocommerce->cart->empty_cart();
+
+			// Redirect to thank you page
+			return array(
+				'result'   => 'success',
+				'redirect' => $this->get_return_url( $customer_order ),
+			);
+		} else {
+			wc_add_notice( __('Payment error: Moneris payment declined.', $MPG_Moneris_Payment_Gateway->text_domain), 'error' );
+
+			$customer_order->add_order_note( 'Payment error: '. $mpgResponse->getMessage() );
+		}
+	}
 
 }
