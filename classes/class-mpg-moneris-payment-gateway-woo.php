@@ -143,7 +143,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		if ( $this->supports( 'default_credit_card_form' ) ) {
 			$this->credit_card_form(); // Deprecated, will be removed in a future version.
 		}
-	}
+	}	
 
 	public function process_payment($order_id) {
 		global $MPG_Moneris_Payment_Gateway,$woocommerce;
@@ -154,7 +154,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		$api_token = $this->api_token;
 
 		/********************* Transactional Variables ************************/
-		$type='purchase';
+		$type = 'purchase';
 		$cust_id = $customer_order->get_user_id();
 		$amount = $customer_order->order_total;
 		$pan = str_replace( array(' ', '-' ), '', $_POST[$this->id.'-card-number'] );
@@ -251,18 +251,21 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			);
 			$mpgCustInfo->setItems( $itemsArray[$i] );
 			$i++;
-		}
+		}		
 
 		/***************** Transactional Associative Array ********************/
-
+		if($this->sandbox == 'yes') {
+			date_default_timezone_set(get_option('timezone_string'));
+			$order_id='ord-'.date("dmy-G:i:s"); // Fix duplicate order issue
+		}
 		$txnArray=array(
 			'type'=> $type,
-			'order_id'=> $order_id,
-			'cust_id'=> $cust_id,
-			'amount'=> $amount,
+			'order_id'=> strval($order_id),
+			'cust_id'=> strval($cust_id),
+			'amount'=> strval($amount),
 			'pan'=> $pan,
 			'expdate'=> $expiry_date,
-			'crypt_type'=> $crypt
+			'crypt_type'=> strval($crypt)
 		);
 
 		/********************** Transaction Object ****************************/
@@ -283,12 +286,13 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 
 		/************************ HTTPS Post Object ***************************/
 
-//		$mpgHttpPost = new mpgHttpsPost($store_id,$api_token,$mpgRequest);
-		$mpgHttpPost = new mpgHttpsPostStatus($store_id,$api_token,$status_check,$mpgRequest);
+		$mpgHttpPost = new mpgHttpsPost($store_id,$api_token,$mpgRequest);
+//		$mpgHttpPost = new mpgHttpsPostStatus($store_id,$api_token,$status_check,$mpgRequest);
 
 		/*************************** Response *********************************/
 
-		$mpgResponse = $mpgHttpPost->getMpgResponse();
+		$mpgResponse = $mpgHttpPost->getMpgResponse();	
+		
 		if ( ( $mpgResponse->getResponseCode() != 'null' ) && ( $mpgResponse->getResponseCode() < 50 ) && $mpgResponse->getComplete() ) {
 			// Payment has been successful
 			$customer_order->add_order_note( __( 'Moneris payment completed.', $MPG_Moneris_Payment_Gateway->text_domain ) );
@@ -305,9 +309,16 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			add_post_meta( $order_id, '_transaction_type', $mpgResponse->getTransType(), true );
 			add_post_meta( $order_id, '_card_type', $mpgResponse->getCardType(), true );
 			add_post_meta( $order_id, '_dynamic_descriptor', $dynamic_descriptor, true );
+			add_post_meta( $order_id, '_country_code', $this->country_code, true );
+			if($this->sandbox == 'yes') {
+				add_post_meta( $order_id, '_sandbox_order_id', $mpgResponse->getReceiptId(), true );
+			}	
 
 			// Mark order as Paid
 			$customer_order->payment_complete();
+			
+			// Reduce stock levels
+			$customer_order->reduce_order_stock();
 
 			// Empty the cart (Very important step)
 			$woocommerce->cart->empty_cart();
@@ -318,10 +329,51 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 				'redirect' => $this->get_return_url( $customer_order ),
 			);
 		} else {
-			wc_add_notice( __('Payment error: Moneris payment declined.', $MPG_Moneris_Payment_Gateway->text_domain), 'error' );
-
-			$customer_order->add_order_note( 'Payment error: '. $mpgResponse->getMessage() );
+			wc_add_notice( __('Payment error: '.$mpgResponse->getMessage(), $MPG_Moneris_Payment_Gateway->text_domain), 'error' );
+			$customer_order->add_order_note( __( $mpgResponse->getMessage(), $MPG_Moneris_Payment_Gateway->text_domain ) );
+			return;
 		}
 	}
+	
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		global $MPG_Moneris_Payment_Gateway;
+		$txnnumber = get_post_meta( $order_id, '_transaction_id', true );
+		$customer_order = new WC_Order($order_id);
+		$order_country_code = get_post_meta( $order_id, '_country_code', true );
+		if($this->sandbox == 'yes') {
+			$order_id= get_post_meta( $order_id, '_sandbox_order_id', true );
+		}	
+		//Refund transaction object mandatory values
+		// step 1) create transaction array
+		$txnArray=array(
+				'type'=>'refund',
+				'txn_number'=>$txnnumber,
+				'order_id'=>$order_id,
+				'amount'=>$amount,
+				'crypt_type'=> $this->crypt_type,
+				'cust_id'=> $customer_order->get_user_id(),
+				);
+
+		// step 2) create a transaction  object passing the array created in step 1.
+		$mpgTxn = new mpgTransaction($txnArray);
+		
+		// step 3) create a mpgRequest object passing the transaction object created in step 2
+		$mpgRequest = new mpgRequest($mpgTxn);
+		$mpgRequest->setProcCountryCode($order_country_code);
+		if($this->sandbox == 'yes') {
+			$mpgRequest->setTestMode(true);
+		}
+		// step 4) create mpgHttpsPost object which does an https post ##
+		$mpgHttpPost = new mpgHttpsPost($store_id,$api_token,$mpgRequest);
+		
+		// step 5) get an mpgResponse object ##
+		$mpgResponse=$mpgHttpPost->getMpgResponse();
+		if($mpgResponse->getComplete()) {
+		$customer_order->add_order_note( __( 'Amount Refunded: '.$amount, $MPG_Moneris_Payment_Gateway->text_domain ) );
+			return true;
+		}else{
+			return false;
+		}
+	}	
 
 }

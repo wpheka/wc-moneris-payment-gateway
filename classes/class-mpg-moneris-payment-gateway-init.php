@@ -41,7 +41,7 @@ class MPG_Moneris_Payment_Gateway_Init {
 		$this->version = MPG_MONERIS_PAYMENT_GATEWAY_PLUGIN_VERSION;
 		$this->icon = MPG_MONERIS_PAYMENT_GATEWAY_PLUGIN_ICON;
 
-		add_action('init', array(&$this, 'init'), 0);
+		add_action('init', array(&$this, 'load_plugin_textdomain'), 0);
 		add_action( 'plugins_loaded', array(&$this,'init_moneris_gateway_class') );
 		add_filter( 'woocommerce_payment_gateways', array(&$this,'mpg_add_moneris_payment_gateway') );
 		add_filter( 'plugin_action_links_' . plugin_basename($file), array($this, 'mpg_action_links' ) );
@@ -69,26 +69,6 @@ class MPG_Moneris_Payment_Gateway_Init {
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout' ) . '">' . __( 'Settings', $this->text_domain ) . '</a>',
 		);
 		return array_merge( $plugin_links, $links );
-	}
-	/**
-	 * initilize plugin on WP init
-	 */
-	function init() {
-		
-		// Init Text Domain
-		$this->load_plugin_textdomain();
-
-		// Init ajax
-		if(defined('DOING_AJAX')) {
-			$this->load_class('ajax');
-			$this->ajax = new  MPG_Moneris_Payment_Gateway_Ajax();
-		}
-
-		if (!is_admin() || defined('DOING_AJAX')) {
-			$this->load_class('frontend');
-			$this->frontend = new MPG_Moneris_Payment_Gateway_Frontend();
-		}
-
 	}
 
 	/**
@@ -123,20 +103,6 @@ class MPG_Moneris_Payment_Gateway_Init {
 		if ('' != $class_name && '' != $this->token) {
 			require_once ('class-' . esc_attr($this->token) . '-' . esc_attr($class_name) . '.php');
 		} // End If Statement
-	}// End load_class()
-	
-	/** Cache Helpers *********************************************************/
-
-	/**
-	 * Sets a constant preventing some caching plugins from caching a page. Used on dynamic pages
-	 *
-	 * @access public
-	 * @return void
-	 */
-	function nocache() {
-		if (!defined('DONOTCACHEPAGE'))
-			define("DONOTCACHEPAGE", "true");
-		// WP Super Cache constant
-	}
+	}// End load_class()	
 
 }
