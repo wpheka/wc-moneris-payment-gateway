@@ -330,7 +330,10 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		} else {
 			wc_add_notice( __('Payment error: '.$mpgResponse->getMessage(), $MPG_Moneris_Payment_Gateway->text_domain), 'error' );
+<<<<<<< HEAD
 			$customer_order->add_order_note( __( $mpgResponse->getMessage(), $MPG_Moneris_Payment_Gateway->text_domain ) );
+=======
+>>>>>>> 1b5135bc855f24257516d617acca7061a9536123
 			return;
 		}
 	}
