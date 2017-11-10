@@ -66,7 +66,7 @@ class MPG_Moneris_Payment_Gateway_Init {
 	 */
 	function mpg_action_links($links) {
 		$plugin_links = array(
-			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout' ) . '">' . __( 'Settings', $this->text_domain ) . '</a>',
+			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=moneris' ) . '">' . __( 'Settings', $this->text_domain ) . '</a>',
 		);
 		return array_merge( $plugin_links, $links );
 	}
