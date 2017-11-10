@@ -6,6 +6,10 @@ Description: WooCommerce Moneris Payment Gateway
 Author: Akshaya Swaroop
 Version: 1.0.0
 Author URI: https://github.com/AkshayaDev/
+Requires at least: 4.4
+Tested up to: 4.8
+Text Domain: search_orders_by_product
+Domain Path: /languages/
 */
 
 if ( ! class_exists( 'MPG_Dependencies' ) )
