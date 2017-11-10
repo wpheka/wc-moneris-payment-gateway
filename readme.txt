@@ -1,6 +1,6 @@
 === WC Moneris Payment Gateway ===
 Contributors: akshayaswaroop
-Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, woocommerce, payment gateway, admin, woocommerce payments, payment gateway dashboard
+Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, woocommerce, payment gateway, admin, woocommerce payments, payment gateway dashboard, canada woocommerce payment gateway, canada payemnt gateway
 Requires at least: 4.4
 Tested up to: 4.8
 Stable tag: 1.0
@@ -8,7 +8,7 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: paypal.me/AKSHAYASWAROOP
 
-A simple plugin that easily add moneris payment gateway to your WordPress / WooCommerce website.
+A simple plugin that easily add moneris payment gateway to your WordPress / WooCommerce website. Moneris is Canada’s leading processor of Debit and credit card payments.
 
 == Description ==
 WC Search Orders By Product does exactly what it says - This WooCommerce extension **automatically** adds moneris payment gateway to your site.
