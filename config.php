@@ -4,7 +4,7 @@ if(!defined('MPG_MONERIS_PAYMENT_GATEWAY_PLUGIN_TOKEN')) {
 }
 
 if(!defined('MPG_MONERIS_PAYMENT_GATEWAY_TEXT_DOMAIN')) {
-	define('MPG_MONERIS_PAYMENT_GATEWAY_TEXT_DOMAIN', 'Moneris_Payment_Gateway');
+	define('MPG_MONERIS_PAYMENT_GATEWAY_TEXT_DOMAIN', 'wc-moneris-payment-gateway');
 }
 
 if(!defined('MPG_MONERIS_PAYMENT_GATEWAY_PLUGIN_VERSION')) {
