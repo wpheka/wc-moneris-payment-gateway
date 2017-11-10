@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Moneris Payment Gateway
+Plugin Name: WC Moneris Payment Gateway
 Plugin URI: https://github.com/AkshayaDev/
 Description: WooCommerce Moneris Payment Gateway
 Author: Akshaya Swaroop
