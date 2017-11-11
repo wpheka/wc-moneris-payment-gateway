@@ -75,8 +75,10 @@ class MPG_Moneris_Payment_Gateway_Init {
 	 * Moneris Gateway Class
 	 */
 	function init_moneris_gateway_class() {
-		$this->load_class('woo');
-		$this->admin = new mpg_WOO_Moneris_Payment_Gateway();
+		if(class_exists('WC_Payment_Gateway')) {
+			$this->load_class('woo');
+			$this->admin = new mpg_WOO_Moneris_Payment_Gateway();
+		}
 	}
 
 	/**

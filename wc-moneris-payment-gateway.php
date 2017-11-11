@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WC Moneris Payment Gateway
-Plugin URI: https://github.com/AkshayaDev/
+Plugin URI: https://github.com/AkshayaDev/wc-moneris-payment-gateway
 Description: WooCommerce Moneris Payment Gateway
 Author: Akshaya Swaroop
 Version: 1.0.0
@@ -31,7 +31,7 @@ if(!class_exists('MPG_Moneris_Payment_Gateway') && MPG_Dependencies::is_woocomme
 		function mpg_admin_notice() {
 			?>
 			<div class="error">
-				<p><?php _e('Moneris Payment Gateway plugin requires <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> plugins to be active!', MPG_MONERIS_PAYMENT_GATEWAY_TEXT_DOMAIN); ?></p>
+				<p><?php _e('Moneris Payment Gateway plugin requires <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> plugin to be active!', MPG_MONERIS_PAYMENT_GATEWAY_TEXT_DOMAIN); ?></p>
 			</div>
 			<?php
 		}

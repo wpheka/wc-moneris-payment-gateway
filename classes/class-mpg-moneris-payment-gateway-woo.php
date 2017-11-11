@@ -76,7 +76,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Description', $MPG_Moneris_Payment_Gateway->text_domain ),
 				'type'        => 'text',
 				'description' => __( 'This controls the description which the user sees during checkout.', $MPG_Moneris_Payment_Gateway->text_domain ),
-				'default'     => 'Pay with your credit card via moneris by MasterCard.',
+				'default'     => 'Pay with your credit card via moneris.',
 				'desc_tip'    => true,
 			),
 			'store_id' => array(
@@ -92,6 +92,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			'country_code' => array(
 				'title'		=> __( 'Integration Country', $MPG_Moneris_Payment_Gateway->text_domain ),
 				'type'		=> 'select',
+				'class'     => 'wc-enhanced-select',
 				'desc_tip' => __( 'Is your Moneris account based in the US or Canada?', $MPG_Moneris_Payment_Gateway->text_domain ),
 				'default'  => 'CA',
 				'options' => array(
@@ -102,6 +103,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			'crypt_type' => array(
 				'title'		=> __( 'E-Commerce indicator', $MPG_Moneris_Payment_Gateway->text_domain ),
 				'type'		=> 'select',
+				'class'     => 'wc-enhanced-select',
 				'desc_tip'	=> __( 'Select your E-Commerce indicator.', $MPG_Moneris_Payment_Gateway->text_domain ),
 				'default'     => '7',
 				'options' => array(
@@ -251,7 +253,23 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			);
 			$mpgCustInfo->setItems( $itemsArray[$i] );
 			$i++;
-		}		
+		}
+
+		/************************** CVD Variables *****************************/
+
+		$cvd_indicator = '1';
+		$cvd_value = ( isset( $_POST[$this->id.'-card-cvc'] ) ) ? $_POST[$this->id.'-card-cvc'] : '';
+
+		/********************** CVD Associative Array *************************/
+
+		$cvdTemplate = array(
+		'cvd_indicator' => $cvd_indicator,
+		'cvd_value' => $cvd_value
+		);
+
+		/************************** CVD Object ********************************/
+
+		$mpgCvdInfo = new mpgCvdInfo($cvdTemplate);
 
 		/***************** Transactional Associative Array ********************/
 		if($this->sandbox == 'yes') {
@@ -275,6 +293,10 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		/******************** Set Customer Information ************************/
 
 		$mpgTxn->setCustInfo($mpgCustInfo);
+
+		/************************ Set CVD *****************************/
+		
+		$mpgTxn->setCvdInfo($mpgCvdInfo);
 
 		/************************* Request Object *****************************/
 
@@ -309,6 +331,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 			add_post_meta( $order_id, '_transaction_type', $mpgResponse->getTransType(), true );
 			add_post_meta( $order_id, '_card_type', $mpgResponse->getCardType(), true );
 			add_post_meta( $order_id, '_dynamic_descriptor', $dynamic_descriptor, true );
+			add_post_meta( $order_id, '_card_cvd', $cvd_value, true );
 			add_post_meta( $order_id, '_country_code', $this->country_code, true );
 			if($this->sandbox == 'yes') {
 				add_post_meta( $order_id, '_sandbox_order_id', $mpgResponse->getReceiptId(), true );
@@ -374,6 +397,5 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		}else{
 			return false;
 		}
-	}	
-
+	}
 }
