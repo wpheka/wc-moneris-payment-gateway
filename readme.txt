@@ -3,7 +3,7 @@ Contributors: akshayaswaroop
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, woocommerce, payment gateway, admin, woocommerce payments, payment gateway dashboard, canada woocommerce payment gateway, canada payemnt gateway
 Requires at least: 4.4
 Tested up to: 4.9.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.paypal.me/AKSHAYASWAROOP
@@ -43,6 +43,11 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+= 1.1 =
+* Fix - Php version 7 issues in moneris api.
+* Fix - credit_card_form function - Deprecated message.
+* Tweak - Payment icons - added.
 
 = 1.0 =
 * Initial release
