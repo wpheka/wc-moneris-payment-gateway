@@ -20,7 +20,7 @@ class mpgGlobals
                   	'CLIENT_TIMEOUT' => '30'
                  	);
 
- 	function mpgGlobals()
+ 	function __construct()
  	{
  		// default
  	}
@@ -42,7 +42,7 @@ class httpsPost
 	var $response;
 	var $debug = FALSE; //default is false for production release
 
-	function httpsPost($url, $dataToSend)
+	function __construct($url, $dataToSend)
 	{
 		$this->url=$url;
 		$this->dataToSend=$dataToSend;
@@ -100,7 +100,7 @@ class mpgHttpsPost
  	var $txnType;
  	var $isMPI;
 
- 	function mpgHttpsPost($storeid,$apitoken,$mpgRequestOBJ)
+ 	function __construct($storeid,$apitoken,$mpgRequestOBJ)
  	{
 
   		$this->store_id=$storeid;
@@ -202,7 +202,7 @@ class mpgHttpsPostStatus
  	var $mpgResponse;
  	var $xmlString;
 
- 	function mpgHttpsPostStatus($storeid,$apitoken,$status,$mpgRequestOBJ)
+ 	function __construct($storeid,$apitoken,$status,$mpgRequestOBJ)
  	{
 
   		$this->store_id=$storeid;
@@ -325,7 +325,7 @@ class mpgResponse
  	var $results = array();
  	var $rules = array();
 
- 	function mpgResponse($xmlString)
+ 	function __construct($xmlString)
  	{
 
   		$this->p = xml_parser_create();
@@ -1932,7 +1932,7 @@ class mpgRequest
 	var $testMode = "";
 	var $isMPI = "";
 	
-	function mpgRequest($txn)
+	function __construct($txn)
 	{
 
  		if(is_array($txn))
@@ -2164,7 +2164,7 @@ class mpgCustInfo
  	var $email;
  	var $instructions;
 
- 	function mpgCustInfo($custinfo=0,$billing=0,$shipping=0,$items=0)
+ 	function __construct($custinfo=0,$billing=0,$shipping=0,$items=0)
  	{
  		if($custinfo)
    		{
@@ -2278,7 +2278,7 @@ class mpgRecur{
 	var $params;
 	var $recurTemplate = array('recur_unit','start_now','start_date','num_recurs','period','recur_amount');
 
-	function mpgRecur($params)
+	function __construct($params)
 	{
 		$this->params = $params;
 		if( (! $this->params['period']) )
@@ -2309,7 +2309,7 @@ class mpgAvsInfo
     var $params;
     var $avsTemplate = array('avs_street_number','avs_street_name','avs_zipcode','avs_email','avs_hostname','avs_browser','avs_shiptocountry','avs_shipmethod','avs_merchprodsku','avs_custip','avs_custphone');
 
-    function mpgAvsInfo($params)
+    function __construct($params)
     {
         $this->params = $params;
     }
@@ -2340,7 +2340,7 @@ class mpgCvdInfo
     var $params;
     var $cvdTemplate = array('cvd_indicator','cvd_value');
 
-    function mpgCvdInfo($params)
+    function __construct($params)
     {
         $this->params = $params;
     }
@@ -2370,7 +2370,7 @@ class mpgAchInfo
 			'cust_state','cust_zip','routing_num','account_num',
 			'check_num','account_type','micr');
 
-	function mpgAchInfo($params)
+	function __construct($params)
 	{
 		$this->params = $params;
 	}
@@ -2397,7 +2397,7 @@ class mpgConvFeeInfo
 	var $params;
 	var $convFeeTemplate = array('convenience_fee');
 
-	function mpgConvFeeInfo($params)
+	function __construct($params)
 	{
 		$this->params = $params;
 	}
@@ -2432,7 +2432,7 @@ class mpgTransaction
 	var $attributeAccountInfo = null;
 	var $level23Data = null;
 
-	function mpgTransaction($txn)
+	function __construct($txn)
 	{
 		$this->txn=$txn;
 	}
@@ -2555,7 +2555,7 @@ class MpiHttpsPost
 	var $mpiRequest;
 	var $mpiResponse;
 
-	function MpiHttpsPost($storeid,$apitoken,$mpiRequestOBJ)
+	function __construct($storeid,$apitoken,$mpiRequestOBJ)
 	{
 
 		$this->store_id=$storeid;
@@ -2631,7 +2631,7 @@ class MpiResponse{
 
 	var $ACSUrl;
 
-	function MpiResponse($xmlString)
+	function __construct($xmlString)
 	{
 
 		$this->p = xml_parser_create();
@@ -2823,7 +2823,7 @@ class MpiRequest
 	var $procCountryCode = "";
 	var $testMode = "";
 
-	function MpiRequest($txn)
+	function __construct($txn)
 	{
 
 		if(is_array($txn))
@@ -2921,7 +2921,7 @@ class MpiTransaction
 {
 	var $txn;
 
-	function MpiTransaction($txn)
+	function __construct($txn)
 	{
 		$this->txn=$txn;
 	}
@@ -2942,7 +2942,7 @@ class riskHttpsPost{
 	var $riskRequest;
 	var $riskResponse;
 
-	function riskHttpsPost($storeid,$apitoken,$riskRequestOBJ)
+	function __construct($storeid,$apitoken,$riskRequestOBJ)
 	{
 
 		$this->store_id=$storeid;
@@ -3021,7 +3021,7 @@ class riskResponse{
 	var $results = array();
 	var $rules = array();
 
-	function riskResponse($xmlString)
+	function __construct($xmlString)
 	{
 
 		$this->p = xml_parser_create();
@@ -3151,7 +3151,7 @@ class riskRequest{
 	var $procCountryCode = "";
 	var $testMode = "";
 
-	function riskRequest($txn)
+	function __construct($txn)
 	{
 		if(is_array($txn))
 		{
@@ -3270,7 +3270,7 @@ class mpgSessionAccountInfo
 											'shipping_address_state','shipping_address_country','shipping_address_zip','local_attrib_1','local_attrib_2','local_attrib_3','local_attrib_4',
 											'local_attrib_5','transaction_amount','transaction_currency');
 
-	function mpgSessionAccountInfo($params)
+	function __construct($params)
 	{
 		$this->params = $params;
 	}
@@ -3301,7 +3301,7 @@ class mpgAttributeAccountInfo
 											'account_address_state','account_address_country','account_address_zip','shipping_address_street1','shipping_address_street2','shipping_address_city',
 											'shipping_address_state','shipping_address_country','shipping_address_zip');
 
-	function mpgAttributeAccountInfo($params)
+	function __construct($params)
 	{
 		$this->params = $params;
 	}
@@ -3331,7 +3331,7 @@ class riskTransaction{
 	var $attributeAccountInfo = null;
 	var $sessionAccountInfo = null;
 
-	function riskTransaction($txn)
+	function __construct($txn)
 	{
 		$this->txn=$txn;
 	}
