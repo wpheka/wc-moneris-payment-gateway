@@ -2,7 +2,7 @@
 Contributors: akshayaswaroop
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, woocommerce, payment gateway, admin, woocommerce payments, payment gateway dashboard, canada woocommerce payment gateway, canada payemnt gateway
 Requires at least: 4.4
-Tested up to: 4.8
+Tested up to: 4.9.1
 Stable tag: 1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
