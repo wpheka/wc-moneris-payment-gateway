@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
+class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 	/**
 	 * Constructor.
@@ -143,7 +143,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( $this->supports( 'default_credit_card_form' ) ) {
-			$this->credit_card_form(); // Deprecated, will be removed in a future version.
+			parent::payment_fields();
 		}
 	}	
 
