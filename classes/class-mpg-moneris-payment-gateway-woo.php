@@ -12,8 +12,8 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function __construct() {
 		global $MPG_Moneris_Payment_Gateway;
 
-		$this->id                 = 'moneris';
-		$this->method_title       = __( 'Moneris', $MPG_Moneris_Payment_Gateway->text_domain );
+		$this->id                 = 'mpg_moneris';
+		$this->method_title       = __( 'MPG Moneris', $MPG_Moneris_Payment_Gateway->text_domain );
 		$this->method_description = __( 'Allows payments by Moneris.', $MPG_Moneris_Payment_Gateway->text_domain );
 		$this->new_method_label   = __( 'Use a new card', $MPG_Moneris_Payment_Gateway->text_domain );
 		$this->has_fields         = true;
