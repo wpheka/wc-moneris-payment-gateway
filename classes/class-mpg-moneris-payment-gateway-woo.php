@@ -41,6 +41,8 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$this->country_code    = $this->get_option( 'country_code' );
 		$this->crypt_type      = $this->get_option( 'crypt_type' );
 
+		$this->order_id_hack   = 'yes';		// suffix order_id with timestamp to avoid duplicate order_ids
+
 		$this->init_moneris_api();
 
 		// Hooks
@@ -272,9 +274,9 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$mpgCvdInfo = new mpgCvdInfo($cvdTemplate);
 
 		/***************** Transactional Associative Array ********************/
-		if($this->sandbox == 'yes') {
+		if($this->order_id_hack == 'yes' || $this->sandbox == 'yes') {
 			date_default_timezone_set(get_option('timezone_string'));
-			$order_id='ord-'.date("dmy-G:i:s"); // Fix duplicate order issue
+			$order_id = uniqid( '', true ).'-'.$order_id.'-'.date("dmy-Gis"); // Fix duplicate order issue
 		}
 		$txnArray=array(
 			'type'=> $type,
@@ -333,7 +335,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 			add_post_meta( $order_id, '_dynamic_descriptor', $dynamic_descriptor, true );
 			add_post_meta( $order_id, '_card_cvd', $cvd_value, true );
 			add_post_meta( $order_id, '_country_code', $this->country_code, true );
-			if($this->sandbox == 'yes') {
+			if($this->order_id_hack == 'yes' || $this->sandbox == 'yes') {
 				add_post_meta( $order_id, '_sandbox_order_id', $mpgResponse->getReceiptId(), true );
 			}	
 
@@ -363,7 +365,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$txnnumber = get_post_meta( $order_id, '_transaction_id', true );
 		$customer_order = new WC_Order($order_id);
 		$order_country_code = get_post_meta( $order_id, '_country_code', true );
-		if($this->sandbox == 'yes') {
+		if($this->order_id_hack == 'yes' || $this->sandbox == 'yes') {
 			$order_id= get_post_meta( $order_id, '_sandbox_order_id', true );
 		}	
 		//Refund transaction object mandatory values
