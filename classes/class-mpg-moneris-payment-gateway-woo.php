@@ -160,7 +160,7 @@ class mpg_WOO_Moneris_Payment_Gateway extends WC_Payment_Gateway_CC {
 		/********************* Transactional Variables ************************/
 		$type = 'purchase';
 		$cust_id = $customer_order->get_user_id();
-		$amount = $customer_order->order_total;
+		$amount = $customer_order->get_total();
 		$pan = str_replace( array(' ', '-' ), '', $_POST[$this->id.'-card-number'] );
 		$expiry_date = $_POST[$this->id.'-card-expiry'];
 		if(!empty($expiry_date)) {
