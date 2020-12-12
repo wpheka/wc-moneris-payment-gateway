@@ -1,0 +1,21 @@
+{
+    "name": "wpheka/moneris-api",
+    "description": "WPHEKA Moneris Api",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WPHEKA",
+            "email": "contact@wpheka.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "wpheka\\Moneris\\": "src/"
+        }
+    }
+}
