@@ -1,0 +1,200 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WC Moneris Payment Gateway\n"
+"POT-Creation-Date: 2019-06-14 02:25+0530\n"
+"PO-Revision-Date: 2019-06-14 02:28+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wc-moneris-payment-gateway.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: classes/class-mpg-moneris-payment-gateway-init.php:69
+msgid "Settings"
+msgstr "Settings"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:16
+#: classes/class-mpg-moneris-payment-gateway-woo.php:75
+msgid "Moneris"
+msgstr "Moneris"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:17
+msgid "Allows payments by Moneris."
+msgstr "Allows payments by Moneris."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:18
+msgid "Use a new card"
+msgstr "Use a new card"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:65
+msgid "Enable/Disable"
+msgstr "Enable/Disable"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:66
+msgid "Enable Moneris Gateway"
+msgstr "Enable Moneris Gateway"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:72
+msgid "Title"
+msgstr "Title"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:74
+msgid "This controls the title which the user sees during checkout."
+msgstr "This controls the title which the user sees during checkout."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:79
+msgid "Description"
+msgstr "Description"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:81
+msgid "This controls the description which the user sees during checkout."
+msgstr "This controls the description which the user sees during checkout."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:86
+msgid "Store Id"
+msgstr "Store Id"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:88
+msgid "Enter your Moneris account store id here."
+msgstr "Enter your Moneris account store id here."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:91
+msgid "API Token"
+msgstr "API Token"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:93
+msgid "Enter your Moneris API Token here."
+msgstr "Enter your Moneris API Token here."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:96
+msgid "Integration Country"
+msgstr "Integration Country"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:99
+msgid "Is your Moneris account based in the US or Canada?"
+msgstr "Is your Moneris account based in the US or Canada?"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:102
+msgid "Canada"
+msgstr "Canada"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:103
+msgid "United States"
+msgstr "United States"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:107
+msgid "E-Commerce indicator"
+msgstr "E-Commerce indicator"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:110
+msgid "Select your E-Commerce indicator."
+msgstr "Select your E-Commerce indicator."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:113
+msgid "Mail Order / Telephone Order—Single"
+msgstr "Mail Order / Telephone Order—Single"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:114
+msgid "Mail Order / Telephone Order—Recurring"
+msgstr "Mail Order / Telephone Order—Recurring"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:115
+msgid "Mail Order / Telephone Order—Instalment"
+msgstr "Mail Order / Telephone Order—Instalment"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:116
+msgid "Mail Order / Telephone Order—Unknown classification"
+msgstr "Mail Order / Telephone Order—Unknown classification"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:117
+msgid "Authenticated e-commerce transaction (VBV)"
+msgstr "Authenticated e-commerce transaction (VBV)"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:118
+msgid "Non-authenticated e-commerce transaction (VBV)"
+msgstr "Non-authenticated e-commerce transaction (VBV)"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:119
+msgid "SSL-enabled merchant"
+msgstr "SSL-enabled merchant"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:120
+msgid "Non-secure transaction (web- or email-based)"
+msgstr "Non-secure transaction (web- or email-based)"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:121
+msgid "SET non-authenticated transaction"
+msgstr "SET non-authenticated transaction"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:125
+msgid "Sandbox"
+msgstr "Sandbox"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:126
+msgid "Enable sandbox mode"
+msgstr "Enable sandbox mode"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:128
+msgid "Place the payment gateway in sandbox mode."
+msgstr "Place the payment gateway in sandbox mode."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:141
+#, php-format
+msgid "TEST MODE ENABLED. Use a test card: %s"
+msgstr "TEST MODE ENABLED. Use a test card: %s"
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:330
+msgid "Moneris payment completed."
+msgstr "Moneris payment completed."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:365
+msgid "Payment error: "
+msgstr "Payment error: "
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:383
+msgid "Refund failed."
+msgstr "Refund failed."
+
+#: classes/class-mpg-moneris-payment-gateway-woo.php:419
+msgid "Amount Refunded: "
+msgstr "Amount Refunded: "
+
+#: wc-moneris-payment-gateway.php:37
+msgid ""
+"Moneris Payment Gateway plugin requires <a href=\"http://wordpress.org/"
+"extend/plugins/woocommerce/\">WooCommerce</a> plugin to be active!"
+msgstr ""
+"Moneris Payment Gateway plugin requires <a href=\"http://wordpress.org/"
+"extend/plugins/woocommerce/\">WooCommerce</a> plugin to be active!"
+
+#. Plugin Name of the plugin/theme
+msgid "WC Moneris Payment Gateway"
+msgstr "WC Moneris Payment Gateway"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/AkshayaDev/wc-moneris-payment-gateway"
+msgstr "https://github.com/AkshayaDev/wc-moneris-payment-gateway"
+
+#. Description of the plugin/theme
+msgid "WooCommerce Moneris Payment Gateway"
+msgstr "WooCommerce Moneris Payment Gateway"
+
+#. Author of the plugin/theme
+msgid "Akshaya Swaroop"
+msgstr "Akshaya Swaroop"
+
+#. Author URI of the plugin/theme
+msgid "https://github.com/AkshayaDev/"
+msgstr "https://github.com/AkshayaDev/"
