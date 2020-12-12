@@ -1,0 +1,92 @@
+.postbox.moneris-pro {
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    color: #fff;
+}
+
+.postbox.moneris-pro h3.hndle {
+    text-align: center;
+    color: #fff;
+}
+
+.postbox.moneris-pro span.pro-feature-list {
+    color: #000;
+}
+
+h3.hndle {
+    text-align: center;
+}
+
+a.button.moneris-upgrade {
+    border-radius: 50px;
+    background: #00c9b7;
+    color: #fff;
+    border-color: #00c9b7;
+}
+
+a.button.moneris-upgrade {
+	display: block;
+    text-align: center;
+    width: 100%;
+    border-radius: 50px;
+    border-width: thin;
+    border-style: none;
+    background: #00c9b7;
+    color: #fff;
+    border-color: #00c9b7;
+    -webkit-box-shadow: 10px 10px 14px 1px rgba(00,00,00,0.2);
+    box-shadow: 10px 10px 14px 1px rgba(00,00,00,0.2);
+    transition: all 0.5s;
+    text-transform: uppercase;
+    letter-spacing: 0.094em;
+}
+
+a.button.moneris-upgrade:hover {
+	display: block;
+    text-align: center;
+    width: 100%;
+    border-radius: 50px;
+    border-width: thin;
+    border-style: none;    
+    background: #00c9b7;
+    color: #fff;
+    border-color: #00c9b7;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    transition: all 0.5s;
+    text-transform: uppercase;
+    letter-spacing: 0.094em;
+}
+
+a.button.moneris-upgrade:active {
+	display: block;
+    text-align: center;
+    width: 100%;
+    border-radius: 50px;
+    border-width: thin;
+    border-style: none;
+    background: #00c9b7;
+    color: #fff;
+    border-color: #00c9b7;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    transition: all 0.5s;
+    text-transform: uppercase;
+    letter-spacing: 0.094em;
+}
+
+a.button.moneris-upgrade:focus {
+	display: block;
+    text-align: center;
+    width: 100%;	
+    border-radius: 50px;
+    border-width: thin;
+    border-style: none;    
+    background: #00c9b7;
+    color: #fff;
+    border-color: #00c9b7;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    transition: all 0.5s;
+    text-transform: uppercase;
+    letter-spacing: 0.094em;
+}

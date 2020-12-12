@@ -1,0 +1,79 @@
+.wpheka-plugin-donation-notice {
+	background: #fff;
+	border: 0;
+	border-radius: 4px;
+	color: #cd331f;
+	padding: 1px 5px;
+	position: relative;
+}
+
+.wpheka-plugin-donation-button-notice-dismiss:focus {
+	box-shadow: none;
+}
+
+.wpheka-plugin-donation-button-notice-dismiss:hover {
+	opacity: .5;
+}
+
+.wpheka-plugin-donation-button-notice-dismiss:before {
+	color: #FF8676;
+}
+
+.wpheka-plugin-donation-plugin-name,
+.wpheka-plugin-donation-button {
+	background: #fff;
+	border: 1px solid #cd331f;
+	border-radius: 4px;
+	color: #cd331f;
+	margin-right: 5px;
+	padding: 2px 15px;
+	text-decoration: none;
+}
+
+.wpheka-plugin-donation-plugin-name,
+.wpheka-plugin-donation-button:hover {
+	background: #cd331f;
+	color: #fff;
+}
+
+.wpheka-plugin-donation-plugin-name,
+.wpheka-plugin-donation-button:focus {
+	background: #cd331f;
+	color: #fff;
+}
+
+.wpheka-plugin-donation-plugin-name,
+.wpheka-plugin-donation-button:active {
+	background: #cd331f;
+	color: #fff;
+}
+
+.wpheka-plugin-donation-plugin-name {
+	font-weight: bold;
+}
+
+.wpheka-plugin-donation-button:hover .dashicons-heart {
+	animation: .8s infinite heart_beat;
+}
+
+.wpheka-plugin-donation-button:focus {
+	box-shadow: none;
+}
+
+@keyframes heart_beat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
