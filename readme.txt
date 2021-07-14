@@ -2,8 +2,8 @@
 Contributors: akshayaswaroop, wpheka
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
 Requires at least: 4.9
-Tested up to: 5.5.3
-Stable tag: 2.5
+Tested up to: 5.7.2
+Stable tag: 2.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.paypal.me/AKSHAYASWAROOP
@@ -43,6 +43,9 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+= 2.6 - 2021-07-14 =
+* Enhancement - WooCommerce Version 5.5.0 compatibility added.
 
 = 2.5 - 2020-12-04 =
 * Fix - Undefined variables removed.
