@@ -451,10 +451,9 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC {
 			?>
 			<script>
 				if(window.jQuery) {
-					jQuery("button.button-primary.woocommerce-save-button").css({
-						"margin-top": "-250px",
-						"position": "absolute",
-					});
+					var save_moneris_options_btn = jQuery("button.button-primary.woocommerce-save-button").parent('p.submit').clone();
+					jQuery("button.button-primary.woocommerce-save-button").parent('p.submit').remove();
+					save_moneris_options_btn.appendTo('div#post-body-content');
 				}
 			</script>
 			<?php
