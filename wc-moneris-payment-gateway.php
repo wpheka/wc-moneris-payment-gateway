@@ -5,11 +5,11 @@
  * Description: Take credit card payments on your WooCommerce store using Moneris. <a href="https://www.wpheka.com" target="_blank">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>
  * Author: WPHEKA
  * Author URI: https://www.wpheka.com
- * Version: 2.6
+ * Version: 2.7
  * Requires at least: 4.9
- * Tested up to: 5.7.2
+ * Tested up to: 5.9
  * WC requires at least: 3.0
- * WC tested up to: 5.5.0
+ * WC tested up to: 6.2.0
  * Text Domain: wpheka-gateway-moneris
  * Domain Path: /languages
  *
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Required minimums and constants
  */
-define( 'WPHEKA_MONERIS_VERSION', '2.6' );
+define( 'WPHEKA_MONERIS_VERSION', '2.7' );
 define( 'WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0' );
 define( 'WPHEKA_MONERIS_MIN_WC_VER', '3.0' );
 define( 'WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '5.0' );
@@ -143,12 +143,12 @@ function wpheka_gateway_moneris_init() {
 			private function __clone() {}
 
 			/**
-			 * Private unserialize method to prevent unserializing of the *Singleton*
+			 * Public unserialize method to prevent unserializing of the *Singleton*
 			 * instance.
 			 *
 			 * @return void
 			 */
-			private function __wakeup() {}
+			public function __wakeup() {}
 
 			/**
 			 * Protected constructor to prevent creating a new instance of the
