@@ -80,6 +80,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC {
 						<div class="inside">
 							<div class="support-widget">
 								<ul>
+									<li><span class="pro-feature-list">»</span>  New payment method <strong style="color: #000000;">Moneris Checkout</strong> added that delivers greater payment security, flexibility and control for online businesses. Read more <a href="https://www.wpheka.com/docs/wc-moneris-payment-gateway-pro/#mco" target="_blank"><b style="color: #000000;">here</b></a>.</li>
 									<li><span class="pro-feature-list">»</span> Route payments to different Moneris accounts based on their currency. </li>
 									<li><span class="pro-feature-list">»</span> Customers can save cards to their accounts for future purchases.</li>
 									<li><span class="pro-feature-list">»</span> Supports eFraud tools / address and card verification.</li>
@@ -192,7 +193,9 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC {
 		$description = $this->get_description();
 
 		if ( 'yes' == $this->sandbox ) {
-			$description .= ' ' . sprintf( __( 'TEST MODE ENABLED. Use a test card: %s', 'woocommerce' ), '<a href="https://developer.moneris.com/More/Testing/Testing%20a%20Solution" target="_blank">https://developer.moneris.com/More/Testing/Testing a Solution</a>' );
+
+			/* translators: link to Moneris testing page */
+			$description .= ' ' . sprintf( __( 'TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date or check the <a href="%s" target="_blank">Testing Moneris documentation</a> for more card numbers.', 'wpheka-gateway-moneris' ), 'https://developer.moneris.com/More/Testing/Testing%20a%20Solution' );
 		}
 
 		if ( $description ) {
@@ -319,8 +322,21 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC {
 			add_post_meta( $order_id, '_card_type', $response->getCardType(), true );
 			add_post_meta( $order_id, '_refund_order_id', $response->getReceiptId(), true );
 
-			// Mark order as Paid.
-			$order->payment_complete();
+			$transaction_id = $response->getTxnNumber();
+			// add transaction id to order notes
+			
+			if(!empty($transaction_id)) {
+				/* translators: transaction id */
+				$message = sprintf( __( 'Moneris payment complete (Transaction ID: %s)', 'wpheka-gateway-moneris' ), $transaction_id );
+				// Mark order as processing
+				$order->update_status( 'processing', $message );
+
+				$order->set_transaction_id( $transaction_id );
+			}
+
+			if ( is_callable( [ $order, 'save' ] ) ) {
+				$order->save();
+			}
 
 			// Remove cart.
 			if ( isset( WC()->cart ) ) {
