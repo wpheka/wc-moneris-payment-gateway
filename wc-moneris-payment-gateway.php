@@ -5,7 +5,7 @@
  * Description: Take credit card payments on your WooCommerce store using Moneris. <a href="https://www.wpheka.com" target="_blank">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>
  * Author: WPHEKA
  * Author URI: https://www.wpheka.com
- * Version: 2.9
+ * Version: 3.0
  * Requires at least: 4.9
  * Tested up to: 6.0.2
  * WC requires at least: 3.0
@@ -18,22 +18,22 @@
  * @link      https://www.wpheka.com
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
 /**
  * Required minimums and constants
  */
-define( 'WPHEKA_MONERIS_VERSION', '2.9' );
-define( 'WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0' );
-define( 'WPHEKA_MONERIS_MIN_WC_VER', '3.0' );
-define( 'WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '6.0' );
-define( 'WPHEKA_MONERIS_MAIN_FILE', __FILE__ );
-define( 'WPHEKA_MONERIS_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
-define( 'WPHEKA_MONERIS_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'WPHEKA_MONERIS_PLUGIN_ICON', untrailingslashit( plugins_url( '/assets/images/logo.png', __FILE__ ) ) );
-define( 'WPHEKA_MONERIS_PLUGIN_LOGO', untrailingslashit( plugins_url( '/assets/images/logo-dark.png', __FILE__ ) ) );
+define('WPHEKA_MONERIS_VERSION', '3.0');
+define('WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0');
+define('WPHEKA_MONERIS_MIN_WC_VER', '3.0');
+define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '6.0');
+define('WPHEKA_MONERIS_MAIN_FILE', __FILE__);
+define('WPHEKA_MONERIS_PLUGIN_URL', untrailingslashit(plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__))));
+define('WPHEKA_MONERIS_PLUGIN_PATH', untrailingslashit(plugin_dir_path(__FILE__)));
+define('WPHEKA_MONERIS_PLUGIN_ICON', untrailingslashit(plugins_url('/assets/images/logo.png', __FILE__)));
+define('WPHEKA_MONERIS_PLUGIN_LOGO', untrailingslashit(plugins_url('/assets/images/logo-dark.png', __FILE__)));
 
 /**
  * CURL not enabled fallback notice.
@@ -41,7 +41,7 @@ define( 'WPHEKA_MONERIS_PLUGIN_LOGO', untrailingslashit( plugins_url( '/assets/i
  * @since 1.9
  */
 function wpheka_moneris_missing_curl() {
-	echo '<div class="error"><p><strong>' . esc_html__( 'Moneris - cURL is not installed.', 'wpheka-gateway-moneris' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . esc_html__('Moneris - cURL is not installed.', 'wpheka-gateway-moneris') . '</strong></p></div>';
 }
 
 /**
@@ -51,7 +51,7 @@ function wpheka_moneris_missing_curl() {
  */
 function wpheka_moneris_missing_wc_notice() {
 	/* translators: 1. URL link. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'Moneris requires WooCommerce to be installed and active. You can download %s here.', 'wpheka-gateway-moneris' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf(esc_html__('Moneris requires WooCommerce to be installed and active. You can download %s here.', 'wpheka-gateway-moneris'), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>') . '</strong></p></div>';
 }
 
 /**
@@ -61,7 +61,7 @@ function wpheka_moneris_missing_wc_notice() {
  */
 function wpheka_moneris_wc_not_supported() {
 	/* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'Moneris requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'wpheka-gateway-moneris' ), WPHEKA_MONERIS_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf(esc_html__('Moneris requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'wpheka-gateway-moneris'), WPHEKA_MONERIS_MIN_WC_VER, WC_VERSION) . '</strong></p></div>';
 }
 
 /**
@@ -71,7 +71,7 @@ function wpheka_moneris_wc_not_supported() {
  */
 function wpheka_moneris_min_php_ver_notice() {
 	/* translators: 1) int version 2) int version */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'wpheka-gateway-moneris' ), WPHEKA_MONERIS_MIN_PHP_VER, phpversion() ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf(esc_html__('WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'wpheka-gateway-moneris'), WPHEKA_MONERIS_MIN_PHP_VER, phpversion()) . '</strong></p></div>';
 }
 
 /**
@@ -80,40 +80,40 @@ function wpheka_moneris_min_php_ver_notice() {
  * @since 2.0
  */
 function wpheka_moneris_pro_active_notice() {
-	echo '<div class="error"><p><strong>' . esc_html__( 'Pro version of Moneris gateway plugin is already active, Please deactivate it first to install the free version.', 'wpheka-gateway-moneris-pro' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . esc_html__('Pro version of Moneris gateway plugin is already active, Please deactivate it first to install the free version.', 'wpheka-gateway-moneris-pro') . '</strong></p></div>';
 }
 
-add_action( 'plugins_loaded', 'wpheka_gateway_moneris_init' );
+add_action('plugins_loaded', 'wpheka_gateway_moneris_init');
 
 function wpheka_gateway_moneris_init() {
-	load_plugin_textdomain( 'wpheka-gateway-moneris', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain('wpheka-gateway-moneris', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
-	if ( ! function_exists( 'curl_init' ) ) {
-		add_action( 'admin_notices', 'wpheka_moneris_missing_curl' );
+	if (!function_exists('curl_init')) {
+		add_action('admin_notices', 'wpheka_moneris_missing_curl');
 		return;
 	}
 
-	if ( ! class_exists( 'WooCommerce' ) ) {
-		add_action( 'admin_notices', 'wpheka_moneris_missing_wc_notice' );
+	if (!class_exists('WooCommerce')) {
+		add_action('admin_notices', 'wpheka_moneris_missing_wc_notice');
 		return;
 	}
 
-	if ( version_compare( WC_VERSION, WPHEKA_MONERIS_MIN_WC_VER, '<' ) ) {
-		add_action( 'admin_notices', 'wpheka_moneris_wc_not_supported' );
+	if (version_compare(WC_VERSION, WPHEKA_MONERIS_MIN_WC_VER, '<')) {
+		add_action('admin_notices', 'wpheka_moneris_wc_not_supported');
 		return;
 	}
 
-	if ( version_compare( phpversion(), WPHEKA_MONERIS_MIN_PHP_VER, '<' ) ) {
-		add_action( 'admin_notices', 'wpheka_moneris_min_php_ver_notice' );
+	if (version_compare(phpversion(), WPHEKA_MONERIS_MIN_PHP_VER, '<')) {
+		add_action('admin_notices', 'wpheka_moneris_min_php_ver_notice');
 		return;
 	}
 
-	if ( class_exists( 'WPHEKA_Moneris_Pro' ) ) {
-		add_action( 'admin_notices', 'wpheka_moneris_pro_active_notice' );
+	if (class_exists('WPHEKA_Moneris_Pro')) {
+		add_action('admin_notices', 'wpheka_moneris_pro_active_notice');
 		return;
 	}
 
-	if ( ! class_exists( 'WPHEKA_Moneris' ) ) :
+	if (!class_exists('WPHEKA_Moneris')):
 
 		class WPHEKA_Moneris {
 
@@ -128,7 +128,7 @@ function wpheka_gateway_moneris_init() {
 			 * @return Singleton The *Singleton* instance.
 			 */
 			public static function get_instance() {
-				if ( null === self::$instance ) {
+				if (null === self::$instance) {
 					self::$instance = new self();
 				}
 				return self::$instance;
@@ -155,7 +155,7 @@ function wpheka_gateway_moneris_init() {
 			 * *Singleton* via the `new` operator from outside of this class.
 			 */
 			private function __construct() {
-				add_action( 'admin_init', array( $this, 'install' ) );
+				add_action('admin_init', array($this, 'install'));
 				$this->init();
 			}
 
@@ -167,18 +167,18 @@ function wpheka_gateway_moneris_init() {
 			 */
 			public function init() {
 
-				if ( is_admin() ) {
-					require_once dirname( __FILE__ ) . '/includes/admin/class-wpheka-gateway-moneris-deactivation.php';
-					require_once dirname( __FILE__ ) . '/includes/admin/class-wpheka-gateway-moneris-donation.php';
+				if (is_admin()) {
+					require_once dirname(__FILE__) . '/includes/admin/class-wpheka-gateway-moneris-deactivation.php';
+					require_once dirname(__FILE__) . '/includes/admin/class-wpheka-gateway-moneris-donation.php';
 				}
 
-				require_once dirname( __FILE__ ) . '/includes/class-wpheka-moneris-logger.php';
-				require_once dirname( __FILE__ ) . '/includes/wpheka-moneris-api/vendor/autoload.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wpheka-gateway-moneris.php';
+				require_once dirname(__FILE__) . '/includes/class-wpheka-moneris-logger.php';
+				require_once dirname(__FILE__) . '/includes/wpheka-moneris-api/vendor/autoload.php';
+				require_once dirname(__FILE__) . '/includes/class-wpheka-gateway-moneris.php';
 
-				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateways' ) );
-				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
-				add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
+				add_filter('woocommerce_payment_gateways', array($this, 'add_gateways'));
+				add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'plugin_action_links'));
+				add_filter('plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2);
 			}
 
 			/**
@@ -188,8 +188,8 @@ function wpheka_gateway_moneris_init() {
 			 * @version 1.9
 			 */
 			public function update_plugin_version() {
-				delete_option( 'wpheka_moneris_version' );
-				update_option( 'wpheka_moneris_version', WPHEKA_MONERIS_VERSION );
+				delete_option('wpheka_moneris_version');
+				update_option('wpheka_moneris_version', WPHEKA_MONERIS_VERSION);
 			}
 
 			/**
@@ -199,15 +199,15 @@ function wpheka_gateway_moneris_init() {
 			 * @version 1.9
 			 */
 			public function install() {
-				if ( ! is_plugin_active( plugin_basename( __FILE__ ) ) ) {
+				if (!is_plugin_active(plugin_basename(__FILE__))) {
 					return;
 				}
 
-				if ( ! defined( 'IFRAME_REQUEST' ) && ( WPHEKA_MONERIS_VERSION !== get_option( 'wpheka_moneris_version' ) ) ) {
-					do_action( 'wpheka_moneris_updated' );
+				if (!defined('IFRAME_REQUEST') && (WPHEKA_MONERIS_VERSION !== get_option('wpheka_moneris_version'))) {
+					do_action('wpheka_moneris_updated');
 
-					if ( ! defined( 'WPHEKA_MONERIS_INSTALLING' ) ) {
-						define( 'WPHEKA_MONERIS_INSTALLING', true );
+					if (!defined('WPHEKA_MONERIS_INSTALLING')) {
+						define('WPHEKA_MONERIS_INSTALLING', true);
 					}
 
 					$this->update_plugin_version();
@@ -221,12 +221,12 @@ function wpheka_gateway_moneris_init() {
 			 * @version 1.9
 			 * @param  array $links Original list of plugin links.
 			 */
-			public function plugin_action_links( $links ) {
+			public function plugin_action_links($links) {
 				$plugin_links = array(
-					'<a href="admin.php?page=wc-settings&tab=checkout&section=moneris">' . esc_html__( 'Settings', 'wpheka-gateway-moneris' ) . '</a>',
+					'<a href="admin.php?page=wc-settings&tab=checkout&section=moneris">' . esc_html__('Settings', 'wpheka-gateway-moneris') . '</a>',
 				);
 
-				return array_merge( $plugin_links, $links );
+				return array_merge($plugin_links, $links);
 			}
 
 			/**
@@ -237,12 +237,12 @@ function wpheka_gateway_moneris_init() {
 			 * @param  string $file  Name of current file.
 			 * @return array  $links Update list of plugin links.
 			 */
-			public function plugin_row_meta( $links, $file ) {
-				if ( plugin_basename( __FILE__ ) === $file ) {
+			public function plugin_row_meta($links, $file) {
+				if (plugin_basename(__FILE__) === $file) {
 					$row_meta = array(
-						'support' => '<a href="' . esc_url( apply_filters( 'wpheka_gateway_moneris_support_url', 'https://www.wpheka.com/submit-ticket/' ) ) . '" title="' . esc_attr( __( 'Open a support request at wpheka.com', 'wpheka-gateway-moneris' ) ) . '">' . __( 'Support', 'wpheka-gateway-moneris' ) . '</a>',
+						'support' => '<a href="' . esc_url(apply_filters('wpheka_gateway_moneris_support_url', 'https://www.wpheka.com/submit-ticket/')) . '" title="' . esc_attr(__('Open a support request at wpheka.com', 'wpheka-gateway-moneris')) . '">' . __('Support', 'wpheka-gateway-moneris') . '</a>',
 					);
-					return array_merge( $links, $row_meta );
+					return array_merge($links, $row_meta);
 				}
 				return (array) $links;
 			}
@@ -254,7 +254,7 @@ function wpheka_gateway_moneris_init() {
 			 * @version 1.9
 			 * @param  array $methods WC payment methods.
 			 */
-			public function add_gateways( $methods ) {
+			public function add_gateways($methods) {
 				$methods[] = 'WPHEKA_Gateway_Moneris';
 				return $methods;
 			}
