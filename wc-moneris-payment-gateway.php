@@ -7,9 +7,9 @@
  * Author URI: https://www.wpheka.com
  * Version: 3.0
  * Requires at least: 4.9
- * Tested up to: 6.0.2
+ * Tested up to: 6.2.2
  * WC requires at least: 3.0
- * WC tested up to: 6.8.2
+ * WC tested up to: 7.8.0
  * Text Domain: wpheka-gateway-moneris
  * Domain Path: /languages
  *
@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
 define('WPHEKA_MONERIS_VERSION', '3.0');
 define('WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0');
 define('WPHEKA_MONERIS_MIN_WC_VER', '3.0');
-define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '6.0');
+define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '7.8');
 define('WPHEKA_MONERIS_MAIN_FILE', __FILE__);
 define('WPHEKA_MONERIS_PLUGIN_URL', untrailingslashit(plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__))));
 define('WPHEKA_MONERIS_PLUGIN_PATH', untrailingslashit(plugin_dir_path(__FILE__)));
