@@ -1,0 +1,37 @@
+.moneris-direct-card-form {
+    text-align: center;
+}
+
+.moneris-direct-card-form #moneris-direct-card-wrapper {
+    margin-bottom: 30px;
+}
+
+.moneris-direct-card-form .moneris-direct-half-wrapper {
+    display: flex;
+}
+
+.moneris-direct-card-form input.moneris-input-wide {
+    display: block;
+    width: 100%;
+}
+
+.moneris-direct-card-form .moneris-input-half-wrapper input {
+    display: inline-block;
+}
+
+#moneris-direct-card-wrapper .jp-card-container {
+    width: auto;
+    max-width: 350px;
+}
+
+/* Adjust the styling for the input fields */
+.moneris-direct-card-form input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Style the expiry and CVC input fields */
+.moneris-direct-card-form .moneris-input-half {
+    width: calc(50% - 5px); /* Adjust width for two inputs with a small gap */
+    margin-right: 5px; /* Add space between the inputs */
+}
