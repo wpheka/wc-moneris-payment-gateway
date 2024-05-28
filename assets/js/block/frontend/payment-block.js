@@ -35,6 +35,7 @@ const CreditCardInputs = ({
     name: `${METHOD_NAME}-card-number`,
     placeholder: "Card Number",
     onChange: handleInputChange,
+    onBlur: handleInputChange,
     autoComplete: "off",
     className: "moneris-input-wide"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -44,6 +45,7 @@ const CreditCardInputs = ({
     name: `${METHOD_NAME}-card-expiry`,
     placeholder: "Expiry Date",
     onChange: handleInputChange,
+    onBlur: handleInputChange,
     autoComplete: "off",
     className: "moneris-input-half"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
@@ -51,6 +53,7 @@ const CreditCardInputs = ({
     name: `${METHOD_NAME}-card-cvc`,
     placeholder: "CVC",
     onChange: handleInputChange,
+    onBlur: handleInputChange,
     autoComplete: "off",
     className: "moneris-input-half"
   }))));
@@ -69,16 +72,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/html-entities */ "@wordpress/html-entities");
-/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/html-entities */ "@wordpress/html-entities");
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _woocommerce_settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @woocommerce/settings */ "@woocommerce/settings");
 /* harmony import */ var _woocommerce_settings__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_woocommerce_settings__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _CreditCardInputs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreditCardInputs */ "./resources/js/frontend/CreditCardInputs.js");
 /* harmony import */ var _MonerisPopulateBrowserParams__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MonerisPopulateBrowserParams */ "./resources/js/frontend/MonerisPopulateBrowserParams.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./resources/js/frontend/utils.js");
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./icons */ "./resources/js/frontend/icons.js");
 
 
 
@@ -86,11 +91,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+const createElement = window.wp.element.createElement;
+const ReactElement = (type, props = {}, ...childs) => {
+  return Object(createElement)(type, props, ...childs);
+};
 const directSettings = (0,_woocommerce_settings__WEBPACK_IMPORTED_MODULE_3__.getSetting)('moneris_data', {});
 const METHOD_NAME = 'moneris';
 const CreditCardForm = props => {
-  const [creditCardData, setCreditCardData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const cardWrapperRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  const [creditCardData, setCreditCardData] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({});
+  const cardWrapperRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   const browserParams = _MonerisPopulateBrowserParams__WEBPACK_IMPORTED_MODULE_5__["default"].execute(METHOD_NAME);
   const {
     eventRegistration,
@@ -99,7 +109,7 @@ const CreditCardForm = props => {
   const {
     onPaymentProcessing
   } = eventRegistration;
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     const unsubscribe = onPaymentProcessing(async () => {
       const paymentMethodData = {
         ...browserParams,
@@ -116,7 +126,7 @@ const CreditCardForm = props => {
       unsubscribe();
     };
   }, [emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, onPaymentProcessing, creditCardData]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     __webpack_require__.e(/*! import() */ "resources_js_frontend_card_js").then(__webpack_require__.t.bind(__webpack_require__, /*! ./card.js */ "./resources/js/frontend/card.js", 23)).then(Card => {
       new Card.default({
         form: '.wc-block-checkout__form',
@@ -135,7 +145,7 @@ const CreditCardForm = props => {
       [e.target.name]: e.target.value
     }));
   };
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_CreditCardInputs__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  return createElement(_CreditCardInputs__WEBPACK_IMPORTED_MODULE_4__["default"], {
     handleInputChange: handleInputChange,
     METHOD_NAME: METHOD_NAME,
     directSettings: directSettings,
@@ -144,13 +154,30 @@ const CreditCardForm = props => {
 };
 let Wpheka_Moneris_Gateway = {};
 if (Object.keys(directSettings).length) {
-  const defaultLabel = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Moneris", "wpheka-gateway-moneris");
-  const label = (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__.decodeEntities)(directSettings.title) || defaultLabel;
+  const defaultLabel = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Moneris", "wpheka-gateway-moneris");
+  const label = (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_1__.decodeEntities)(directSettings.title) || defaultLabel;
+  const Label = ({
+    components
+  }) => {
+    const {
+      PaymentMethodLabel,
+      PaymentMethodIcons
+    } = components;
+    const labelComp = ReactElement(PaymentMethodLabel, {
+      text: label
+    });
+    const iconsComp = ReactElement(PaymentMethodIcons, {
+      icons: (0,_icons__WEBPACK_IMPORTED_MODULE_7__.getMonerisCreditCardIcons)()
+    });
+    return ReactElement('div', {
+      className: METHOD_NAME + '-payment-gateway-label'
+    }, labelComp, iconsComp);
+  };
   Wpheka_Moneris_Gateway = {
     name: METHOD_NAME,
-    label: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, label),
-    content: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CreditCardForm, null),
-    edit: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CreditCardForm, null),
+    label: ReactElement(Label),
+    content: createElement(CreditCardForm, null),
+    edit: createElement(CreditCardForm, null),
     canMakePayment: () => true,
     ariaLabel: label,
     supports: {
@@ -196,6 +223,63 @@ const monerisPopulateBrowserParams = {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (monerisPopulateBrowserParams);
+
+/***/ }),
+
+/***/ "./resources/js/frontend/icons.js":
+/*!****************************************!*\
+  !*** ./resources/js/frontend/icons.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getMonerisCreditCardIcons: () => (/* binding */ getMonerisCreditCardIcons)
+/* harmony export */ });
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./resources/js/frontend/utils.js");
+
+const getMonerisCreditCardIcons = () => {
+  return Object.entries((0,_utils__WEBPACK_IMPORTED_MODULE_0__.getMonerisServerData)().icons).map(([id, {
+    src,
+    alt
+  }]) => {
+    return {
+      id,
+      src,
+      alt
+    };
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/frontend/utils.js":
+/*!****************************************!*\
+  !*** ./resources/js/frontend/utils.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getMonerisServerData: () => (/* binding */ getMonerisServerData)
+/* harmony export */ });
+/* harmony import */ var _woocommerce_settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @woocommerce/settings */ "@woocommerce/settings");
+/* harmony import */ var _woocommerce_settings__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_woocommerce_settings__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Hitpay data comes form the server passed on a global object.
+ */
+const getMonerisServerData = () => {
+  const monerisServerData = (0,_woocommerce_settings__WEBPACK_IMPORTED_MODULE_0__.getSetting)('moneris_data', null);
+  if (!monerisServerData || typeof monerisServerData !== 'object') {
+    throw new Error('Hitpay initialization data is not available');
+  }
+  return monerisServerData;
+};
 
 /***/ }),
 

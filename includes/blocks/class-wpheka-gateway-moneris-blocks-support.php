@@ -83,13 +83,31 @@ final class Woocommerce_Gateway_Moneris_Blocks_Support extends AbstractPaymentMe
     public function get_payment_method_data()
     {
         return array(
-            'title'        => $this->get_setting('title'),
-            // almost the same way:
-            // 'title'     => isset( $this->settings[ 'title' ] ) ? $this->settings[ 'title' ] : 'Default value';
-            'description'  => $this->get_setting('description'),
-            'supports'  => array_filter($this->gateway->supports, [ $this->gateway, 'supports' ]),
-            // example of getting a public key
-            // 'publicKey' => $this->get_publishable_key(),
+            'title' => $this->get_setting('title'),
+            'description' => $this->get_setting('description'),
+            'supports' => array_filter($this->gateway->supports, [ $this->gateway, 'supports' ]),
+            'icons' => $this->get_icons(),
         );
+    }
+
+    /**
+     * Return the icons urls.
+     *
+     * @return array Arrays of icons metadata.
+     */
+    private function get_icons()
+    {
+        $payment_icons = $this->gateway->getPreferredCards();
+
+        $icons_src = [];
+
+        foreach ($payment_icons as $payment_icon_key => $payment_icon_name) {
+            $icons_src[$payment_icon_key] = [
+                'src' => WC()->plugin_url(). '/assets/images/icons/credit-cards/'.$payment_icon_key.'.svg',
+                'alt' => esc_attr($payment_icon_name),
+            ];
+        }
+        
+        return $icons_src;
     }
 }

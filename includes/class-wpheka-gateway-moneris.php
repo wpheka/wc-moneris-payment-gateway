@@ -490,6 +490,19 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         return apply_filters('wpheka_gateway_icon', $icon, $this->id);
     }
 
+    public function getPreferredCards()
+    {
+        $preferred_cards = array();
+
+        if (!empty($this->preferred_cards)) {
+            foreach ($this->preferred_cards as $card) {
+                $preferred_cards[$card] = ucfirst($card);
+            }
+        }
+
+        return $preferred_cards;
+    }
+
     /**
      * Moneris settings submit button css
      */

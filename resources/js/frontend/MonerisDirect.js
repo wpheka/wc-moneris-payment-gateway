@@ -4,6 +4,14 @@ import React, {useState, useEffect, useRef} from 'react';
 import {getSetting} from '@woocommerce/settings';
 import CreditCardInputs from './CreditCardInputs';
 import monerisPopulateBrowserParams from './MonerisPopulateBrowserParams';
+import { getMonerisServerData } from './utils';
+import { getMonerisCreditCardIcons } from './icons';
+
+const createElement = window.wp.element.createElement;
+
+const ReactElement = (type, props = {}, ...childs) => {
+    return Object(createElement)(type, props, ...childs);
+}
 
 const directSettings = getSetting('moneris_data', {});
 const METHOD_NAME = 'moneris';
@@ -74,9 +82,25 @@ if (Object.keys(directSettings).length) {
 	const defaultLabel = __("Moneris", "wpheka-gateway-moneris");
 	const label = decodeEntities(directSettings.title) || defaultLabel;
 
+    const Label = ({components}) => {
+        const {PaymentMethodLabel, PaymentMethodIcons} = components;
+
+        const labelComp = ReactElement(PaymentMethodLabel, {
+            text: label,
+        });
+
+        const iconsComp = ReactElement(PaymentMethodIcons, {
+            icons: getMonerisCreditCardIcons(),
+        });
+
+        return ReactElement('div', {
+            className: METHOD_NAME + '-payment-gateway-label',
+        }, labelComp, iconsComp);
+    }
+
 	Wpheka_Moneris_Gateway = {
 		name: METHOD_NAME,
-		label: <div>{label}</div>,
+		label: ReactElement(Label),
 		content: <CreditCardForm />,
 		edit: <CreditCardForm />,
 		canMakePayment: () => true,

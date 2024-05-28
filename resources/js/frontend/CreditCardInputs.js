@@ -12,6 +12,7 @@ const CreditCardInputs = ({ handleInputChange, METHOD_NAME, directSettings, card
 					name={`${METHOD_NAME}-card-number`}
 					placeholder="Card Number"
 					onChange={handleInputChange}
+					onBlur={handleInputChange}
 					autoComplete="off"
 					className="moneris-input-wide"
 				/>
@@ -21,6 +22,7 @@ const CreditCardInputs = ({ handleInputChange, METHOD_NAME, directSettings, card
 						name={`${METHOD_NAME}-card-expiry`}
 						placeholder="Expiry Date"
 						onChange={handleInputChange}
+						onBlur={handleInputChange}
 						autoComplete="off"
 						className="moneris-input-half"
 					/>
@@ -29,6 +31,7 @@ const CreditCardInputs = ({ handleInputChange, METHOD_NAME, directSettings, card
 						name={`${METHOD_NAME}-card-cvc`}
 						placeholder="CVC"
 						onChange={handleInputChange}
+						onBlur={handleInputChange}
 						autoComplete="off"
 						className="moneris-input-half"
 					/>
