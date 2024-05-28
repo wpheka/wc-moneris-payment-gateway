@@ -2,8 +2,8 @@
 Contributors: akshayaswaroop, wpheka
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
 Requires at least: 4.9
-Tested up to: 6.4.3
-Stable tag: 3.2
+Tested up to: 6.5.3
+Stable tag: 3.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.paypal.me/AKSHAYASWAROOP
@@ -15,9 +15,8 @@ Moneris is Canada's leading processor of Debit and credit card payments. This Wo
 
 = Key Features: =
 
-* Canadian merchants can process payments in either **Canadian** or **United States** dollars, requiring a merchant account that uses the currency of their choice.
+* API based credit card payment method which allows a user to enter a credit card on the WooCommerce checkout page and capture payment to the Moneris account without leaving the WooCommerce website.
 * Switch between **Sandbox** and **Live** environments.
-* Customers can directly pay with credit card on your website.
 
 If you enjoyed this plugin then please put a review, that will encourage me to bring some more …
 
@@ -43,6 +42,9 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+= 3.3 - 2024-05-28 =
+* Fix - onPaymentProcessing deprecated issue fixed.
 
 = 3.2 - 2024-03-15 =
 * Fix - Manual credit card number entry issue fixed.

@@ -107,10 +107,10 @@ const CreditCardForm = props => {
     emitResponse
   } = props;
   const {
-    onPaymentProcessing
+    onPaymentSetup
   } = eventRegistration;
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    const unsubscribe = onPaymentProcessing(async () => {
+    const unsubscribe = onPaymentSetup(async () => {
       const paymentMethodData = {
         ...browserParams,
         ...creditCardData
@@ -125,7 +125,7 @@ const CreditCardForm = props => {
     return () => {
       unsubscribe();
     };
-  }, [emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, onPaymentProcessing, creditCardData]);
+  }, [emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, onPaymentSetup, creditCardData]);
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     __webpack_require__.e(/*! import() */ "resources_js_frontend_card_js").then(__webpack_require__.t.bind(__webpack_require__, /*! ./card.js */ "./resources/js/frontend/card.js", 23)).then(Card => {
       new Card.default({

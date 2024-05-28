@@ -5,11 +5,11 @@
  * Description: Take credit card payments on your WooCommerce store using Moneris. <a href="https://www.wpheka.com" target="_blank">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>
  * Author: WPHEKA
  * Author URI: https://www.wpheka.com
- * Version: 3.2
+ * Version: 3.3
  * Requires at least: 4.9
- * Tested up to: 6.4.3
+ * Tested up to: 6.5.3
  * WC requires at least: 3.0
- * WC tested up to: 8.6.1
+ * WC tested up to: 8.9.1
  * Text Domain: wpheka-gateway-moneris
  * Domain Path: /languages
  *
@@ -25,10 +25,10 @@ if (!defined('ABSPATH')) {
 /**
  * Required minimums and constants
  */
-define('WPHEKA_MONERIS_VERSION', '3.2');
+define('WPHEKA_MONERIS_VERSION', '3.3');
 define('WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0');
 define('WPHEKA_MONERIS_MIN_WC_VER', '3.0');
-define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '7.8');
+define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '17.8');
 define('WPHEKA_MONERIS_MAIN_FILE', __FILE__);
 define('WPHEKA_MONERIS_PLUGIN_URL', untrailingslashit(plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__))));
 define('WPHEKA_MONERIS_PLUGIN_PATH', untrailingslashit(plugin_dir_path(__FILE__)));

@@ -21,10 +21,10 @@ const CreditCardForm = (props) => {
 	const cardWrapperRef = useRef(null);
 	const browserParams = monerisPopulateBrowserParams.execute(METHOD_NAME);
 	const {eventRegistration, emitResponse} = props;
-	const {onPaymentProcessing} = eventRegistration;
+	const {onPaymentSetup} = eventRegistration;
 
 	useEffect(() => {
-		const unsubscribe = onPaymentProcessing(async () => {
+		const unsubscribe = onPaymentSetup(async () => {
 			const paymentMethodData = {
 				...browserParams,
 				...creditCardData,
@@ -41,7 +41,7 @@ const CreditCardForm = (props) => {
 		return () => {
 			unsubscribe();
 		};
-	}, [emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, onPaymentProcessing, creditCardData]);
+	}, [emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, onPaymentSetup, creditCardData]);
 
 	useEffect(() => {
 		import('./card.js')
