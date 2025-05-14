@@ -341,7 +341,6 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             $_date = $response->getTransDate() . ' ' . $response->getTransTime();
 
             $this->update_order_meta_data('_paid_date', $_date, $order, $order_id);
-            $this->update_order_meta_data('_transaction_id', $response->getTxnNumber(), $order, $order_id);
             $this->update_order_meta_data('_completed_date', $_date, $order, $order_id);
             $this->update_order_meta_data('_reference_no', $response->getReferenceNum(), $order, $order_id);
             $this->update_order_meta_data('_response_code', $response->getResponseCode(), $order, $order_id);

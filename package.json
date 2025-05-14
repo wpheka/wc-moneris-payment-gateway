@@ -1,13 +1,14 @@
 {
   "name": "wpheka-gateway-moneris",
-  "version": "3.3.0",
+  "version": "3.5.0",
   "description": "Take credit card payments on your WooCommerce store using Moneris.",
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build"
   },
   "engines": {
-    "node": "16"
+    "node": "^20.11.1",
+    "npm": "^10.2.4"
   },
   "repository": "https://github.com/wpheka/wc-moneris-payment-gateway.git",
   "bugs": {
@@ -19,7 +20,16 @@
     "@woocommerce/dependency-extraction-webpack-plugin": "^2.3.0",
     "@wordpress/scripts": "^26.18.0"
   },
+  "devDependencies": {
+    "@woocommerce/dependency-extraction-webpack-plugin": "^3.1.0",
+    "@wordpress/scripts": "^30.7.0"
+  },
   "dependencies": {
-    "@wordpress/icons": "^9.41.0"
+    "@wordpress/icons": "^10.9.0",
+    "card-validator": "^10.0.2",
+    "cleave.js": "^1.6.0",
+    "react-hook-form": "^7.56.2",
+    "react-payment-inputs": "^1.2.0",
+    "styled-components": "^6.1.17"
   }
 }

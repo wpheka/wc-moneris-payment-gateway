@@ -2,8 +2,8 @@
 Contributors: akshayaswaroop, wpheka
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
 Requires at least: 4.9
-Tested up to: 6.5.3
-Stable tag: 3.3
+Tested up to: 6.8.1
+Stable tag: 3.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.paypal.me/AKSHAYASWAROOP
@@ -42,6 +42,14 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+2025.05.13 - version 3.5
+* Fix - WooCommerce block checkout credit card expiry field mobile keyboard issue fixed.
+* Enhancement - Moneris Api updated.
+* Misc - Added support for WooCommerce 9.8.5
+
+= 3.4 - 2024-11-30 =
+* Enhancement - WooCommerce Version 9.4.2 compatibility added.
 
 = 3.3 - 2024-05-28 =
 * Fix - onPaymentProcessing deprecated issue fixed.

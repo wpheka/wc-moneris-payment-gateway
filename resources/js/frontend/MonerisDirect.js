@@ -2,10 +2,10 @@ import {__} from '@wordpress/i18n';
 import {decodeEntities} from '@wordpress/html-entities';
 import React, {useState, useEffect, useRef} from 'react';
 import {getSetting} from '@woocommerce/settings';
-import CreditCardInputs from './CreditCardInputs';
 import monerisPopulateBrowserParams from './MonerisPopulateBrowserParams';
 import { getMonerisServerData } from './utils';
 import { getMonerisCreditCardIcons } from './icons';
+import CreditCardFields from './CreditCardFields';
 
 const createElement = window.wp.element.createElement;
 
@@ -43,22 +43,6 @@ const CreditCardForm = (props) => {
 		};
 	}, [emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, onPaymentSetup, creditCardData]);
 
-	useEffect(() => {
-		import('./card.js')
-			.then(Card => {
-				new Card.default({
-					form: '.wc-block-checkout__form',
-					container: cardWrapperRef.current,
-					formSelectors: {
-						numberInput: `input[name="${METHOD_NAME}-card-number"]`,
-						expiryInput: `input[name="${METHOD_NAME}-card-expiry"]`,
-						cvcInput: `input[name="${METHOD_NAME}-card-cvc"]`
-					}
-				});
-			})
-			.catch(error => console.error('Error loading card.js:', error));
-	}, []);
-
 	const handleInputChange = (e) => {
 		setCreditCardData(prevData => ({
 			...prevData,
@@ -67,11 +51,10 @@ const CreditCardForm = (props) => {
 	};
 
 	return (
-		<CreditCardInputs
+		<CreditCardFields
 			handleInputChange={handleInputChange}
 			METHOD_NAME={METHOD_NAME}
 			directSettings={directSettings}
-			cardWrapperRef={cardWrapperRef}
 		/>
 	);
 };
