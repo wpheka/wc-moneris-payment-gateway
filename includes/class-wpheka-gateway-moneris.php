@@ -289,6 +289,15 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         );
     }
 
+    private function get_order_meta_data($key, $order, $order_id)
+    {
+        if (OrderUtil::custom_orders_table_usage_is_enabled()) {
+            return $order->get_meta($key);
+        } else {
+            return get_post_meta($order_id, $key, true);
+        }
+    }
+
     private function update_order_meta_data($key, $value, $order, $order_id)
     {
         if (OrderUtil::custom_orders_table_usage_is_enabled()) {
@@ -356,13 +365,15 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             if (!empty($transaction_id)) {
                 /* translators: transaction id */
                 $message = sprintf(__('Moneris payment complete (Transaction ID: %s)', 'wpheka-gateway-moneris'), $transaction_id);
-                // Mark order as processing
-                $order->update_status('processing', $message);
 
                 $order->set_transaction_id($transaction_id);
+                $order->payment_complete();
+
+                // Mark order as processing
+                $order->update_status('processing', $message);
             }
 
-            if (is_callable([$order, 'save'])) {
+            if (is_callable([ $order, 'save' ])) {
                 $order->save();
             }
 
@@ -428,7 +439,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         if (!empty($timezone_string) && function_exists('date_default_timezone_set')) {
             date_default_timezone_set($timezone_string);
         }
-        $order_placed_datetime = get_post_meta($order_id, '_paid_date', true);
+        $order_placed_datetime = $this->get_order_meta_data('_paid_date', $order, $order_id);
 
         if (!empty($order_placed_datetime)) {
             $order_placed_timestamp = strtotime($order_placed_datetime);
