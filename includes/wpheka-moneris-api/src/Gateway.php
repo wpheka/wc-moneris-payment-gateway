@@ -47,6 +47,13 @@ class Gateway {
 	protected $gateway_id;
 
 	/**
+	 * Raw XML string sent to Moneris API on last request.
+	 *
+	 * @var string
+	 */
+	protected $last_request_xml = '';
+
+	/**
 	 * Checkout form posted data.
 	 *
 	 * @var array
@@ -331,10 +338,22 @@ class Gateway {
 		$request = $this->request( $transaction );
 
 		// HTTPS Post Object.
-		$https_post  = new mpgHttpsPost( $this->store_id, $this->api_token, $request );
+		$https_post = new mpgHttpsPost( $this->store_id, $this->api_token, $request );
+
+		// Store raw request XML for logging.
+		$this->last_request_xml = $https_post->xmlString;
 
 		// Response.
 		$response = $https_post->getMpgResponse();
 		return $response;
+	}
+
+	/**
+	 * Returns the raw XML string sent to the Moneris API on the last request.
+	 *
+	 * @return string
+	 */
+	public function getLastRequestXml() {
+		return $this->last_request_xml;
 	}
 }

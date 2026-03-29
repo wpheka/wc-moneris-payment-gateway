@@ -53,6 +53,8 @@ class WPHEKA_Deactivation_Tracker {
 	 */
 	public static function send_tracking_deactivation() {
 
+		check_ajax_referer( 'wpheka_moneris_deactivation_nonce', 'nonce' );
+
 		if ( empty( $_POST['deactivation_domain'] ) ) {
 			wp_send_json_error( array( 'error' => __( 'Something went wrong. Please try again later.', 'wpheka-gateway-moneris' ) ) );
 			wp_die( -1 );
@@ -315,6 +317,7 @@ class WPHEKA_Deactivation_Tracker {
 							type: 'POST',
 							data: {
 								action: 'wpheka_moneris_submit_deactivation',
+								nonce: '<?php echo esc_js( wp_create_nonce( 'wpheka_moneris_deactivation_nonce' ) ); ?>',
 								reason_id: ( 0 === $radio.length ) ? 'none' : $radio.val(),
 								reason_info: ( 0 !== $input.length ) ? $input.val().trim() : '',
 								deactivation_domain: ( 0 !== $deactivation_domain.length ) ? $deactivation_domain.val().trim() : '',

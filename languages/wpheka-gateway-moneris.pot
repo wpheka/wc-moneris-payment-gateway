@@ -1,0 +1,233 @@
+# Copyright (C) 2026 WPHEKA
+# This file is distributed under the same license as the WC Moneris Payment Gateway plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WC Moneris Payment Gateway 3.7.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-moneris-payment-gateway\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-29T14:04:22+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wpheka-gateway-moneris\n"
+
+#. Plugin Name of the plugin
+#: wc-moneris-payment-gateway.php
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:58
+msgid "WC Moneris Payment Gateway"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: wc-moneris-payment-gateway.php
+msgid "https://www.wpheka.com/product/wc-moneris-payment-gateway"
+msgstr ""
+
+#. Description of the plugin
+#: wc-moneris-payment-gateway.php
+msgid "Take credit card payments on your WooCommerce store using Moneris. <a href=\"https://www.wpheka.com\" target=\"_blank\">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>"
+msgstr ""
+
+#. Author of the plugin
+#: wc-moneris-payment-gateway.php
+msgid "WPHEKA"
+msgstr ""
+
+#. Author URI of the plugin
+#: wc-moneris-payment-gateway.php
+msgid "https://www.wpheka.com"
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-deactivation.php:59
+msgid "Something went wrong. Please try again later."
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:58
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:92
+msgid "Make a donation"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:32
+#: includes/class-wpheka-gateway-moneris.php:173
+#: assets/js/block/frontend/payment-block.js:1
+#: resources/js/frontend/MonerisDirect.js:52
+msgid "Moneris"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:33
+msgid "Allows payments by Moneris."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:34
+msgid "Use a new card"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:163
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:164
+msgid "Enable Moneris Gateway"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:170
+msgid "Title"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:172
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:177
+msgid "Description"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:179
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:184
+msgid "Store Id"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:186
+msgid "Enter your Moneris account store id here."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:189
+msgid "API Token"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:191
+msgid "Enter your Moneris API Token here."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:194
+msgid "Preferred Cards"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:197
+msgid "Select your desired cards from the multiple-select box. The logo of the selected card(s) will be displayed on the checkout page."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:200
+msgid "Visa"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:201
+msgid "MasterCard"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:202
+msgid "Discover"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:203
+msgid "American Express"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:204
+msgid "JCB"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:207
+msgid "Select your desired cards"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:211
+msgid "Sandbox"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:212
+msgid "Enable sandbox mode"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:214
+msgid "Place the payment gateway in sandbox mode."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:218
+msgid "Logging"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:219
+msgid "Enable logging"
+msgstr ""
+
+#. translators: %s: URL to WooCommerce logs
+#: includes/class-wpheka-gateway-moneris.php:223
+#, php-format
+msgid "Log gateway events for debugging. View logs in <a href=\"%s\">WooCommerce &rsaquo; Status &rsaquo; Logs</a>."
+msgstr ""
+
+#. translators: link to Moneris testing page
+#: includes/class-wpheka-gateway-moneris.php:240
+#, php-format
+msgid "TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date or check the <a href=\"%s\" target=\"_blank\">Testing Moneris documentation</a> for more card numbers."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:279
+msgid "Please enter your card number."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:285
+msgid "Please enter your card expiry."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:291
+msgid "Please enter your card cvd code."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:359
+msgid "Please update your Moneris credentials in payment settings."
+msgstr ""
+
+#. translators: transaction id
+#: includes/class-wpheka-gateway-moneris.php:417
+#, php-format
+msgid "Moneris payment complete (Transaction ID: %s)"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:442
+msgid "Payment error: "
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:520
+msgid "Amount Refunded: "
+msgstr ""
+
+#: wc-moneris-payment-gateway.php:47
+msgid "Moneris - cURL is not installed."
+msgstr ""
+
+#. translators: 1. URL link.
+#: wc-moneris-payment-gateway.php:58
+#, php-format
+msgid "Moneris requires WooCommerce to be installed and active. You can download %s here."
+msgstr ""
+
+#. translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version.
+#: wc-moneris-payment-gateway.php:69
+#, php-format
+msgid "Moneris requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
+msgstr ""
+
+#. translators: 1) int version 2) int version
+#: wc-moneris-payment-gateway.php:80
+#, php-format
+msgid "WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s."
+msgstr ""
+
+#: wc-moneris-payment-gateway.php:318
+msgid "Settings"
+msgstr ""
+
+#: wc-moneris-payment-gateway.php:336
+msgid "Open a support request at wpheka.com"
+msgstr ""
+
+#: wc-moneris-payment-gateway.php:336
+msgid "Support"
+msgstr ""

@@ -21,6 +21,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     public $store_id;
     public $api_token;
     public $preferred_cards;
+    public $logging;
 
     /**
      * Constructor for the gateway.
@@ -54,11 +55,24 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         $this->store_id = $this->get_option('store_id');
         $this->api_token = $this->get_option('api_token');
         $this->preferred_cards = $this->get_option('preferred_cards');
+        $this->logging         = $this->get_option('logging');
+
+        add_filter('wpheka_moneris_logging', array($this, 'is_logging_enabled'));
 
         // Hooks.
         add_action('admin_enqueue_scripts', array($this, 'moneris_admin_styles'));
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('woocommerce_after_settings_checkout', array($this, 'submit_button_css'));
+    }
+
+    /**
+     * Returns true if logging is enabled.
+     *
+     * @return bool
+     */
+    public function is_logging_enabled()
+    {
+        return 'yes' === $this->logging;
     }
 
     /**
@@ -83,44 +97,47 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         <div id="poststuff">
             <div id="post-body" class="metabox-holder columns-2">
                 <div id="post-body-content">
-                    <?php parent::admin_options();?>
+                    <?php parent::admin_options(); ?>
                 </div>
                 <div id="postbox-container-1" class="postbox-container">
                     <div id="side-sortables" class="meta-box-sortables ui-sortable">
                         <div class="postbox moneris-pro">
-                        <div class="handlediv" title="Click to toggle"><br></div>
-                        <h3 class="hndle"><span><i class="dashicons dashicons-update"></i>&nbsp;&nbsp;Upgrade to Pro</span></h3>
-                        <div class="inside">
-                            <div class="support-widget">
-                                <ul>
-                                    <li><span class="pro-feature-list">»</span>  New payment method <strong style="color: #000000;">Moneris Checkout</strong> added that delivers greater payment security, flexibility and control for online businesses. Read more <a href="https://www.wpheka.com/docs/wc-moneris-payment-gateway-pro/#mco" target="_blank"><b style="color: #000000;">here</b></a>.</li>
-                                    <li><span class="pro-feature-list">»</span> Route payments to different Moneris accounts based on their currency. </li>
-                                    <li><span class="pro-feature-list">»</span> Customers can save cards to their accounts for future purchases.</li>
-                                    <li><span class="pro-feature-list">»</span> Supports eFraud tools / address and card verification.</li>
-                                    <li><span class="pro-feature-list">»</span> Accepts Major Credit Cards / Debit Cards (Visa, MasterCard, Discover, JCB and American Express).</li>
-                                    <li><span class="pro-feature-list">»</span> Process refunds automatically from within WooCommerce.</li>
-                                    <li><span class="pro-feature-list">»</span> Option to directly charge credit cards or pre authorize credit cards transactions.</li>
-                                    <li><span class="pro-feature-list">»</span> Statement descriptor option (Merchant defined description sent on a per-transaction basis that will appear on the credit card statement appended to the merchant’s business name).</li>
-                                    <li><span class="pro-feature-list">»</span> Moneris Vault support for storing/removing credit card profiles.</li>
-                                    <li><span class="pro-feature-list">»</span> WooCommerce sequential order numbers pro compatibility.</li>
-                                    <li><span class="pro-feature-list">»</span> Auto Hassle-Free Updates</li>
-                                    <li><span class="pro-feature-list">»</span> High Priority Customer Support</li>
-                                </ul>
-                                <a href="https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/" class="button moneris-upgrade" target="_blank"><span class="dashicons dashicons-star-filled" style="margin-top: 3px;"></span> Upgrade Now</a>
+                            <div class="handlediv" title="Click to toggle"></div>
+                            <h2 class="hndle"><span><span class="dashicons dashicons-update"></span> Upgrade to Pro</span></h2>
+                            <div class="inside">
+                                <div class="support-widget">
+                                    <ul>
+                                        <li><span class="pro-feature-list">»</span> New payment method <strong class="moneris-feature-name">Moneris Checkout</strong> added that delivers greater payment security, flexibility and control for online businesses. Read more <a href="https://docs.wpheka.com/plugin/wc-moneris-gateway-pro/configuration#moneris-checkout-mco-configuration" target="_blank">here</a>.</li>
+                                        <li><span class="pro-feature-list">»</span> Route payments to different Moneris accounts based on their currency.</li>
+                                        <li><span class="pro-feature-list">»</span> Customers can save cards to their accounts for future purchases.</li>
+                                        <li><span class="pro-feature-list">»</span> Supports eFraud tools / address and card verification.</li>
+                                        <li><span class="pro-feature-list">»</span> Accepts Major Credit Cards / Debit Cards (Visa, MasterCard, Discover, JCB and American Express).</li>
+                                        <li><span class="pro-feature-list">»</span> Process refunds automatically from within WooCommerce.</li>
+                                        <li><span class="pro-feature-list">»</span> Option to directly charge credit cards or pre authorize credit cards transactions.</li>
+                                        <li><span class="pro-feature-list">»</span> Statement descriptor option (Merchant defined description sent on a per-transaction basis that will appear on the credit card statement appended to the merchant’s business name).</li>
+                                        <li><span class="pro-feature-list">»</span> Moneris Vault support for storing/removing credit card profiles.</li>
+                                        <li><span class="pro-feature-list">»</span> WooCommerce sequential order numbers pro compatibility.</li>
+                                        <li><span class="pro-feature-list">»</span> 3D Secure (3DS) fraud validation support.</li>
+                                        <li><span class="pro-feature-list">»</span> Authorize mode with auto-capture on WooCommerce order completion.</li>
+                                        <li><span class="pro-feature-list">»</span> WooCommerce Blocks checkout support.</li>
+                                        <li><span class="pro-feature-list">»</span> Auto Hassle-Free Updates</li>
+                                        <li><span class="pro-feature-list">»</span> High Priority Customer Support</li>
+                                    </ul>
+                                    <a href="https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/" class="button moneris-upgrade" target="_blank"><span class="dashicons dashicons-star-filled"></span> Upgrade Now</a>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                        <div class="postbox ">
-                            <div class="handlediv" title="Click to toggle"><br></div>
-                            <h3 class="hndle"><span><i class="dashicons dashicons-editor-help"></i>&nbsp;&nbsp;Plugin Support</span></h3>
+                        <div class="postbox">
+                            <div class="handlediv" title="Click to toggle"></div>
+                            <h2 class="hndle"><span><span class="dashicons dashicons-editor-help"></span> Plugin Support</span></h2>
                             <div class="inside">
                                 <div class="support-widget">
                                     <p>
-                                    <img style="width: 70%;margin: 0 auto;position: relative;display: inherit;" src="<?php echo WPHEKA_MONERIS_PLUGIN_LOGO; ?>">
-                                    <br/>
-                                    Got a Question, Idea, Problem or Praise?</p>
+                                        <img class="moneris-support-logo" src="<?php echo esc_url( WPHEKA_MONERIS_PLUGIN_LOGO ); ?>" alt="WPHEKA">
+                                    </p>
+                                    <p>Got a Question, Idea, Problem or Praise?</p>
                                     <ul>
-                                        <li>» Please leave us a <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/wc-moneris-payment-gateway?filter=5#postform">★★★★★</a> rating.</li>
+                                        <li>» Please leave us a <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/wc-moneris-payment-gateway?filter=5#postform">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating.</li>
                                         <li>» <a href="https://www.wpheka.com/submit-ticket/" target="_blank">Support Request</a></li>
                                         <li>» <a href="https://www.wpheka.com/product/wc-moneris-payment-gateway/" target="_blank">Documentation and Common issues.</a></li>
                                         <li>» <a href="https://www.wpheka.com/plugins/" target="_blank">Our Plugins Shop</a></li>
@@ -197,6 +214,17 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                 'description' => __('Place the payment gateway in sandbox mode.', 'wpheka-gateway-moneris'),
                 'default' => 'yes',
             ),
+            'logging' => array(
+                'title'       => __('Logging', 'wpheka-gateway-moneris'),
+                'label'       => __('Enable logging', 'wpheka-gateway-moneris'),
+                'type'        => 'checkbox',
+                'description' => sprintf(
+                    /* translators: %s: URL to WooCommerce logs */
+                    __('Log gateway events for debugging. View logs in <a href="%s">WooCommerce &rsaquo; Status &rsaquo; Logs</a>.', 'wpheka-gateway-moneris'),
+                    esc_url(admin_url('admin.php?page=wc-status&tab=logs'))
+                ),
+                'default'     => 'no',
+            ),
         );
     }
 
@@ -207,7 +235,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     {
         $description = $this->get_description();
 
-        if ('yes' == $this->sandbox) {
+        if ('yes' === $this->sandbox) {
             /* translators: link to Moneris testing page */
             $description .= ' ' . sprintf(__('TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date or check the <a href="%s" target="_blank">Testing Moneris documentation</a> for more card numbers.', 'wpheka-gateway-moneris'), 'https://developer.moneris.com/More/Testing/Testing%20a%20Solution');
         }
@@ -332,7 +360,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         }
 
         $params = array(
-            'environment' => ('yes' == $this->sandbox) ? 'staging' : 'live',
+            'environment' => ('yes' === $this->sandbox) ? 'staging' : 'live',
             'gateway_id' => $this->id,
             'posted_data' => wp_unslash($_POST),
             'order' => $order,
@@ -343,7 +371,29 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
 
         $gateway = new Gateway($store_id, $api_token, $params);
 
+        $raw_card = isset($_POST[$this->id . '-card-number']) ? str_replace(array(' ', '-'), '', wc_clean(wp_unslash($_POST[$this->id . '-card-number']))) : '';
+        $masked_card = strlen($raw_card) > 4 ? str_repeat('*', strlen($raw_card) - 4) . substr($raw_card, -4) : '****';
+
+        WPHEKA_Moneris_Logger::log(
+            'Purchase Request' .
+            ' | Order: #' . $order_id .
+            ' | Amount: ' . $order->get_total() .
+            ' | Environment: ' . $params['environment'] .
+            ' | Card: ' . $masked_card .
+            ' | Expiry: ' . (isset($_POST[$this->id . '-card-expiry']) ? wc_clean(wp_unslash($_POST[$this->id . '-card-expiry'])) : 'N/A')
+        );
+
         $response = $gateway->purchase();
+
+        WPHEKA_Moneris_Logger::log(
+            'Purchase Request XML | Order: #' . $order_id . "\n" .
+            $gateway->getLastRequestXml()
+        );
+
+        WPHEKA_Moneris_Logger::log(
+            'Purchase Response | Order: #' . $order_id . "\n" .
+            wp_json_encode($response->getMpgResponseData(), JSON_PRETTY_PRINT)
+        );
 
         if ($this->transaction_success($response)) {
             // Add Transaction details.
@@ -388,12 +438,12 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                 'redirect' => $this->get_return_url($order),
             );
         } else {
-            wc_add_notice(__('Payment error: ' . $response->getMessage(), 'wpheka-gateway-moneris'), 'error');
-            WPHEKA_Moneris_Logger::log('Payment error: ' . $response->getMessage());
-            $order->add_order_note(__($response->getMessage(), 'wpheka-gateway-moneris'));
-            /* translators: error message */
+            $error_message = $response->getMessage();
+            wc_add_notice(__('Payment error: ' . $error_message, 'wpheka-gateway-moneris'), 'error');
+            WPHEKA_Moneris_Logger::log('Payment error: ' . $error_message);
+            $order->add_order_note(__($error_message, 'wpheka-gateway-moneris'));
             $order->update_status('failed');
-            return;
+            throw new Exception(__($error_message, 'wpheka-gateway-moneris'));
         }
     }
 
@@ -406,7 +456,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
      */
     private function isSameDay($ts1, $ts2 = '')
     {
-        if ($ts2 == '') {
+        if ($ts2 === '') {
             $ts2 = time();
         }
         $f = false;
@@ -453,7 +503,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         }
 
         $params = array(
-            'environment' => ('yes' == $this->sandbox) ? 'staging' : 'live',
+            'environment' => ('yes' === $this->sandbox) ? 'staging' : 'live',
             'gateway_id' => $this->id,
             'posted_data' => array(),
             'order' => $order,
@@ -484,16 +534,20 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     public function get_icon()
     {
 
-        $visa = '<img src="' . WC_HTTPS::force_https_url(WC()->plugin_url() . '/assets/images/icons/credit-cards/visa.svg') . '" alt="Visa" width="32" />';
-        $mastercard = '<img src="' . WC_HTTPS::force_https_url(WC()->plugin_url() . '/assets/images/icons/credit-cards/mastercard.svg') . '" alt="MasterCard" width="32" />';
-        $discover = '<img src="' . WC_HTTPS::force_https_url(WC()->plugin_url() . '/assets/images/icons/credit-cards/discover.svg') . '" alt="Discover" width="32" />';
-        $amex = '<img src="' . WC_HTTPS::force_https_url(WC()->plugin_url() . '/assets/images/icons/credit-cards/amex.svg') . '" alt="Amex" width="32" />';
-        $jcb = '<img src="' . WC_HTTPS::force_https_url(WC()->plugin_url() . '/assets/images/icons/credit-cards/jcb.svg') . '" alt="JCB" width="32" />';
+        $card_icons = array(
+            'visa'       => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/visa.svg', 'https' ) ) . '" alt="Visa" width="32" />',
+            'mastercard' => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/mastercard.svg', 'https' ) ) . '" alt="MasterCard" width="32" />',
+            'discover'   => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/discover.svg', 'https' ) ) . '" alt="Discover" width="32" />',
+            'amex'       => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/amex.svg', 'https' ) ) . '" alt="Amex" width="32" />',
+            'jcb'        => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/jcb.svg', 'https' ) ) . '" alt="JCB" width="32" />',
+        );
 
         $icon = '';
         if (!empty($this->preferred_cards)) {
             foreach ($this->preferred_cards as $card) {
-                $icon .= $$card;
+                if (isset($card_icons[$card])) {
+                    $icon .= $card_icons[$card];
+                }
             }
         }
 
@@ -524,9 +578,9 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             ?>
             <script>
                 if(window.jQuery) {
-                    var save_moneris_options_btn = jQuery("button.button-primary.woocommerce-save-button").parent('p.submit').clone();
-                    jQuery("button.button-primary.woocommerce-save-button").parent('p.submit').remove();
-                    save_moneris_options_btn.appendTo('div#post-body-content');
+                    var $submit = jQuery("button.woocommerce-save-button").closest('p.submit');
+                    $submit.clone().appendTo('div#post-body-content');
+                    $submit.remove();
                 }
             </script>
             <?php

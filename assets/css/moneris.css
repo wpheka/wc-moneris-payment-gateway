@@ -3,7 +3,7 @@
     color: #fff;
 }
 
-.postbox.moneris-pro h3.hndle {
+.postbox.moneris-pro h2.hndle {
     text-align: center;
     color: #fff;
 }
@@ -12,81 +12,38 @@
     color: #000;
 }
 
-h3.hndle {
+.postbox.moneris-pro strong.moneris-feature-name {
+    color: #000;
+}
+
+h2.hndle {
     text-align: center;
+}
+
+img.moneris-support-logo {
+    width: 70%;
+    margin: 0 auto 12px;
+    display: block;
 }
 
 a.button.moneris-upgrade {
-    border-radius: 50px;
-    background: #00c9b7;
-    color: #fff;
-    border-color: #00c9b7;
-}
-
-a.button.moneris-upgrade {
-	display: block;
+    display: block;
     text-align: center;
     width: 100%;
     border-radius: 50px;
-    border-width: thin;
-    border-style: none;
+    border: none;
     background: #00c9b7;
     color: #fff;
-    border-color: #00c9b7;
-    -webkit-box-shadow: 10px 10px 14px 1px rgba(00,00,00,0.2);
-    box-shadow: 10px 10px 14px 1px rgba(00,00,00,0.2);
+    -webkit-box-shadow: 10px 10px 14px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 10px 14px 1px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
     text-transform: uppercase;
     letter-spacing: 0.094em;
 }
 
-a.button.moneris-upgrade:hover {
-	display: block;
-    text-align: center;
-    width: 100%;
-    border-radius: 50px;
-    border-width: thin;
-    border-style: none;    
-    background: #00c9b7;
-    color: #fff;
-    border-color: #00c9b7;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    transition: all 0.5s;
-    text-transform: uppercase;
-    letter-spacing: 0.094em;
-}
-
-a.button.moneris-upgrade:active {
-	display: block;
-    text-align: center;
-    width: 100%;
-    border-radius: 50px;
-    border-width: thin;
-    border-style: none;
-    background: #00c9b7;
-    color: #fff;
-    border-color: #00c9b7;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    transition: all 0.5s;
-    text-transform: uppercase;
-    letter-spacing: 0.094em;
-}
-
+a.button.moneris-upgrade:hover,
+a.button.moneris-upgrade:active,
 a.button.moneris-upgrade:focus {
-	display: block;
-    text-align: center;
-    width: 100%;	
-    border-radius: 50px;
-    border-width: thin;
-    border-style: none;    
-    background: #00c9b7;
-    color: #fff;
-    border-color: #00c9b7;
     -webkit-box-shadow: none;
     box-shadow: none;
-    transition: all 0.5s;
-    text-transform: uppercase;
-    letter-spacing: 0.094em;
 }

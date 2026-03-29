@@ -2,11 +2,11 @@
 Contributors: akshayaswaroop, wpheka
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
 Requires at least: 4.9
-Tested up to: 6.8.2
-Stable tag: 3.6
+Tested up to: 6.9.4
+Stable tag: 3.7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Donate link: https://www.paypal.me/AKSHAYASWAROOP
+Donate link: https://www.paypal.me/swaroopakshaya
 
 A simple plugin that easily add moneris payment gateway to your WooCommerce website.
 
@@ -42,6 +42,23 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+2026-03-29 - version 3.7.0
+* Fix - Replaced deprecated WC_HTTPS::force_https_url() with esc_url() and set_url_scheme()
+* Fix - Resolved unsafe variable variable pattern in payment icon output
+* Fix - Added nonce verification to deactivation feedback AJAX handler
+* Fix - Strict type comparisons applied throughout
+* Fix - Payment failure in WooCommerce Blocks checkout now throws exception instead of returning null, resolving fatal error in Legacy.php
+* Fix - Save changes button now correctly positioned below settings fields
+* Add - Requires PHP header added to plugin metadata
+* Add - Enable Logging setting to toggle gateway debug logging from the settings page
+* Add - Request and response logging for purchase transactions when logging is enabled
+* Add - Pro features list updated with 3DS fraud validation, Authorize mode with auto-capture, and WooCommerce Blocks support
+* Enhancement - WooCommerce Blocks checkout JS updated: removed deprecated browser params collection, cleaned up unused imports
+* Enhancement - npm packages upgraded to latest versions including @wordpress/scripts 31.x and @woocommerce/dependency-extraction-webpack-plugin 4.x
+* Enhancement - webpack config simplified for compatibility with dependency extraction plugin v4
+* Update - Tested up to WordPress 6.9.4 and WooCommerce 10.6.1
+* Update - Donation link updated
 
 2025.08.13 - version 3.6
 * Fix - Transaction id update issue fixed.

@@ -16,7 +16,7 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 
 	class WPHEKA_Gateway_Moneris_Donation {
 
-		const DONATION_URL = 'https://www.paypal.me/AKSHAYASWAROOP';
+		const DONATION_URL = 'https://www.paypal.me/swaroopakshaya';
 
 		private static $version_meta = 'wpheka_gateway_moneris_donation_version';
 
