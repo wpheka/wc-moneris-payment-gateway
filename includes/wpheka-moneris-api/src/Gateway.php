@@ -2,6 +2,10 @@
 
 namespace wpheka\Moneris;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once __DIR__ . '/mpgClasses.php';
 
 class Gateway {
@@ -102,8 +106,9 @@ class Gateway {
 	protected function get_card_expiry() {
 		$card_expiry = wc_clean( wp_unslash( $this->posted_data[ $this->gateway_id . '-card-expiry' ] ) );
 		if ( ! empty( $card_expiry ) ) {
-			$card_expiry = explode( '/', $card_expiry );
-			list($cardmonth, $cardyear) = $card_expiry;
+			$parts     = array_map( 'trim', explode( '/', $card_expiry ) );
+			$cardmonth = $parts[0];
+			$cardyear  = isset( $parts[1] ) ? $parts[1] : '';
 			$card_expiry = $cardyear . $cardmonth;
 		}
 		return $card_expiry;
@@ -117,11 +122,7 @@ class Gateway {
 	protected function get_order_id() {
 		$order_id = $this->order->get_id();
 		if ( 'staging' == $this->environment ) {
-			$timezone_string = get_option( 'timezone_string' );
-			if ( ! empty( $timezone_string ) && function_exists( 'date_default_timezone_set' ) ) {
-				date_default_timezone_set( $timezone_string );
-			}
-			$order_id = 'wc-order-' . date( 'dmy-G:i:s' ); // Fix duplicate order issue.
+			$order_id = 'wc-order-' . gmdate( 'dmy-G:i:s' ); // Fix duplicate order issue.
 		}
 
 		return $order_id;
@@ -146,6 +147,48 @@ class Gateway {
 	}
 
 	/**
+	 * Escape a value for safe embedding in the Moneris request XML.
+	 *
+	 * @param  string $value Raw value.
+	 * @return string
+	 */
+	protected function xml_escape( $value ) {
+		return htmlspecialchars( (string) $value, ENT_QUOTES | ENT_XML1, 'UTF-8' );
+	}
+
+	/**
+	 * Get the order's tax totals mapped to Moneris tax1/tax2/tax3 fields.
+	 *
+	 * Each WooCommerce tax line (e.g. GST, PST) maps to one field, in order.
+	 * Any lines beyond the third are summed into tax3.
+	 *
+	 * @return array Three formatted amounts (tax1, tax2, tax3); empty strings when unused.
+	 */
+	private function get_order_taxes() {
+		$amounts = array();
+
+		foreach ( $this->order->get_taxes() as $tax_item ) {
+			$amounts[] = (float) $tax_item->get_tax_total() + (float) $tax_item->get_shipping_tax_total();
+		}
+
+		if ( empty( $amounts ) && (float) $this->order->get_total_tax() > 0 ) {
+			$amounts[] = (float) $this->order->get_total_tax();
+		}
+
+		if ( count( $amounts ) > 3 ) {
+			$amounts[2] = array_sum( array_slice( $amounts, 2 ) );
+			$amounts    = array_slice( $amounts, 0, 3 );
+		}
+
+		$taxes = array( '', '', '' );
+		foreach ( $amounts as $index => $amount ) {
+			$taxes[ $index ] = number_format( $amount, 2, '.', '' );
+		}
+
+		return $taxes;
+	}
+
+	/**
 	 * Get customer information from wc order
 	 *
 	 * @return object customer information
@@ -165,9 +208,7 @@ class Gateway {
 		$country = $this->order->get_billing_country();
 		$phone_number = $this->order->get_billing_phone();
 		$fax = '';
-		$tax1 = '';
-		$tax2 = '';
-		$tax3 = '';
+		list( $tax1, $tax2, $tax3 ) = $this->get_order_taxes();
 		$shipping_cost = number_format( $this->order->get_total_shipping(), 2, '.', '' );
 		$email = $this->order->get_billing_email();
 		$instructions = $this->order->get_customer_note();
@@ -212,13 +253,14 @@ class Gateway {
 			'shipping_cost' => $shipping_cost,
 		);
 
-		// Set Customer Information.
-		$customer_info->setBilling( $billing );
+		// Set Customer Information. Values are escaped because mpgCustInfo
+		// concatenates them into the request XML without encoding.
+		$customer_info->setBilling( array_map( array( $this, 'xml_escape' ), $billing ) );
 
-		$customer_info->setShipping( $shipping );
+		$customer_info->setShipping( array_map( array( $this, 'xml_escape' ), $shipping ) );
 
-		$customer_info->setEmail( $email );
-		$customer_info->setInstructions( $instructions );
+		$customer_info->setEmail( $this->xml_escape( $email ) );
+		$customer_info->setInstructions( $this->xml_escape( $instructions ) );
 
 		// Set Customer Line Item Information.
 		$i = 0;
@@ -236,9 +278,9 @@ class Gateway {
 			$product        = $item->get_product();
 			$product_exists = is_object( $product );
 			$items_array[ $i ] = array(
-				'name' => $item['name'],
-				'quantity' => $item['qty'],
-				'product_code' => $product_exists ? $product->get_sku() : $product_id,
+				'name' => $this->xml_escape( $item['name'] ),
+				'quantity' => $this->xml_escape( $item['qty'] ),
+				'product_code' => $this->xml_escape( $product_exists ? $product->get_sku() : $product_id ),
 				'extended_amount' => number_format( $item['line_total'], 2, '.', '' ),
 			);
 			$customer_info->setItems( $items_array[ $i ] );
@@ -276,9 +318,9 @@ class Gateway {
 	 * @return object moneris response
 	 */
 	public function refund( $amount, $reason ) {
-		$order_id = $this->order->get_id();
-		$txnnumber = get_post_meta( $order_id, '_transaction_id', true );
-		$order_id = get_post_meta( $order_id, '_refund_order_id', true );
+		// Order object methods work with both HPOS and legacy post-meta storage.
+		$txnnumber = $this->order->get_transaction_id();
+		$order_id  = $this->order->get_meta( '_refund_order_id' );
 
 		$params = array(
 			'type' => 'refund',
@@ -287,7 +329,7 @@ class Gateway {
 			'amount' => $amount,
 			'crypt_type' => self::CRYPT_TYPE,
 			'cust_id' => $this->get_customer_id(),
-			'dynamic_descriptor' => isset( $reason ) ? $reason : 'refund',
+			'dynamic_descriptor' => ! empty( $reason ) ? $this->xml_escape( $reason ) : 'refund',
 		);
 
 		$transaction = $this->transaction( $params );

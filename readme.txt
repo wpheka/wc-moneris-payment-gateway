@@ -2,11 +2,11 @@
 Contributors: akshayaswaroop, wpheka
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
 Requires at least: 4.9
-Tested up to: 6.9.4
-Stable tag: 3.7.0
+Tested up to: 7.0.1
+Stable tag: 3.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Donate link: https://www.paypal.me/swaroopakshaya
+Donate link: https://paypal.me/swaroopakshaya
 
 A simple plugin that easily add moneris payment gateway to your WooCommerce website.
 
@@ -42,6 +42,20 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+2026-07-14 - version 3.8.0
+* Fix - Full card number and API token are now redacted from debug logs
+* Fix - Refunds were failing on stores using WooCommerce High-Performance Order Storage (HPOS)
+* Fix - Card brand logos were not displaying on checkout for sites served over HTTP
+* Fix - Virtual/downloadable orders are no longer downgraded from completed back to processing after payment
+* Fix - Orders are now marked paid even when Moneris does not return a transaction number
+* Fix - PHP timezone is no longer changed globally during payment and refund processing
+* Fix - Donation notice styling and dismiss button restored
+* Add - Order taxes are now reported to Moneris and appear in the Tax 1/2/3 fields of the Merchant Resource Center
+* Enhancement - Customer data embedded in Moneris API requests is now XML-escaped
+* Enhancement - Admin strings made translatable; deactivation feedback modal now discloses the data it sends
+* Update - Tested up to WordPress 7.0.1 and WooCommerce 10.9.4
+* Update - npm toolchain updated to @wordpress/scripts 32.x and dependency extraction plugin 5.x; unused packages removed
 
 2026-03-29 - version 3.7.0
 * Fix - Replaced deprecated WC_HTTPS::force_https_url() with esc_url() and set_url_scheme()

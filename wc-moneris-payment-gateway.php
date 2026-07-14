@@ -5,12 +5,12 @@
  * Description: Take credit card payments on your WooCommerce store using Moneris. <a href="https://www.wpheka.com" target="_blank">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>
  * Author: WPHEKA
  * Author URI: https://www.wpheka.com
- * Version: 3.7.0
+ * Version: 3.8.0
  * Requires at least: 4.9
- * Tested up to: 6.9.4
+ * Tested up to: 7.0.1
  * Requires Plugins: woocommerce
  * WC requires at least: 3.0
- * WC tested up to: 10.6.1
+ * WC tested up to: 10.9.4
  * Requires PHP: 5.6
  * Text Domain: wpheka-gateway-moneris
  * Domain Path: /languages
@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
 /**
  * Required minimums and constants
  */
-define('WPHEKA_MONERIS_VERSION', '3.7.0');
+define('WPHEKA_MONERIS_VERSION', '3.8.0');
 define('WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0');
 define('WPHEKA_MONERIS_MIN_WC_VER', '3.0');
 define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '17.8');
@@ -66,7 +66,7 @@ function wpheka_moneris_missing_wc_notice()
 function wpheka_moneris_wc_not_supported()
 {
     /* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
-    echo '<div class="error"><p><strong>' . sprintf(esc_html__('Moneris requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'wpheka-gateway-moneris'), WPHEKA_MONERIS_MIN_WC_VER, WC_VERSION) . '</strong></p></div>';
+    echo '<div class="error"><p><strong>' . sprintf(esc_html__('Moneris requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'wpheka-gateway-moneris'), esc_html(WPHEKA_MONERIS_MIN_WC_VER), esc_html(WC_VERSION)) . '</strong></p></div>';
 }
 
 /**
@@ -77,7 +77,7 @@ function wpheka_moneris_wc_not_supported()
 function wpheka_moneris_min_php_ver_notice()
 {
     /* translators: 1) int version 2) int version */
-    echo '<div class="error"><p><strong>' . sprintf(esc_html__('WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'wpheka-gateway-moneris'), WPHEKA_MONERIS_MIN_PHP_VER, phpversion()) . '</strong></p></div>';
+    echo '<div class="error"><p><strong>' . sprintf(esc_html__('WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'wpheka-gateway-moneris'), esc_html(WPHEKA_MONERIS_MIN_PHP_VER), esc_html(phpversion())) . '</strong></p></div>';
 }
 
 /**
@@ -87,7 +87,7 @@ function wpheka_moneris_min_php_ver_notice()
  */
 function wpheka_moneris_pro_active_notice()
 {
-    echo '<div class="error"><p><strong>' . esc_html__('Pro version of Moneris gateway plugin is already active, Please deactivate it first to install the free version.', 'wpheka-gateway-moneris-pro') . '</strong></p></div>';
+    echo '<div class="error"><p><strong>' . esc_html__('Pro version of Moneris gateway plugin is already active, Please deactivate it first to install the free version.', 'wpheka-gateway-moneris') . '</strong></p></div>';
 }
 
 add_action('plugins_loaded', 'wpheka_gateway_moneris_init');

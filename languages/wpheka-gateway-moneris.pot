@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the WC Moneris Payment Gateway plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Moneris Payment Gateway 3.7.0\n"
+"Project-Id-Version: WC Moneris Payment Gateway 3.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-moneris-payment-gateway\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-29T14:04:22+00:00\n"
+"POT-Creation-Date: 2026-07-14T08:31:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wpheka-gateway-moneris\n"
 
 #. Plugin Name of the plugin
 #: wc-moneris-payment-gateway.php
-#: includes/admin/class-wpheka-gateway-moneris-donation.php:58
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:59
 msgid "WC Moneris Payment Gateway"
 msgstr ""
 
@@ -44,9 +44,37 @@ msgstr ""
 msgid "Something went wrong. Please try again later."
 msgstr ""
 
-#: includes/admin/class-wpheka-gateway-moneris-donation.php:58
-#: includes/admin/class-wpheka-gateway-moneris-donation.php:92
+#: includes/admin/class-wpheka-gateway-moneris-deactivation.php:183
+msgid "If you have a moment, please let us know why you are deactivating:"
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-deactivation.php:200
+msgid "Along with your feedback, your site URL and admin email will be sent to wpheka.com so we can follow up."
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-deactivation.php:204
+msgid "I rather wouldn't say"
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-deactivation.php:205
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-deactivation.php:206
+msgid "Cancel"
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:60
+msgid "Enjoying this plugin? Support its development with a small donation."
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:61
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:96
 msgid "Make a donation"
+msgstr ""
+
+#: includes/admin/class-wpheka-gateway-moneris-donation.php:63
+msgid "Dismiss this notice."
 msgstr ""
 
 #: includes/class-wpheka-gateway-moneris.php:32
@@ -180,22 +208,35 @@ msgstr ""
 msgid "Please enter your card cvd code."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:359
+#: includes/class-wpheka-gateway-moneris.php:377
+#: includes/class-wpheka-gateway-moneris.php:523
+msgid "Order not found."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:389
 msgid "Please update your Moneris credentials in payment settings."
 msgstr ""
 
-#. translators: transaction id
-#: includes/class-wpheka-gateway-moneris.php:417
+#. translators: %s: transaction id
+#: includes/class-wpheka-gateway-moneris.php:445
 #, php-format
 msgid "Moneris payment complete (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:442
-msgid "Payment error: "
+#. translators: %s: error message returned by the Moneris gateway
+#: includes/class-wpheka-gateway-moneris.php:468
+#, php-format
+msgid "Payment error: %s"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:520
-msgid "Amount Refunded: "
+#: includes/class-wpheka-gateway-moneris.php:530
+msgid "Same day refund feature is not available. Please contact plugin author for professional version of this plugin."
+msgstr ""
+
+#. translators: %s: refunded amount
+#: includes/class-wpheka-gateway-moneris.php:549
+#, php-format
+msgid "Amount Refunded: %s"
 msgstr ""
 
 #: wc-moneris-payment-gateway.php:47
@@ -218,6 +259,10 @@ msgstr ""
 #: wc-moneris-payment-gateway.php:80
 #, php-format
 msgid "WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s."
+msgstr ""
+
+#: wc-moneris-payment-gateway.php:90
+msgid "Pro version of Moneris gateway plugin is already active, Please deactivate it first to install the free version."
 msgstr ""
 
 #: wc-moneris-payment-gateway.php:318

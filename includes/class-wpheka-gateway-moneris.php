@@ -241,7 +241,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         }
 
         if ($description) {
-            echo wpautop(wptexturize(trim($description)));
+            echo wp_kses_post(wpautop(wptexturize(trim($description))));
         }
 
         if ($this->supports('default_credit_card_form')) {
@@ -306,7 +306,9 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     public function complete_free_order($order)
     {
         // Remove cart.
-        WC()->cart->empty_cart();
+        if (isset(WC()->cart)) {
+            WC()->cart->empty_cart();
+        }
 
         $order->payment_complete();
 
@@ -337,6 +339,29 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     }
 
     /**
+     * Redact sensitive values (card number, expiry, API token) from the raw
+     * request XML before it is written to logs. PCI-DSS forbids storing the
+     * full PAN anywhere, log files included.
+     *
+     * @param  string $xml Raw request XML.
+     * @return string
+     */
+    private function redact_sensitive_xml($xml)
+    {
+        $xml = preg_replace_callback(
+            '/<pan>(.*?)<\/pan>/s',
+            function ($matches) {
+                $pan = $matches[1];
+                $masked = strlen($pan) > 4 ? str_repeat('*', strlen($pan) - 4) . substr($pan, -4) : '****';
+                return '<pan>' . $masked . '</pan>';
+            },
+            $xml
+        );
+
+        return preg_replace('/<(expdate|api_token)>.*?<\/\1>/s', '<$1>[redacted]</$1>', $xml);
+    }
+
+    /**
      * Process the payment and return the result.
      *
      * @param int $order_id Order ID.
@@ -346,6 +371,11 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     {
 
         $order = wc_get_order($order_id);
+
+        if (!$order) {
+            WPHEKA_Moneris_Logger::log('Order not found: #' . $order_id);
+            throw new Exception(__('Order not found.', 'wpheka-gateway-moneris'));
+        }
 
         if (0 >= $order->get_total()) {
             return $this->complete_free_order($order);
@@ -379,15 +409,14 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             ' | Order: #' . $order_id .
             ' | Amount: ' . $order->get_total() .
             ' | Environment: ' . $params['environment'] .
-            ' | Card: ' . $masked_card .
-            ' | Expiry: ' . (isset($_POST[$this->id . '-card-expiry']) ? wc_clean(wp_unslash($_POST[$this->id . '-card-expiry'])) : 'N/A')
+            ' | Card: ' . $masked_card
         );
 
         $response = $gateway->purchase();
 
         WPHEKA_Moneris_Logger::log(
             'Purchase Request XML | Order: #' . $order_id . "\n" .
-            $gateway->getLastRequestXml()
+            $this->redact_sensitive_xml($gateway->getLastRequestXml())
         );
 
         WPHEKA_Moneris_Logger::log(
@@ -410,18 +439,14 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             $this->update_order_meta_data('_refund_order_id', $response->getReceiptId(), $order, $order_id);
 
             $transaction_id = $response->getTxnNumber();
-            // add transaction id to order notes
 
             if (!empty($transaction_id)) {
-                /* translators: transaction id */
-                $message = sprintf(__('Moneris payment complete (Transaction ID: %s)', 'wpheka-gateway-moneris'), $transaction_id);
-
-                $order->set_transaction_id($transaction_id);
-                $order->payment_complete();
-
-                // Mark order as processing
-                $order->update_status('processing', $message);
+                /* translators: %s: transaction id */
+                $order->add_order_note(sprintf(__('Moneris payment complete (Transaction ID: %s)', 'wpheka-gateway-moneris'), $transaction_id));
             }
+
+            // Sets processing/completed status and stores the transaction id.
+            $order->payment_complete($transaction_id);
 
             if (is_callable([ $order, 'save' ])) {
                 $order->save();
@@ -439,31 +464,40 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             );
         } else {
             $error_message = $response->getMessage();
-            wc_add_notice(__('Payment error: ' . $error_message, 'wpheka-gateway-moneris'), 'error');
+            /* translators: %s: error message returned by the Moneris gateway */
+            $notice = sprintf(__('Payment error: %s', 'wpheka-gateway-moneris'), $error_message);
             WPHEKA_Moneris_Logger::log('Payment error: ' . $error_message);
-            $order->add_order_note(__($error_message, 'wpheka-gateway-moneris'));
+            $order->add_order_note($notice);
             $order->update_status('failed');
-            throw new Exception(__($error_message, 'wpheka-gateway-moneris'));
+            // WooCommerce catches this exception and shows the message as a checkout notice.
+            throw new Exception($notice);
         }
     }
 
     /**
-     * Check timestamps is on same day.
+     * Check whether a date/time string (site timezone) falls on today's date.
      *
-     * @param  int $ts1 Timestamp1.
-     * @param  int $ts2 Timestamp2.
+     * @param  string $datetime Date/time string, e.g. the stored Moneris transaction date.
      * @return bool
      */
-    private function isSameDay($ts1, $ts2 = '')
+    private function is_same_day($datetime)
     {
-        if ($ts2 === '') {
-            $ts2 = time();
+        if (function_exists('wp_timezone')) {
+            $timezone = wp_timezone();
+        } else {
+            $tz_string = get_option('timezone_string');
+            $timezone = new DateTimeZone($tz_string ? $tz_string : 'UTC');
         }
-        $f = false;
-        if (date('z-Y', $ts1) == date('z-Y', $ts2)) {
-            $f = true;
+
+        $paid = date_create($datetime, $timezone);
+
+        if (!$paid) {
+            return false;
         }
-        return $f;
+
+        $now = date_create('now', $timezone);
+
+        return $paid->format('Y-m-d') === $now->format('Y-m-d');
     }
 
     /**
@@ -483,23 +517,17 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
 
         $store_id = $this->store_id;
         $api_token = $this->api_token;
-        $order = new WC_Order($order_id);
+        $order = wc_get_order($order_id);
 
-        $timezone_string = get_option('timezone_string');
-        if (!empty($timezone_string) && function_exists('date_default_timezone_set')) {
-            date_default_timezone_set($timezone_string);
+        if (!$order) {
+            return new WP_Error('error', __('Order not found.', 'wpheka-gateway-moneris'));
         }
+
         $order_placed_datetime = $this->get_order_meta_data('_paid_date', $order, $order_id);
 
-        if (!empty($order_placed_datetime)) {
-            $order_placed_timestamp = strtotime($order_placed_datetime);
-
-            $is_order_placed_same_day = $this->isSameDay($order_placed_timestamp, time());
-
-            if ($is_order_placed_same_day) {
-                WPHEKA_Moneris_Logger::log('Same day refund feature is not available. Please contact plugin author for professional version of this plugin.');
-                return new WP_Error('error', __('Same day refund feature is not available. Please contact plugin author for professional version of this plugin.', 'woocommerce'));
-            }
+        if (!empty($order_placed_datetime) && $this->is_same_day($order_placed_datetime)) {
+            WPHEKA_Moneris_Logger::log('Same day refund feature is not available. Please contact plugin author for professional version of this plugin.');
+            return new WP_Error('error', __('Same day refund feature is not available. Please contact plugin author for professional version of this plugin.', 'wpheka-gateway-moneris'));
         }
 
         $params = array(
@@ -517,10 +545,11 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         $response = $gateway->refund($amount, $reason);
 
         if ($this->transaction_success($response)) {
-            $order->add_order_note(__('Amount Refunded: ' . $amount, 'wpheka-gateway-moneris'));
+            /* translators: %s: refunded amount */
+            $order->add_order_note(sprintf(__('Amount Refunded: %s', 'wpheka-gateway-moneris'), $amount));
             return true;
         } else {
-            $order->add_order_note(__($response->getMessage(), 'wpheka-gateway-moneris'));
+            $order->add_order_note($response->getMessage());
             return false;
         }
     }
@@ -535,11 +564,11 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     {
 
         $card_icons = array(
-            'visa'       => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/visa.svg', 'https' ) ) . '" alt="Visa" width="32" />',
-            'mastercard' => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/mastercard.svg', 'https' ) ) . '" alt="MasterCard" width="32" />',
-            'discover'   => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/discover.svg', 'https' ) ) . '" alt="Discover" width="32" />',
-            'amex'       => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/amex.svg', 'https' ) ) . '" alt="Amex" width="32" />',
-            'jcb'        => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/jcb.svg', 'https' ) ) . '" alt="JCB" width="32" />',
+            'visa'       => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/visa.svg' ) ) . '" alt="Visa" width="32" />',
+            'mastercard' => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/mastercard.svg' ) ) . '" alt="MasterCard" width="32" />',
+            'discover'   => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/discover.svg' ) ) . '" alt="Discover" width="32" />',
+            'amex'       => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/amex.svg' ) ) . '" alt="Amex" width="32" />',
+            'jcb'        => '<img src="' . esc_url( set_url_scheme( WC()->plugin_url() . '/assets/images/icons/credit-cards/jcb.svg' ) ) . '" alt="JCB" width="32" />',
         );
 
         $icon = '';
@@ -554,7 +583,12 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         return apply_filters('wpheka_gateway_icon', $icon, $this->id);
     }
 
-    public function getPreferredCards()
+    /**
+     * Get the admin-selected preferred cards as key => label pairs.
+     *
+     * @return array
+     */
+    public function get_preferred_cards()
     {
         $preferred_cards = array();
 
@@ -574,7 +608,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     {
         $section = isset($_GET['section']) ? sanitize_text_field(wp_unslash($_GET['section'])) : '';
 
-        if (isset($_GET['section']) && 'moneris' === $_GET['section']) {
+        if ('moneris' === $section) {
             ?>
             <script>
                 if(window.jQuery) {

@@ -16,7 +16,7 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 
 	class WPHEKA_Gateway_Moneris_Donation {
 
-		const DONATION_URL = 'https://www.paypal.me/swaroopakshaya';
+		const DONATION_URL = 'https://paypal.me/swaroopakshaya';
 
 		private static $version_meta = 'wpheka_gateway_moneris_donation_version';
 
@@ -55,14 +55,18 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 		public static function donation_notice() {
 			?>
 			<div class="notice wpheka-plugin-donation-notice">
-				<p><span class="wpheka-plugin-donation-plugin-name">{ <?php esc_html_e( 'WC Moneris Payment Gateway', 'wpheka-gateway-moneris' ); ?> }</span> <a href="<?php echo esc_url( self::DONATION_URL ); ?>" target="_blank" class="wpheka-plugin-donation-button"> <span class="dashicons dashicons-heart"></span> <?php echo esc_html_e( 'Make a donation', 'wpheka-gateway-moneris' ); ?></a></p>
-				<button type="button" class="notice-dismiss wpheka-plugin-donation-button-notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+				<p>
+					<span class="wpheka-plugin-donation-plugin-name"><?php esc_html_e( 'WC Moneris Payment Gateway', 'wpheka-gateway-moneris' ); ?></span>
+					<span class="wpheka-plugin-donation-text"><?php esc_html_e( 'Enjoying this plugin? Support its development with a small donation.', 'wpheka-gateway-moneris' ); ?></span>
+					<a href="<?php echo esc_url( self::DONATION_URL ); ?>" target="_blank" class="wpheka-plugin-donation-button"><span class="dashicons dashicons-heart"></span><?php esc_html_e( 'Make a donation', 'wpheka-gateway-moneris' ); ?></a>
+				</p>
+				<button type="button" class="notice-dismiss wpheka-plugin-donation-button-notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'wpheka-gateway-moneris' ); ?></span></button>
 			</div>
 			<?php
 		}
 
 		public static function dismiss_notice() {
-			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], self::$action_nonce ) ) {
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), self::$action_nonce ) ) {
 				wp_die();
 			}
 

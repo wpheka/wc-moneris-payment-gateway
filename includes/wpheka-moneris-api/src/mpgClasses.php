@@ -10,7 +10,7 @@ class mpgGlobals
     var $Globals=array(
                     'MONERIS_PROTOCOL' => 'https',
                     'MONERIS_HOST' => 'mpg1.moneris.io', //default
-                    'MONERIS_TEST_HOST' => 'mpg1t.moneris.io',
+                    'MONERIS_TEST_HOST' => 'esqa.moneris.com',
                     'MONERIS_US_HOST' => 'esplus.moneris.com',
                     'MONERIS_US_TEST_HOST' => 'esplusqa.moneris.com',
                     'MONERIS_PORT' =>'443',

@@ -5,6 +5,10 @@
  * @package WPHEKA_Gateway_Moneris
  */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType;
 
 /**
@@ -34,7 +38,7 @@ final class Woocommerce_Gateway_Moneris_Blocks_Support extends AbstractPaymentMe
         
         // you can also initialize your payment gateway here
         $gateways = WC()->payment_gateways->payment_gateways();
-        $this->gateway  = $gateways[ $this->name ];
+        $this->gateway  = isset($gateways[ $this->name ]) ? $gateways[ $this->name ] : null;
     }
 
     /**
@@ -82,6 +86,10 @@ final class Woocommerce_Gateway_Moneris_Blocks_Support extends AbstractPaymentMe
      */
     public function get_payment_method_data()
     {
+        if (!$this->gateway) {
+            return array();
+        }
+
         return array(
             'title' => $this->get_setting('title'),
             'description' => $this->get_setting('description'),
@@ -97,7 +105,7 @@ final class Woocommerce_Gateway_Moneris_Blocks_Support extends AbstractPaymentMe
      */
     private function get_icons()
     {
-        $payment_icons = $this->gateway->getPreferredCards();
+        $payment_icons = $this->gateway->get_preferred_cards();
 
         $icons_src = [];
 

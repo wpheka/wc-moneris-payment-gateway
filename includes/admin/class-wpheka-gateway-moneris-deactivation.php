@@ -65,7 +65,7 @@ class WPHEKA_Deactivation_Tracker {
 		$deactivation_domain = isset( $_POST['deactivation_domain'] ) ? sanitize_text_field( wp_unslash( $_POST['deactivation_domain'] ) ) : '';
 		$deactivation_license_key = isset( $_POST['deactivation_license_key'] ) ? sanitize_text_field( wp_unslash( $_POST['deactivation_license_key'] ) ) : '';
 
-		$email = isset( $_POST['deactivation_email'] ) ? filter_var( $_POST['deactivation_email'], FILTER_SANITIZE_EMAIL ) : '';
+		$email = isset( $_POST['deactivation_email'] ) ? sanitize_email( wp_unslash( $_POST['deactivation_email'] ) ) : '';
 
 		$reason_id = isset( $_POST['reason_id'] ) ? sanitize_text_field( wp_unslash( $_POST['reason_id'] ) ) : '';
 		$reason_info = isset( $_POST['reason_info'] ) ? sanitize_text_field( wp_unslash( $_POST['reason_info'] ) ) : '';
@@ -177,10 +177,10 @@ class WPHEKA_Deactivation_Tracker {
 
 		?>
 
-		<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>" id="<?php echo $deactivation_modal_id; ?>">
+		<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>" id="<?php echo esc_attr( $deactivation_modal_id ); ?>">
 			<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-wrap">
 				<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-header">
-					<h3><?php echo esc_html( 'If you have a moment, please let us know why you are deactivating:', 'wpheka-gateway-moneris' ); ?></h3>
+					<h3><?php esc_html_e( 'If you have a moment, please let us know why you are deactivating:', 'wpheka-gateway-moneris' ); ?></h3>
 				</div>
 
 				<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-body">
@@ -196,18 +196,20 @@ class WPHEKA_Deactivation_Tracker {
 					<input type="hidden" name="deactivation_license_key" value="<?php echo esc_attr( $license_key ); ?>">
 
 					<input type="hidden" name="email" value="<?php echo esc_attr( $license_email ); ?>">
+
+					<p class="description"><?php esc_html_e( 'Along with your feedback, your site URL and admin email will be sent to wpheka.com so we can follow up.', 'wpheka-gateway-moneris' ); ?></p>
 				</div>
 
 				<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-footer">
-					<a href="#" class="dont-bother-me"><?php echo esc_html( 'I rather wouldn\'t say', 'wpheka-gateway-moneris' ); ?></a>
-					<button class="button-secondary"><?php echo esc_html( 'Submit & Deactivate', 'wpheka-gateway-moneris' ); ?></button>
-					<button class="button-primary"><?php echo esc_html( 'Cancel', 'wpheka-gateway-moneris' ); ?></button>
+					<a href="#" class="dont-bother-me"><?php esc_html_e( 'I rather wouldn\'t say', 'wpheka-gateway-moneris' ); ?></a>
+					<button class="button-secondary"><?php esc_html_e( 'Submit & Deactivate', 'wpheka-gateway-moneris' ); ?></button>
+					<button class="button-primary"><?php esc_html_e( 'Cancel', 'wpheka-gateway-moneris' ); ?></button>
 				</div>
 			</div>
 		</div>
 
 		<style type="text/css">
-			<?php echo $deactivation_modal_class; ?> {
+			<?php echo esc_attr( $deactivation_modal_class ); ?> {
 				position: fixed;
 				z-index: 99999;
 				top: 0;
@@ -218,41 +220,41 @@ class WPHEKA_Deactivation_Tracker {
 				display: none;
 			}
 
-			<?php echo $deactivation_modal_class; ?>.modal-active {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>.modal-active {
 				display: block;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-wrap {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-wrap {
 				width: 475px;
 				position: relative;
 				margin: 10% auto;
 				background: #fff;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-header {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-header {
 				border-bottom: 1px solid #eee;
 				padding: 8px 20px;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-header h3 {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-header h3 {
 				line-height: 150%;
 				margin: 0;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-body {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-body {
 				padding: 5px 20px 20px 20px;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-body .reason-input {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-body .reason-input {
 				margin-top: 5px;
 				margin-left: 20px;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-body textarea, <?php echo $deactivation_modal_class; ?>-body input[type="text"]{
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-body textarea, <?php echo esc_attr( $deactivation_modal_class ); ?>-body input[type="text"]{
 				width: 100%;
 			}
 
-			<?php echo $deactivation_modal_class; ?>-footer {
+			<?php echo esc_attr( $deactivation_modal_class ); ?>-footer {
 				border-top: 1px solid #eee;
 				padding: 12px 20px;
 				text-align: right;
@@ -262,10 +264,10 @@ class WPHEKA_Deactivation_Tracker {
 		<script type="text/javascript">
 			(function($) {
 				$(function() {
-					var modal = $( '#<?php echo $deactivation_modal_id; ?>' );
+					var modal = $( '#<?php echo esc_js( $deactivation_modal_id ); ?>' );
 					var deactivateLink = '';
 
-					$( '#the-list' ).on('click', 'a.<?php echo self::$tracker_id; ?>-deactivate-link', function(e) {
+					$( '#the-list' ).on('click', 'a.<?php echo esc_js( self::$tracker_id ); ?>-deactivate-link', function(e) {
 						e.preventDefault();
 
 						modal.addClass('modal-active');
