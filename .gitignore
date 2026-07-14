@@ -76,3 +76,9 @@ i18n/languages/woocommerce.pot
 
 # Build
 build/
+
+# Distribution zips
+*.zip
+
+# npm lockfile
+package-lock.json

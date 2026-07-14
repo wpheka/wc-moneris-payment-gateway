@@ -5,7 +5,8 @@
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build",
-    "make-pot": "wp i18n make-pot . languages/wpheka-gateway-moneris.pot"
+    "make-pot": "wp i18n make-pot . languages/wpheka-gateway-moneris.pot",
+    "make-zip": "rm -f wc-moneris-payment-gateway.zip && cd .. && zip -rq wc-moneris-payment-gateway/wc-moneris-payment-gateway.zip wc-moneris-payment-gateway -x '*/.git/*' '*/node_modules/*' '*.gitignore' '*package-lock.json' '*CLAUDE.md' '*.md' '*.zip' '*.DS_Store' '*/.vscode/*' '*/.idea/*' && echo 'Created wc-moneris-payment-gateway.zip'"
   },
   "engines": {
     "node": ">=20.11.1",
