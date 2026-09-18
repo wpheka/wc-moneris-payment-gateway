@@ -1,0 +1,44 @@
+# WPHEKA Quality configuration for WC Moneris Payment Gateway (free, wordpress.org).
+#
+# This plugin processes live card payments on customer stores, so the security
+# checks matter more here than anywhere else in the portfolio.
+
+project_type: woocommerce-plugin
+
+php:
+  minimum: "7.4"
+
+wordpress:
+  required: true
+
+woocommerce:
+  required: true
+  hpos: true
+  blocks: true
+
+checks:
+  php_syntax: true
+  git_diff_check: true
+  phpcs: true
+  phpstan: true
+  phpunit: true
+  composer_validate: true
+  composer_audit: true
+  semgrep: true
+  gitleaks: true
+  plugin_check: true
+  coderabbit: true
+  # package.json exists only to build the blocks bundle. Leaving npm off keeps
+  # unattended runs from executing build scripts.
+  npm: false
+
+exclude:
+  # Moneris's own library, shipped as-is. The root CLAUDE.md names mpgClasses.php
+  # as not ours to restyle; its vendor/ tree is third-party twice over.
+  - includes/wpheka-moneris-api/vendor/
+  - includes/wpheka-moneris-api/src/mpgClasses.php
+  # Compiled block output; the source lives in resources/.
+  - assets/js/block/
+  - languages/
+
+fail_on: error
