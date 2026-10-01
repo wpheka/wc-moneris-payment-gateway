@@ -1,6 +1,6 @@
 ﻿=== WC Moneris Payment Gateway ===
 Contributors: akshayaswaroop, wpheka
-Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
+Tags: moneris, woocommerce, payment gateway, credit card, canada
 Requires at least: 4.9
 Tested up to: 7.1.2
 Stable tag: 3.8.1
