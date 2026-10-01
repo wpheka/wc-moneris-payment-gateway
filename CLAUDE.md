@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-WC Moneris Payment Gateway (v3.7.0) — a WooCommerce credit card payment gateway for Moneris (Canada's payment processor), by WPHEKA. Text domain: `wpheka-gateway-moneris`. The plugin skips loading if the Pro version of the gateway is already active on the site.
+WC Moneris Payment Gateway (v3.8.0) — a WooCommerce credit card payment gateway for Moneris (Canada's payment processor), by WPHEKA. Text domain: `wpheka-gateway-moneris`. The plugin skips loading if the Pro version of the gateway is already active on the site.
 
 ## Build Commands
 
@@ -29,10 +29,10 @@ The `vendor/` directory is committed; only run composer if changing the library.
 ## Architecture
 
 - `wc-moneris-payment-gateway.php` — defines `WPHEKA_MONERIS_*` constants, admin notices (missing cURL/WC, version checks, Pro conflict), HPOS + cart/checkout blocks compatibility declarations, blocks payment method registration, and the `WPHEKA_Moneris` singleton (defined inline inside `wpheka_gateway_moneris_init` on `plugins_loaded`). The singleton loads includes and registers the gateway via `woocommerce_payment_gateways`.
-- `includes/class-wpheka-gateway-moneris.php` — `WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC`. Gateway id `moneris`. Handles settings (sandbox, store_id, api_token, preferred cards, logging), `process_payment()`, `process_refund()` (same-day refunds are voided via purchase correction), and order meta via HPOS-aware helpers (`get_order_meta_data`/`update_order_meta_data` use `OrderUtil` to branch between HPOS and legacy post meta).
+- `includes/class-wpheka-gateway-moneris.php` — `WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC`. Gateway id `moneris`. Handles settings (sandbox, store_id, api_token, preferred cards, logging), `process_payment()`, `process_refund()` (previous-day refunds only: a same-day refund is rejected with a notice, since voiding through purchase correction is a Pro feature), and order meta via HPOS-aware helpers (`get_order_meta_data`/`update_order_meta_data` use `OrderUtil` to branch between HPOS and legacy post meta).
 - `includes/wpheka-moneris-api/src/` — `Gateway.php` (wrapper) and `mpgClasses.php` (Moneris mpg API classes for HTTPS posts to Moneris).
 - `includes/class-wpheka-moneris-logger.php` — logging via WC logger, gated by the `wpheka_moneris_logging` filter/setting.
-- `includes/blocks/class-wpheka-gateway-moneris-blocks-support.php` — `AbstractPaymentMethodType` implementation for WooCommerce Blocks checkout (block name `monerisgateway/moneris_direct`).
+- `includes/blocks/class-wpheka-gateway-moneris-blocks-support.php` — `AbstractPaymentMethodType` implementation for WooCommerce Blocks checkout (payment method name `moneris`). Its card-field stylesheet is attached to the `woocommerce/checkout` block via `wp_enqueue_block_style()`.
 - `includes/admin/` — deactivation feedback and donation notice classes (admin only).
 - `resources/js/frontend/` — React source for the blocks checkout card form (`cleave.js`, `react-hook-form`).
 

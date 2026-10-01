@@ -6,7 +6,7 @@
 project_type: woocommerce-plugin
 
 php:
-  minimum: "7.4"
+  minimum: "5.6"
 
 wordpress:
   required: true
