@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import Cleave from 'cleave.js/react';
 import { decodeEntities } from '@wordpress/html-entities';
+import { __ } from '@wordpress/i18n';
 
 const inputStyle = {
     width: '100%',
@@ -26,10 +27,11 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
             <p>{ decodeEntities( directSettings.description || '' ) }</p>
 
             {/* Card Number */}
-            <label style={ { display: 'block', marginBottom: '0.5rem', fontWeight: '600' } }>
-                Card Number
+            <label style={ { display: 'block', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-number` }>
+                { __( 'Card Number', 'wpheka-gateway-moneris' ) }
             </label>
             <Cleave
+                id={ `${METHOD_NAME}-card-number` }
                 name={ `${METHOD_NAME}-card-number` }
                 options={ { creditCard: true } }
                 placeholder="1234 5678 9012 3456"
@@ -43,10 +45,11 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
             ) }
 
             {/* Expiry */}
-            <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } }>
-                Expiry (MM/YY)
+            <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-expiry` }>
+                { __( 'Expiry (MM/YY)', 'wpheka-gateway-moneris' ) }
             </label>
             <Cleave
+                id={ `${METHOD_NAME}-card-expiry` }
                 name={ `${METHOD_NAME}-card-expiry` }
                 options={ { date: true, datePattern: [ 'm', 'y' ] } }
                 placeholder="MM/YY"
@@ -60,10 +63,11 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
             ) }
 
             {/* CVC */}
-            <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } }>
-                CVC
+            <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-cvc` }>
+                { __( 'CVC', 'wpheka-gateway-moneris' ) }
             </label>
             <Cleave
+                id={ `${METHOD_NAME}-card-cvc` }
                 name={ `${METHOD_NAME}-card-cvc` }
                 options={ { blocks: [ 4 ], numericOnly: true } }
                 placeholder="CVC"

@@ -7,13 +7,15 @@
  * Author URI: https://www.wpheka.com
  * Version: 3.8.0
  * Requires at least: 4.9
- * Tested up to: 7.0.1
+ * Tested up to: 7.1.2
  * Requires Plugins: woocommerce
  * WC requires at least: 3.0
- * WC tested up to: 10.9.4
+ * WC tested up to: 11.1.2
  * Requires PHP: 5.6
  * Text Domain: wpheka-gateway-moneris
  * Domain Path: /languages
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
  * @package   WPHEKA_Moneris
  * @author    WPHEKA
@@ -153,15 +155,21 @@ add_action('woocommerce_blocks_loaded', 'woocommerce_gateway_moneris_block_suppo
  */
 function add_credit_card_input_styles_to_moneris_block()
 {
-    $block_name = 'monerisgateway/moneris_direct';
+    // The Checkout block, which renders the payment method label these rules
+    // lay out. It used to be attached to 'monerisgateway/moneris_direct', which
+    // is not a registered block, so the stylesheet never loaded.
+    $block_name = 'woocommerce/checkout';
     $args       = array(
         'handle' => 'credit-card-input-styles',
         'src'    => plugins_url('/assets/css/blocks/credit-card-inputs.css', __FILE__),
-        'path'   => plugins_url('/assets/css/blocks/credit-card-inputs.css', __FILE__),
+        'path'   => plugin_dir_path(__FILE__) . 'assets/css/blocks/credit-card-inputs.css',
         'ver'    => WPHEKA_MONERIS_VERSION,
     );
 
-    wp_enqueue_block_style($block_name, $args);
+    // wp_enqueue_block_style() needs WordPress 5.9; the plugin declares 4.9.
+    if (function_exists('wp_enqueue_block_style')) {
+        wp_enqueue_block_style($block_name, $args);
+    }
 }
 add_action('after_setup_theme', 'add_credit_card_input_styles_to_moneris_block');
 

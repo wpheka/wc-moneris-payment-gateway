@@ -32,9 +32,12 @@ class WPHEKA_Moneris_Logger {
 
 			if ( ! is_null( $start_time ) ) {
 
-				$formatted_start_time = date_i18n( get_option( 'date_format' ) . ' g:ia', $start_time );
-				$end_time             = is_null( $end_time ) ? current_time( 'timestamp' ) : $end_time;
-				$formatted_end_time   = date_i18n( get_option( 'date_format' ) . ' g:ia', $end_time );
+				// Real Unix timestamps, so the subtraction below is a true
+				// duration. current_time( 'timestamp' ) is shifted by the site's
+				// UTC offset and is not one.
+				$formatted_start_time = self::format_time( $start_time );
+				$end_time             = is_null( $end_time ) ? time() : $end_time;
+				$formatted_end_time   = self::format_time( $end_time );
 				$elapsed_time         = round( abs( $end_time - $start_time ) / 60, 2 );
 
 				$log_entry  = "\n" . '====Moneris Version: ' . WPHEKA_MONERIS_VERSION . '====' . "\n";
@@ -49,5 +52,22 @@ class WPHEKA_Moneris_Logger {
 
 			self::$logger->debug( $log_entry, array( 'source' => self::WPHEKA_MONERIS_LOG_FILENAME ) );
 		}
+	}
+
+	/**
+	 * Format a Unix timestamp in the site's time zone.
+	 *
+	 * @param int $timestamp Unix timestamp.
+	 * @return string
+	 */
+	private static function format_time( $timestamp ) {
+		$format = get_option( 'date_format' ) . ' g:ia';
+
+		// wp_date() needs WordPress 5.3; this plugin still declares 4.9.
+		if ( function_exists( 'wp_date' ) ) {
+			return wp_date( $format, $timestamp );
+		}
+
+		return date_i18n( $format, $timestamp + (int) ( (float) get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
 	}
 }

@@ -1,5 +1,5 @@
 # Copyright (C) 2026 WPHEKA
-# This file is distributed under the same license as the WC Moneris Payment Gateway plugin.
+# This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
 "Project-Id-Version: WC Moneris Payment Gateway 3.8.0\n"
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-14T08:31:44+00:00\n"
+"POT-Creation-Date: 2026-10-01T14:33:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wpheka-gateway-moneris\n"
@@ -78,7 +78,7 @@ msgid "Dismiss this notice."
 msgstr ""
 
 #: includes/class-wpheka-gateway-moneris.php:32
-#: includes/class-wpheka-gateway-moneris.php:173
+#: includes/class-wpheka-gateway-moneris.php:184
 #: assets/js/block/frontend/payment-block.js:1
 #: resources/js/frontend/MonerisDirect.js:52
 msgid "Moneris"
@@ -92,187 +92,314 @@ msgstr ""
 msgid "Use a new card"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:163
+#: includes/class-wpheka-gateway-moneris.php:107
+msgid "Sell more"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:108
+msgid "Subscriptions"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:108
+msgid "Renewals are charged automatically through WooCommerce Subscriptions."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:109
+msgid "Saved cards"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:109
+msgid "Returning customers pay with a saved card."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:110
+msgid "Moneris Checkout"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:110
+msgid "Moneris's own secure payment form, so card details never touch your server."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:111
+msgid "CAD and USD"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:111
+msgid "Send each currency to its own Moneris account."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:113
+msgid "Stop fraud"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:114
+msgid "3-D Secure"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:114
+msgid "Extra card verification on eligible cards."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:115
+msgid "Address and CVD checks"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:115
+msgid "You decide which mismatches to accept or decline."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:116
+msgid "Card-testing protection"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:116
+msgid "Cap payment attempts per order and per IP address."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:118
+msgid "Save time"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:119
+msgid "Same-day refunds"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:119
+msgid "Refund right from the order screen, even on the day of the sale."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:120
+msgid "Authorize and capture"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:120
+msgid "Authorize at checkout and capture when you complete the order."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:121
+msgid "Statement descriptor"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:121
+msgid "Show your own description on customers' card statements."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:126
+msgid "Upgrade to Moneris Pro"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:128
+msgid "The free version handles one-off card payments. Pro adds the things growing stores ask us for most."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:137
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:138
+msgid "From $79. Includes a year of updates and priority support."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:174
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:164
+#: includes/class-wpheka-gateway-moneris.php:175
 msgid "Enable Moneris Gateway"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:170
+#: includes/class-wpheka-gateway-moneris.php:181
 msgid "Title"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:172
+#: includes/class-wpheka-gateway-moneris.php:183
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:177
+#: includes/class-wpheka-gateway-moneris.php:188
 msgid "Description"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:179
+#: includes/class-wpheka-gateway-moneris.php:190
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:184
+#: includes/class-wpheka-gateway-moneris.php:195
 msgid "Store Id"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:186
+#: includes/class-wpheka-gateway-moneris.php:197
 msgid "Enter your Moneris account store id here."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:189
+#: includes/class-wpheka-gateway-moneris.php:200
 msgid "API Token"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:191
+#: includes/class-wpheka-gateway-moneris.php:202
 msgid "Enter your Moneris API Token here."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:194
+#: includes/class-wpheka-gateway-moneris.php:205
 msgid "Preferred Cards"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:197
+#: includes/class-wpheka-gateway-moneris.php:208
 msgid "Select your desired cards from the multiple-select box. The logo of the selected card(s) will be displayed on the checkout page."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:200
+#: includes/class-wpheka-gateway-moneris.php:211
 msgid "Visa"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:201
+#: includes/class-wpheka-gateway-moneris.php:212
 msgid "MasterCard"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:202
+#: includes/class-wpheka-gateway-moneris.php:213
 msgid "Discover"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:203
+#: includes/class-wpheka-gateway-moneris.php:214
 msgid "American Express"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:204
+#: includes/class-wpheka-gateway-moneris.php:215
 msgid "JCB"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:207
+#: includes/class-wpheka-gateway-moneris.php:218
 msgid "Select your desired cards"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:211
+#: includes/class-wpheka-gateway-moneris.php:222
 msgid "Sandbox"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:212
+#: includes/class-wpheka-gateway-moneris.php:223
 msgid "Enable sandbox mode"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:214
+#: includes/class-wpheka-gateway-moneris.php:225
 msgid "Place the payment gateway in sandbox mode."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:218
+#: includes/class-wpheka-gateway-moneris.php:229
 msgid "Logging"
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:219
+#: includes/class-wpheka-gateway-moneris.php:230
 msgid "Enable logging"
 msgstr ""
 
 #. translators: %s: URL to WooCommerce logs
-#: includes/class-wpheka-gateway-moneris.php:223
+#: includes/class-wpheka-gateway-moneris.php:234
 #, php-format
 msgid "Log gateway events for debugging. View logs in <a href=\"%s\">WooCommerce &rsaquo; Status &rsaquo; Logs</a>."
 msgstr ""
 
 #. translators: link to Moneris testing page
-#: includes/class-wpheka-gateway-moneris.php:240
+#: includes/class-wpheka-gateway-moneris.php:251
 #, php-format
 msgid "TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date or check the <a href=\"%s\" target=\"_blank\">Testing Moneris documentation</a> for more card numbers."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:279
+#: includes/class-wpheka-gateway-moneris.php:290
 msgid "Please enter your card number."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:285
+#: includes/class-wpheka-gateway-moneris.php:296
 msgid "Please enter your card expiry."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:291
+#: includes/class-wpheka-gateway-moneris.php:302
 msgid "Please enter your card cvd code."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:377
-#: includes/class-wpheka-gateway-moneris.php:523
+#: includes/class-wpheka-gateway-moneris.php:392
+#: includes/class-wpheka-gateway-moneris.php:538
 msgid "Order not found."
 msgstr ""
 
-#: includes/class-wpheka-gateway-moneris.php:389
+#: includes/class-wpheka-gateway-moneris.php:404
 msgid "Please update your Moneris credentials in payment settings."
 msgstr ""
 
 #. translators: %s: transaction id
-#: includes/class-wpheka-gateway-moneris.php:445
+#: includes/class-wpheka-gateway-moneris.php:460
 #, php-format
 msgid "Moneris payment complete (Transaction ID: %s)"
 msgstr ""
 
 #. translators: %s: error message returned by the Moneris gateway
-#: includes/class-wpheka-gateway-moneris.php:468
+#: includes/class-wpheka-gateway-moneris.php:483
 #, php-format
 msgid "Payment error: %s"
 msgstr ""
 
 #: includes/class-wpheka-gateway-moneris.php:530
-msgid "Same day refund feature is not available. Please contact plugin author for professional version of this plugin."
+msgid "Refund failed."
+msgstr ""
+
+#: includes/class-wpheka-gateway-moneris.php:545
+msgid "Same-day refunds are part of Moneris Pro. You can refund this order from tomorrow, or upgrade to Pro to refund it today."
 msgstr ""
 
 #. translators: %s: refunded amount
-#: includes/class-wpheka-gateway-moneris.php:549
+#: includes/class-wpheka-gateway-moneris.php:564
 #, php-format
 msgid "Amount Refunded: %s"
 msgstr ""
 
-#: wc-moneris-payment-gateway.php:47
+#: wc-moneris-payment-gateway.php:49
 msgid "Moneris - cURL is not installed."
 msgstr ""
 
 #. translators: 1. URL link.
-#: wc-moneris-payment-gateway.php:58
+#: wc-moneris-payment-gateway.php:60
 #, php-format
 msgid "Moneris requires WooCommerce to be installed and active. You can download %s here."
 msgstr ""
 
 #. translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version.
-#: wc-moneris-payment-gateway.php:69
+#: wc-moneris-payment-gateway.php:71
 #, php-format
 msgid "Moneris requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
 msgstr ""
 
 #. translators: 1) int version 2) int version
-#: wc-moneris-payment-gateway.php:80
+#: wc-moneris-payment-gateway.php:82
 #, php-format
 msgid "WooCommerce Moneris - The minimum PHP version required for this plugin is %1$s. You are running %2$s."
 msgstr ""
 
-#: wc-moneris-payment-gateway.php:90
+#: wc-moneris-payment-gateway.php:92
 msgid "Pro version of Moneris gateway plugin is already active, Please deactivate it first to install the free version."
 msgstr ""
 
-#: wc-moneris-payment-gateway.php:318
+#: wc-moneris-payment-gateway.php:326
 msgid "Settings"
 msgstr ""
 
-#: wc-moneris-payment-gateway.php:336
+#: wc-moneris-payment-gateway.php:344
 msgid "Open a support request at wpheka.com"
 msgstr ""
 
-#: wc-moneris-payment-gateway.php:336
+#: wc-moneris-payment-gateway.php:344
 msgid "Support"
+msgstr ""
+
+#: assets/js/block/frontend/payment-block.js:1
+#: resources/js/frontend/CreditCardFields.js:31
+msgid "Card Number"
+msgstr ""
+
+#: assets/js/block/frontend/payment-block.js:1
+#: resources/js/frontend/CreditCardFields.js:49
+msgid "Expiry (MM/YY)"
+msgstr ""
+
+#: assets/js/block/frontend/payment-block.js:1
+#: resources/js/frontend/CreditCardFields.js:67
+msgid "CVC"
 msgstr ""

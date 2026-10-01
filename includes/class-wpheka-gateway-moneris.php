@@ -101,30 +101,41 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                 </div>
                 <div id="postbox-container-1" class="postbox-container">
                     <div id="side-sortables" class="meta-box-sortables ui-sortable">
+                        <?php
+                        $pro_url = 'https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/?utm_source=moneris-free&utm_medium=settings&utm_campaign=upgrade';
+                        $pro_groups = array(
+                            __('Sell more', 'wpheka-gateway-moneris') => array(
+                                array(__('Subscriptions', 'wpheka-gateway-moneris'), __('Renewals are charged automatically through WooCommerce Subscriptions.', 'wpheka-gateway-moneris')),
+                                array(__('Saved cards', 'wpheka-gateway-moneris'), __('Returning customers pay with a saved card.', 'wpheka-gateway-moneris')),
+                                array(__('Moneris Checkout', 'wpheka-gateway-moneris'), __('Moneris\'s own secure payment form, so card details never touch your server.', 'wpheka-gateway-moneris')),
+                                array(__('CAD and USD', 'wpheka-gateway-moneris'), __('Send each currency to its own Moneris account.', 'wpheka-gateway-moneris')),
+                            ),
+                            __('Stop fraud', 'wpheka-gateway-moneris') => array(
+                                array(__('3-D Secure', 'wpheka-gateway-moneris'), __('Extra card verification on eligible cards.', 'wpheka-gateway-moneris')),
+                                array(__('Address and CVD checks', 'wpheka-gateway-moneris'), __('You decide which mismatches to accept or decline.', 'wpheka-gateway-moneris')),
+                                array(__('Card-testing protection', 'wpheka-gateway-moneris'), __('Cap payment attempts per order and per IP address.', 'wpheka-gateway-moneris')),
+                            ),
+                            __('Save time', 'wpheka-gateway-moneris') => array(
+                                array(__('Same-day refunds', 'wpheka-gateway-moneris'), __('Refund right from the order screen, even on the day of the sale.', 'wpheka-gateway-moneris')),
+                                array(__('Authorize and capture', 'wpheka-gateway-moneris'), __('Authorize at checkout and capture when you complete the order.', 'wpheka-gateway-moneris')),
+                                array(__('Statement descriptor', 'wpheka-gateway-moneris'), __('Show your own description on customers\' card statements.', 'wpheka-gateway-moneris')),
+                            ),
+                        );
+                        ?>
                         <div class="postbox moneris-pro">
-                            <div class="handlediv" title="Click to toggle"></div>
-                            <h2 class="hndle"><span><span class="dashicons dashicons-update"></span> Upgrade to Pro</span></h2>
+                            <h2 class="hndle"><span class="dashicons dashicons-star-filled"></span> <span class="moneris-pro-title"><?php esc_html_e('Upgrade to Moneris Pro', 'wpheka-gateway-moneris'); ?></span></h2>
                             <div class="inside">
-                                <div class="support-widget">
-                                    <ul>
-                                        <li><span class="pro-feature-list">»</span> New payment method <strong class="moneris-feature-name">Moneris Checkout</strong> added that delivers greater payment security, flexibility and control for online businesses. Read more <a href="https://docs.wpheka.com/plugin/wc-moneris-gateway-pro/configuration#moneris-checkout-mco-configuration" target="_blank">here</a>.</li>
-                                        <li><span class="pro-feature-list">»</span> Route payments to different Moneris accounts based on their currency.</li>
-                                        <li><span class="pro-feature-list">»</span> Customers can save cards to their accounts for future purchases.</li>
-                                        <li><span class="pro-feature-list">»</span> Supports eFraud tools / address and card verification.</li>
-                                        <li><span class="pro-feature-list">»</span> Accepts Major Credit Cards / Debit Cards (Visa, MasterCard, Discover, JCB and American Express).</li>
-                                        <li><span class="pro-feature-list">»</span> Process refunds automatically from within WooCommerce.</li>
-                                        <li><span class="pro-feature-list">»</span> Option to directly charge credit cards or pre authorize credit cards transactions.</li>
-                                        <li><span class="pro-feature-list">»</span> Statement descriptor option (Merchant defined description sent on a per-transaction basis that will appear on the credit card statement appended to the merchant’s business name).</li>
-                                        <li><span class="pro-feature-list">»</span> Moneris Vault support for storing/removing credit card profiles.</li>
-                                        <li><span class="pro-feature-list">»</span> WooCommerce sequential order numbers pro compatibility.</li>
-                                        <li><span class="pro-feature-list">»</span> 3D Secure (3DS) fraud validation support.</li>
-                                        <li><span class="pro-feature-list">»</span> Authorize mode with auto-capture on WooCommerce order completion.</li>
-                                        <li><span class="pro-feature-list">»</span> WooCommerce Blocks checkout support.</li>
-                                        <li><span class="pro-feature-list">»</span> Auto Hassle-Free Updates</li>
-                                        <li><span class="pro-feature-list">»</span> High Priority Customer Support</li>
+                                <p class="moneris-pro-intro"><?php esc_html_e('The free version handles one-off card payments. Pro adds the things growing stores ask us for most.', 'wpheka-gateway-moneris'); ?></p>
+                                <?php foreach ($pro_groups as $pro_group => $pro_features) : ?>
+                                    <h3 class="moneris-pro-group"><?php echo esc_html($pro_group); ?></h3>
+                                    <ul class="moneris-pro-features">
+                                        <?php foreach ($pro_features as $pro_feature) : ?>
+                                            <li><strong><?php echo esc_html($pro_feature[0]); ?></strong> <?php echo esc_html($pro_feature[1]); ?></li>
+                                        <?php endforeach; ?>
                                     </ul>
-                                    <a href="https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/" class="button moneris-upgrade" target="_blank"><span class="dashicons dashicons-star-filled"></span> Upgrade Now</a>
-                                </div>
+                                <?php endforeach; ?>
+                                <a href="<?php echo esc_url($pro_url); ?>" class="button moneris-upgrade" target="_blank" rel="noopener"><?php esc_html_e('Upgrade to Pro', 'wpheka-gateway-moneris'); ?></a>
+                                <p class="moneris-pro-price"><?php esc_html_e('From $79. Includes a year of updates and priority support.', 'wpheka-gateway-moneris'); ?></p>
                             </div>
                         </div>
                         <div class="postbox">
@@ -138,7 +149,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                                     <p>Got a Question, Idea, Problem or Praise?</p>
                                     <ul>
                                         <li>» Please leave us a <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/wc-moneris-payment-gateway?filter=5#postform">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating.</li>
-                                        <li>» <a href="https://www.wpheka.com/submit-ticket/" target="_blank">Support Request</a></li>
+                                        <li>» <a href="https://www.wpheka.com/contact/" target="_blank">Contact Support</a></li>
                                         <li>» <a href="https://www.wpheka.com/product/wc-moneris-payment-gateway/" target="_blank">Documentation and Common issues.</a></li>
                                         <li>» <a href="https://www.wpheka.com/plugins/" target="_blank">Our Plugins Shop</a></li>
                                     </ul>
@@ -339,15 +350,19 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     }
 
     /**
-     * Redact sensitive values (card number, expiry, API token) from the raw
-     * request XML before it is written to logs. PCI-DSS forbids storing the
-     * full PAN anywhere, log files included.
+     * Redact sensitive values (card number, expiry, CVD, API token and the
+     * customer's personal details) from the raw request XML before it is
+     * written to logs. PCI-DSS forbids storing the full PAN anywhere, log
+     * files included, and cust_info carries the billing and shipping
+     * addresses, email and order notes, which do not belong in a debug log.
      *
      * @param  string $xml Raw request XML.
      * @return string
      */
     private function redact_sensitive_xml($xml)
     {
+        $xml = preg_replace('/<cust_info>.*?<\/cust_info>/s', '<cust_info>[redacted]</cust_info>', $xml);
+
         $xml = preg_replace_callback(
             '/<pan>(.*?)<\/pan>/s',
             function ($matches) {
@@ -358,7 +373,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             $xml
         );
 
-        return preg_replace('/<(expdate|api_token)>.*?<\/\1>/s', '<$1>[redacted]</$1>', $xml);
+        return preg_replace('/<(expdate|api_token|cvd_value)>.*?<\/\1>/s', '<$1>[redacted]</$1>', $xml);
     }
 
     /**
@@ -512,7 +527,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
     {
         if ($amount <= 0) {
             WPHEKA_Moneris_Logger::log('Refund failed.');
-            return new WP_Error('error', __('Refund failed.', 'woocommerce'));
+            return new WP_Error('error', __('Refund failed.', 'wpheka-gateway-moneris'));
         }
 
         $store_id = $this->store_id;
@@ -523,11 +538,15 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             return new WP_Error('error', __('Order not found.', 'wpheka-gateway-moneris'));
         }
 
-        $order_placed_datetime = $this->get_order_meta_data('_paid_date', $order, $order_id);
+        // The order's own paid date, in the site's time zone. Reading the
+        // _paid_date meta returned nothing on HPOS stores, where WooCommerce
+        // keeps that date in a column, so same-day refunds were never caught.
+        $date_paid = $order->get_date_paid();
+        $order_placed_datetime = $date_paid ? $date_paid->date('Y-m-d H:i:s') : $this->get_order_meta_data('_paid_date', $order, $order_id);
 
         if (!empty($order_placed_datetime) && $this->is_same_day($order_placed_datetime)) {
-            WPHEKA_Moneris_Logger::log('Same day refund feature is not available. Please contact plugin author for professional version of this plugin.');
-            return new WP_Error('error', __('Same day refund feature is not available. Please contact plugin author for professional version of this plugin.', 'wpheka-gateway-moneris'));
+            WPHEKA_Moneris_Logger::log('Same-day refund refused: same-day refunds are a Moneris Pro feature.');
+            return new WP_Error('error', __('Same-day refunds are part of Moneris Pro. You can refund this order from tomorrow, or upgrade to Pro to refund it today.', 'wpheka-gateway-moneris'));
         }
 
         $params = array(

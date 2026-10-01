@@ -1,19 +1,56 @@
 .postbox.moneris-pro {
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-    color: #fff;
+    border-top: 4px solid #00a99d;
 }
 
 .postbox.moneris-pro h2.hndle {
     text-align: center;
-    color: #fff;
+    font-size: 15px;
 }
 
-.postbox.moneris-pro span.pro-feature-list {
-    color: #000;
+.postbox.moneris-pro h2.hndle .dashicons {
+    color: #f0b849;
 }
 
-.postbox.moneris-pro strong.moneris-feature-name {
-    color: #000;
+.postbox.moneris-pro .moneris-pro-intro {
+    font-size: 13px;
+    color: #50575e;
+    margin-top: 0;
+}
+
+.postbox.moneris-pro h3.moneris-pro-group {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #00857c;
+    margin: 16px 0 6px;
+}
+
+.postbox.moneris-pro ul.moneris-pro-features {
+    margin: 0;
+}
+
+.postbox.moneris-pro ul.moneris-pro-features li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 7px;
+    line-height: 1.45;
+}
+
+.postbox.moneris-pro ul.moneris-pro-features li::before {
+    content: "\f147";
+    font-family: dashicons;
+    position: absolute;
+    left: 0;
+    top: -1px;
+    font-size: 18px;
+    color: #00a99d;
+}
+
+.postbox.moneris-pro .moneris-pro-price {
+    text-align: center;
+    font-size: 12px;
+    color: #646970;
+    margin: 8px 0 0;
 }
 
 h2.hndle {
@@ -30,20 +67,25 @@ a.button.moneris-upgrade {
     display: block;
     text-align: center;
     width: 100%;
-    border-radius: 50px;
+    margin-top: 18px;
+    padding: 6px 12px;
+    border-radius: 4px;
     border: none;
-    background: #00c9b7;
+    background: #00a99d;
     color: #fff;
-    -webkit-box-shadow: 10px 10px 14px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 10px 10px 14px 1px rgba(0, 0, 0, 0.2);
-    transition: all 0.5s;
-    text-transform: uppercase;
-    letter-spacing: 0.094em;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
 }
 
 a.button.moneris-upgrade:hover,
 a.button.moneris-upgrade:active,
 a.button.moneris-upgrade:focus {
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    background: #00857c;
+    color: #fff;
+}
+
+.postbox.moneris-pro ul.moneris-pro-features li strong {
+    display: block;
+    color: #1d2327;
 }
