@@ -3,7 +3,7 @@ Contributors: akshayaswaroop, wpheka
 Tags: wc moneris payment gateway, woocommerce moneris payment gateway, moneris, payment gateway, credit card, canada woocommerce payment gateway, canada payment gateway
 Requires at least: 4.9
 Tested up to: 7.1.2
-Stable tag: 3.8.0
+Stable tag: 3.8.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://paypal.me/swaroopakshaya
@@ -42,6 +42,14 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 2. Plugin settings screen
 
 == Changelog ==
+
+2026-10-01 - version 3.8.1
+* Fix - Debug logs no longer include the customer's billing and shipping details, email, phone or order notes.
+* Fix - The same-day refund limit now applies on stores using High-Performance Order Storage, as it already did on other stores.
+* Fix - The card form styles now load in the Checkout block, and the card fields are properly labelled for screen readers.
+* Fix - The card field labels in the Checkout block, and the refund error message, can now be translated.
+* Enhancement - A clearer settings sidebar, with an up-to-date list of what Pro adds and a direct link to our contact page.
+* Enhancement - Declared the plugin license. WordPress 7.1.2 and WooCommerce 11.1.2 compatibility.
 
 2026-07-14 - version 3.8.0
 * Fix - Full card number and API token are now redacted from debug logs
