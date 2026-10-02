@@ -7,7 +7,7 @@
  * Author URI: https://www.wpheka.com
  * Version: 3.8.1
  * Requires at least: 4.9
- * Tested up to: 7.1.2
+ * Tested up to: 7.1
  * Requires Plugins: woocommerce
  * WC requires at least: 3.0
  * WC tested up to: 11.1.2

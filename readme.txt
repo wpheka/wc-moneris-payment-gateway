@@ -2,7 +2,7 @@
 Contributors: akshayaswaroop, wpheka
 Tags: moneris, woocommerce, payment gateway, credit card, canada
 Requires at least: 4.9
-Tested up to: 7.1.2
+Tested up to: 7.1
 Stable tag: 3.8.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
