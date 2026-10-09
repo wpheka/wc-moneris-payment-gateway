@@ -8,17 +8,49 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://paypal.me/swaroopakshaya
 
-A simple plugin that easily add moneris payment gateway to your WooCommerce website.
+Accept credit card payments in WooCommerce with Moneris. Customers pay on your own checkout page, classic or block.
 
 == Description ==
-Moneris is Canada's leading processor of Debit and credit card payments. This WooCommerce extension **automatically** adds moneris payment gateway to your woocommerce website and allows you to keep the customer on your site for the checkout process.
+Moneris is Canada's leading processor of Debit and credit card payments. This WooCommerce extension **automatically** adds the Moneris payment gateway to your WooCommerce website and allows you to keep the customer on your site for the checkout process.
 
-= Key Features: =
+### 💳 KEY FEATURES
 
 * API based credit card payment method which allows a user to enter a credit card on the WooCommerce checkout page and capture payment to the Moneris account without leaving the WooCommerce website.
+* Works with the classic checkout and the WooCommerce Checkout block.
 * Switch between **Sandbox** and **Live** environments.
+* Choose which card logos to show at checkout.
+* Refund orders from the WooCommerce order screen, from the day after the sale.
+* The Moneris transaction ID is added to the order notes.
+* Optional debug logging, with card numbers and customer details left out of the log.
+* Compatible with WooCommerce High-Performance Order Storage (HPOS).
 
 If you enjoyed this plugin then please put a review, that will encourage me to bring some more …
+
+### ⭐ WC MONERIS PAYMENT GATEWAY PRO
+
+The free plugin takes one-off card payments. For stores that need more, WC Moneris Payment Gateway Pro adds:
+
+#### 📈 Sell more
+
+* **Subscriptions:** renewals are charged automatically through WooCommerce Subscriptions.
+* **Saved cards:** returning customers pay with a card saved in your Moneris Vault.
+* **Moneris Checkout:** Moneris's own hosted payment form, so card details never touch your server.
+* **CAD and USD:** send each currency to its own Moneris account.
+
+#### 🛡️ Stop fraud
+
+* **3-D Secure:** extra card verification on eligible cards.
+* **Address and CVD checks:** you decide which mismatches to accept or decline.
+* **Card-testing protection:** limit payment attempts per order and per IP address.
+
+#### ⏱️ Save time
+
+* **Same-day refunds:** refund from the order screen on the day of the sale too.
+* **Authorize and capture:** authorize at checkout and capture when you complete the order.
+* **Statement descriptor:** show your own description on customers' card statements.
+* **Priority support** from the WPHEKA team.
+
+[See everything Pro adds on wpheka.com](https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=moneris-free&utm_content=pro-section)
 
 == Installation ==
 
@@ -35,6 +67,18 @@ If you enjoyed this plugin then please put a review, that will encourage me to b
 
 = How It Works? =
 *check installation*
+
+= What is the difference between the free and Pro versions? =
+
+The free plugin takes one-off card payments on your checkout page, with refunds from the order screen from the day after the sale. Pro adds subscriptions, saved cards, Moneris Checkout, separate CAD and USD accounts, 3-D Secure, address and CVD checks, card-testing protection, same-day refunds, authorize and capture, a statement descriptor and priority support. See the full list on the [Pro product page](https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=moneris-free&utm_content=faq).
+
+= Can I upgrade without losing my settings? =
+
+Yes, mostly. Pro uses the same Moneris payment method as the free plugin, so the title, description, sandbox setting and card logos carry over. Pro keeps separate Store ID and API token fields for CAD and USD, so enter your Store ID and API token again under Merchant Settings (CAD) after you switch. Deactivate the free plugin, then install and activate Pro.
+
+= Do I get support? =
+
+Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes a year of priority support and updates from the WPHEKA team.
 
 == Screenshots ==
 
