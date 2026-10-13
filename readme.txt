@@ -11,7 +11,7 @@ Donate link: https://paypal.me/swaroopakshaya
 Accept credit card payments in WooCommerce with Moneris. Customers pay on your own checkout page, classic or block.
 
 == Description ==
-Moneris is Canada's leading processor of Debit and credit card payments. This WooCommerce extension **automatically** adds the Moneris payment gateway to your WooCommerce website and allows you to keep the customer on your site for the checkout process.
+Moneris is Canada's leading processor of debit and credit card payments. This WooCommerce extension **automatically** adds the Moneris payment gateway to your WooCommerce website and allows you to keep the customer on your site for the checkout process.
 
 ### 💳 KEY FEATURES
 
