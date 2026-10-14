@@ -87,6 +87,9 @@ Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes 
 
 == Changelog ==
 
+Unreleased
+* Tweak - Removed incomplete WooCommerce Pre-Orders compatibility code.
+
 2026-10-01 - version 3.8.1
 * Fix - Debug logs no longer include the customer's billing and shipping details, email, phone or order notes.
 * Fix - The same-day refund limit now applies on stores using High-Performance Order Storage, as it already did on other stores.

@@ -37,7 +37,6 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
             'products',
             'default_credit_card_form',
             'refunds',
-            'pre-orders',
         );
         // If you want to show an image next to the gateway's name on the frontend, enter a URL to an image.
         $this->icon = WPHEKA_MONERIS_PLUGIN_ICON;
