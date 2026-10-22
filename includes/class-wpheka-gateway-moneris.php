@@ -53,7 +53,8 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         $this->sandbox = $this->get_option('sandbox');
         $this->store_id = $this->get_option('store_id');
         $this->api_token = $this->get_option('api_token');
-        $this->preferred_cards = $this->get_option('preferred_cards');
+        // The field's default is the string 'visa'; a saved value is a list.
+        $this->preferred_cards = array_filter((array) $this->get_option('preferred_cards'));
         $this->logging         = $this->get_option('logging');
 
         add_filter('wpheka_moneris_logging', array($this, 'is_logging_enabled'));
@@ -98,7 +99,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                 <div id="post-body-content">
                     <?php parent::admin_options(); ?>
                 </div>
-                <div id="postbox-container-1" class="postbox-container">
+                <div id="postbox-container-1" class="postbox-container moneris-sidebar">
                     <div id="side-sortables" class="meta-box-sortables ui-sortable">
                         <?php
                         $pro_url = 'https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/?utm_source=moneris-free&utm_medium=settings&utm_campaign=upgrade';
