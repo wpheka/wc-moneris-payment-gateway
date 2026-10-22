@@ -545,8 +545,8 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
         $order_placed_datetime = $date_paid ? $date_paid->date('Y-m-d H:i:s') : $this->get_order_meta_data('_paid_date', $order, $order_id);
 
         if (!empty($order_placed_datetime) && $this->is_same_day($order_placed_datetime)) {
-            WPHEKA_Moneris_Logger::log('Same-day refund refused: same-day refunds are a Moneris Pro feature.');
-            return new WP_Error('error', __('Same-day refunds are part of Moneris Pro. You can refund this order from tomorrow, or upgrade to Pro to refund it today.', 'wpheka-gateway-moneris'));
+            WPHEKA_Moneris_Logger::log('Same-day refund refused: WC Moneris Payment Gateway refunds orders from the day after they were paid.');
+            return new WP_Error('error', __('WC Moneris Payment Gateway can refund this order from tomorrow, the day after it was paid. If you need to refund on the same day, Moneris Pro can do that from the order screen.', 'wpheka-gateway-moneris'));
         }
 
         $params = array(

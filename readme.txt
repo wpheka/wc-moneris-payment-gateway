@@ -89,6 +89,9 @@ Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes 
 
 Unreleased
 * Tweak - Removed incomplete WooCommerce Pre-Orders compatibility code.
+* Tweak - A clearer message when a refund is asked for on the day the order was paid.
+* Fix - The default card logo shows at checkout before the settings are first saved, without a PHP warning.
+* Fix - The settings sidebar no longer changes box headings on other admin screens.
 
 2026-10-01 - version 3.8.1
 * Fix - Debug logs no longer include the customer's billing and shipping details, email, phone or order notes.
