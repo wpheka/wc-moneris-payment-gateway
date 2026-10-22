@@ -46,12 +46,12 @@ $wpheka_moneris_check   = static function ( $name, $ok, $detail = '' ) use ( &$w
 	WP_CLI::log( ( $ok ? 'PASS  ' : 'FAIL  ' ) . $name . ( $ok || '' === $detail ? '' : ' -- ' . $detail ) );
 };
 
-// An order paid a moment ago with this gateway.
+// An order paid a moment ago with this gateway. The refund check reads only the paid date, so
+// the order stays pending: a status change would fire WooCommerce's order emails.
 $wpheka_moneris_order = wc_create_order();
 $wpheka_moneris_order->set_payment_method( 'moneris' );
 $wpheka_moneris_order->set_total( '25.00' );
 $wpheka_moneris_order->set_date_paid( time() );
-$wpheka_moneris_order->set_status( 'processing' );
 $wpheka_moneris_order->save();
 
 $wpheka_moneris_gateway = new WPHEKA_Gateway_Moneris();
