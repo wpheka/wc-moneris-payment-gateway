@@ -135,7 +135,7 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                                     </ul>
                                 <?php endforeach; ?>
                                 <a href="<?php echo esc_url($pro_url); ?>" class="button moneris-upgrade" target="_blank" rel="noopener"><?php esc_html_e('Upgrade to Pro', 'wpheka-gateway-moneris'); ?></a>
-                                <p class="moneris-pro-price"><?php esc_html_e('From $79. Includes a year of updates and priority support.', 'wpheka-gateway-moneris'); ?></p>
+                                <p class="moneris-pro-price"><?php esc_html_e('From $79. Includes a year of updates and support.', 'wpheka-gateway-moneris'); ?></p>
                             </div>
                         </div>
                         <div class="postbox">
@@ -237,6 +237,36 @@ class WPHEKA_Gateway_Moneris extends WC_Payment_Gateway_CC
                 'default'     => 'no',
             ),
         );
+    }
+
+    /**
+     * Where WooCommerce's Payments screen sends "Manage": the WPHEKA > Moneris page when it
+     * is loaded (PHP 7.4 and later), otherwise WooCommerce's own Moneris section.
+     *
+     * @return string
+     */
+    public function get_settings_url()
+    {
+        if (class_exists('WPHEKA_Gateway_Moneris_Admin_Page')) {
+            return WPHEKA_Gateway_Moneris_Admin_Page::url();
+        }
+
+        return admin_url('admin.php?page=wc-settings&tab=checkout&section=' . $this->id);
+    }
+
+    /**
+     * Keep only the known card logos, in the order they were posted. Clearing every logo
+     * saves an empty list instead of an empty string or an empty value.
+     *
+     * @param string $key   Field key.
+     * @param mixed  $value Posted value.
+     * @return array
+     */
+    public function validate_preferred_cards_field($key, $value)
+    {
+        $value = is_array($value) ? array_map('wc_clean', array_map('stripslashes', $value)) : array();
+
+        return array_values(array_intersect($value, array_keys($this->form_fields['preferred_cards']['options'])));
     }
 
     /**

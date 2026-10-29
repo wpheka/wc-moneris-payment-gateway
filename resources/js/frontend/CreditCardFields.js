@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Cleave from 'cleave.js/react';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __ } from '@wordpress/i18n';
+import { formatCardNumber, formatExpiry, formatCvc } from './card-format.mjs';
 
 const inputStyle = {
     width: '100%',
@@ -21,6 +22,15 @@ const inputErrorStyle = {
 
 const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) => {
     const { formState: { errors } } = useForm();
+    const [ values, setValues ] = useState( { number: '', expiry: '', cvc: '' } );
+
+    // Formats whatever arrives (typing, paste, autofill) and hands the result on as the
+    // field's value, the same shape the server has always read.
+    const change = ( key, format ) => ( e ) => {
+        const value = format( e.target.value );
+        setValues( ( prev ) => ( { ...prev, [ key ]: value } ) );
+        handleInputChange( { target: { name: e.target.name, value } } );
+    };
 
     return (
         <div style={ { padding: '0.5rem 0' } }>
@@ -30,13 +40,16 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
             <label style={ { display: 'block', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-number` }>
                 { __( 'Card Number', 'wpheka-gateway-moneris' ) }
             </label>
-            <Cleave
+            <input
+                type="text"
                 id={ `${METHOD_NAME}-card-number` }
                 name={ `${METHOD_NAME}-card-number` }
-                options={ { creditCard: true } }
+                inputMode="numeric"
+                autoComplete="cc-number"
                 placeholder="1234 5678 9012 3456"
                 style={ errors.cardNumber ? inputErrorStyle : inputStyle }
-                onChange={ handleInputChange }
+                value={ values.number }
+                onChange={ change( 'number', formatCardNumber ) }
             />
             { errors.cardNumber && (
                 <p style={ { color: 'red', marginTop: '-0.3rem', marginBottom: '0.75rem', fontSize: '0.875rem' } }>
@@ -48,13 +61,16 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
             <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-expiry` }>
                 { __( 'Expiry (MM/YY)', 'wpheka-gateway-moneris' ) }
             </label>
-            <Cleave
+            <input
+                type="text"
                 id={ `${METHOD_NAME}-card-expiry` }
                 name={ `${METHOD_NAME}-card-expiry` }
-                options={ { date: true, datePattern: [ 'm', 'y' ] } }
+                inputMode="numeric"
+                autoComplete="cc-exp"
                 placeholder="MM/YY"
                 style={ errors.expiry ? inputErrorStyle : inputStyle }
-                onChange={ handleInputChange }
+                value={ values.expiry }
+                onChange={ change( 'expiry', formatExpiry ) }
             />
             { errors.expiry && (
                 <p style={ { color: 'red', marginTop: '-0.3rem', marginBottom: '0.75rem', fontSize: '0.875rem' } }>
@@ -66,13 +82,16 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
             <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-cvc` }>
                 { __( 'CVC', 'wpheka-gateway-moneris' ) }
             </label>
-            <Cleave
+            <input
+                type="text"
                 id={ `${METHOD_NAME}-card-cvc` }
                 name={ `${METHOD_NAME}-card-cvc` }
-                options={ { blocks: [ 4 ], numericOnly: true } }
+                inputMode="numeric"
+                autoComplete="cc-csc"
                 placeholder="CVC"
                 style={ errors.cvc ? inputErrorStyle : inputStyle }
-                onChange={ handleInputChange }
+                value={ values.cvc }
+                onChange={ change( 'cvc', formatCvc ) }
             />
             { errors.cvc && (
                 <p style={ { color: 'red', marginTop: '-0.3rem', marginBottom: '0.75rem', fontSize: '0.875rem' } }>

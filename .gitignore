@@ -82,3 +82,9 @@ build/
 
 # npm lockfile
 package-lock.json
+
+# Functional test scratch files
+tests/functional/.tmp/
+
+# Local wp-env overrides (for example a PHP version for one run)
+tests/env/.wp-env.override.json

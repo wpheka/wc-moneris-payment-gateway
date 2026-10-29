@@ -22,6 +22,11 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 
 		private static $action_nonce = 'wpheka-gateway-moneris-plugin-donation-ajax-nonce';
 
+		/**
+		 * The admin-post action behind the dismiss link on the WPHEKA > Moneris page.
+		 */
+		const DISMISS_ACTION = 'wpheka_gateway_moneris_donation_dismiss';
+
 		public static function init() {
 			self::hooks();
 		}
@@ -32,6 +37,7 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 				add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 				add_action( 'wp_ajax_wpheka_gateway_moneris_donation_dismiss_notice', array( __CLASS__, 'dismiss_notice' ) );
 			}
+			add_action( 'admin_post_' . self::DISMISS_ACTION, array( __CLASS__, 'dismiss_link' ) );
 			add_filter( 'plugin_row_meta', array( __CLASS__, 'plugin_row_meta' ), 10, 3 );
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_styles' ) );
 		}
@@ -75,6 +81,38 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 				update_user_meta( $user_id, self::$version_meta, WPHEKA_MONERIS_VERSION );
 			}
 
+			exit;
+		}
+
+		/**
+		 * Whether the donation notice is due for the current user.
+		 *
+		 * @return bool
+		 */
+		public static function is_shown() {
+			return self::show();
+		}
+
+		/**
+		 * The dismiss link the WPHEKA > Moneris page uses (its own notices replace
+		 * WordPress's there; everywhere else the notice and its AJAX dismissal stay).
+		 *
+		 * @return string
+		 */
+		public static function dismiss_url() {
+			return wp_nonce_url( admin_url( 'admin-post.php?action=' . self::DISMISS_ACTION ), self::DISMISS_ACTION );
+		}
+
+		/**
+		 * Record the dismissal from the link, as the AJAX dismissal does.
+		 */
+		public static function dismiss_link() {
+			check_admin_referer( self::DISMISS_ACTION );
+			$user_id = get_current_user_id();
+			if ( $user_id ) {
+				update_user_meta( $user_id, self::$version_meta, WPHEKA_MONERIS_VERSION );
+			}
+			wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url() );
 			exit;
 		}
 

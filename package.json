@@ -1,6 +1,6 @@
 {
   "name": "wpheka-gateway-moneris",
-  "version": "3.8.1",
+  "version": "3.9.0",
   "description": "Take credit card payments on your WooCommerce store using Moneris.",
   "scripts": {
     "start": "wp-scripts start",
@@ -23,7 +23,6 @@
     "@wordpress/scripts": "^32.6.0"
   },
   "dependencies": {
-    "cleave.js": "^1.6.0",
     "react-hook-form": "^7.81.0"
   }
 }

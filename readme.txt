@@ -2,8 +2,9 @@
 Contributors: akshayaswaroop, wpheka
 Tags: moneris, woocommerce, payment gateway, credit card, canada
 Requires at least: 4.9
-Tested up to: 7.1.2
-Stable tag: 3.8.1
+Tested up to: 7.1.4
+Requires PHP: 7.4
+Stable tag: 3.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://paypal.me/swaroopakshaya
@@ -60,7 +61,7 @@ The free plugin takes one-off card payments. For stores that need more, WC Moner
 
 1. Upload 'wc-moneris-payment-gateway' to the '/wp-content/plugins/' directory or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Admin area -> WooCommerce -> Settings -> Payments (Tab) -> Moneris
+3. Go to WPHEKA -> Moneris in your admin menu (the Moneris entry under WooCommerce -> Settings -> Payments opens the same page)
 4. Done!
 
 == Frequently Asked Questions ==
@@ -74,7 +75,7 @@ The free plugin takes one-off card payments on your checkout page, with refunds 
 
 = Can I upgrade without losing my settings? =
 
-Yes, mostly. Pro uses the same Moneris payment method as the free plugin, so the title, description, sandbox setting and card logos carry over. Pro keeps separate Store ID and API token fields for CAD and USD, so enter your Store ID and API token again under Merchant Settings (CAD) after you switch. Deactivate the free plugin, then install and activate Pro.
+Yes. Pro uses the same Moneris payment method as the free plugin, so the title, description, sandbox setting and card logos carry over. Moneris Pro 5.1.0 and later also take over your Store ID and API token as Pro's CAD account. Deactivate the free plugin, then install and activate Pro.
 
 = Do I get support? =
 
@@ -87,7 +88,11 @@ Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes 
 
 == Changelog ==
 
-Unreleased
+2026-10-29 - version 3.9.0
+* Update - Settings moved to their own page, WPHEKA > Moneris, with Settings, Transactions and Help tabs. The Moneris link under WooCommerce > Settings > Payments opens the new page. Your settings are kept as they are.
+* Add - Moneris payments and refunds in the last 30 days, the newest Moneris orders and a getting started checklist on the new page.
+* Fix - Card fields in the Checkout block now accept browser autofill and pasted card numbers. Before, they could stay empty, so the order could not be paid.
+* Update - Requires PHP 7.4 or later. Stores on older PHP keep 3.8.1.
 * Tweak - Removed incomplete WooCommerce Pre-Orders compatibility code.
 * Tweak - A clearer message when a refund is asked for on the day the order was paid.
 * Fix - The default card logo shows at checkout before the settings are first saved, without a PHP warning.

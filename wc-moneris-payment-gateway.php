@@ -5,13 +5,13 @@
  * Description: Take credit card payments on your WooCommerce store using Moneris. <a href="https://www.wpheka.com" target="_blank">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>
  * Author: WPHEKA
  * Author URI: https://www.wpheka.com
- * Version: 3.8.1
+ * Version: 3.9.0
  * Requires at least: 4.9
- * Tested up to: 7.1.2
+ * Tested up to: 7.1.4
  * Requires Plugins: woocommerce
  * WC requires at least: 3.0
  * WC tested up to: 11.1.2
- * Requires PHP: 5.6
+ * Requires PHP: 7.4
  * Text Domain: wpheka-gateway-moneris
  * Domain Path: /languages
  * License: GPLv3
@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
 /**
  * Required minimums and constants
  */
-define('WPHEKA_MONERIS_VERSION', '3.8.1');
+define('WPHEKA_MONERIS_VERSION', '3.9.0');
 define('WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0');
 define('WPHEKA_MONERIS_MIN_WC_VER', '3.0');
 define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '17.8');
@@ -273,6 +273,18 @@ function wpheka_gateway_moneris_init()
                 require_once dirname(__FILE__) . '/includes/wpheka-moneris-api/vendor/autoload.php';
                 require_once dirname(__FILE__) . '/includes/class-wpheka-gateway-moneris.php';
 
+                // The WPHEKA > Moneris page needs PHP 7.4 (the admin UI kit). Below that the
+                // gateway keeps its WooCommerce settings screen and payments work as before.
+                if (version_compare(PHP_VERSION, '7.4', '>=')) {
+                    require_once dirname(__FILE__) . '/includes/admin/class-wpheka-gateway-moneris-admin-page.php';
+                    WPHEKA_Gateway_Moneris_Admin_Page::watch_stats();
+
+                    if (is_admin()) {
+                        require_once dirname(__FILE__) . '/includes/wpheka-ui/load.php';
+                        WPHEKA_Gateway_Moneris_Admin_Page::init();
+                    }
+                }
+
                 add_filter('woocommerce_payment_gateways', array($this, 'add_gateways'));
                 add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'plugin_action_links'));
                 add_filter('plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2);
@@ -322,8 +334,9 @@ function wpheka_gateway_moneris_init()
              */
             public function plugin_action_links($links)
             {
+                $settings_url = class_exists('WPHEKA_Gateway_Moneris_Admin_Page') ? WPHEKA_Gateway_Moneris_Admin_Page::url() : admin_url('admin.php?page=wc-settings&tab=checkout&section=moneris');
                 $plugin_links = array(
-                    '<a href="admin.php?page=wc-settings&tab=checkout&section=moneris">' . esc_html__('Settings', 'wpheka-gateway-moneris') . '</a>',
+                    '<a href="' . esc_url($settings_url) . '">' . esc_html__('Settings', 'wpheka-gateway-moneris') . '</a>',
                 );
 
                 return array_merge($plugin_links, $links);
