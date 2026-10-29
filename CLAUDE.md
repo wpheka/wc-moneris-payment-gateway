@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-WC Moneris Payment Gateway (v3.8.0) — a WooCommerce credit card payment gateway for Moneris (Canada's payment processor), by WPHEKA. Text domain: `wpheka-gateway-moneris`. The plugin skips loading if the Pro version of the gateway is already active on the site.
+WC Moneris Payment Gateway (v3.9.0) — a WooCommerce credit card payment gateway for Moneris (Canada's payment processor), by WPHEKA. Text domain: `wpheka-gateway-moneris`. The plugin skips loading if the Pro version of the gateway is already active on the site.
 
 ## Build Commands
 
@@ -33,8 +33,9 @@ The `vendor/` directory is committed; only run composer if changing the library.
 - `includes/wpheka-moneris-api/src/` — `Gateway.php` (wrapper) and `mpgClasses.php` (Moneris mpg API classes for HTTPS posts to Moneris).
 - `includes/class-wpheka-moneris-logger.php` — logging via WC logger, gated by the `wpheka_moneris_logging` filter/setting.
 - `includes/blocks/class-wpheka-gateway-moneris-blocks-support.php` — `AbstractPaymentMethodType` implementation for WooCommerce Blocks checkout (payment method name `moneris`). Its card-field stylesheet is attached to the `woocommerce/checkout` block via `wp_enqueue_block_style()`.
-- `includes/admin/` — deactivation feedback and donation notice classes (admin only).
-- `resources/js/frontend/` — React source for the blocks checkout card form (`cleave.js`, `react-hook-form`).
+- `includes/admin/` — deactivation feedback and donation notice classes (admin only), and `class-wpheka-gateway-moneris-admin-page.php`: the **WPHEKA > Moneris** page (3.9.0; Settings, Transactions, Help). It has no settings of its own: it renders the live gateway's options and saves through `process_admin_options()` on `WC()->payment_gateways()->payment_gateways()['moneris']`, firing WooCommerce's gateway save hook with complete values in `$_POST`. Cut-short posts (no end marker, a missing non-checkbox field) save nothing; fields other code adds keep their stored values. The old `section=moneris` redirects on GET only. Stats count orders by WooCommerce's paid date (any status), cached an hour and cleared on payment/refund/status change (`watch_stats()`, hooked on every request).
+- `includes/wpheka-ui/`, `assets/wpheka-ui/` — the vendored WPHEKA admin UI kit (namespace `WPHEKA_Gateway_Moneris\AdminUI`). Never edit here: change `wpheka-admin-ui/` at the WordPress root and re-vendor with `php wpheka-admin-ui/bin/vendor.php <plugin> 'WPHEKA_Gateway_Moneris\AdminUI' wpheka-gateway-moneris`.
+- `resources/js/frontend/` — React source for the blocks checkout card form. `card-format.mjs` formats the card fields (Cleave.js was removed in 3.9.0: it emptied fields filled without a key press, such as autofill); the server reads `"4242 4242 4242 4242"`, `MM/YY` and CVC digits.
 
 ## Conventions
 
@@ -54,7 +55,11 @@ After modifying any PHP file, immediately run PHPCS on that file and fix the rep
 - Prefix functions/hooks/constants with `wpheka_moneris` / `WPHEKA_MONERIS`
 - Escape output (`esc_html__`, `esc_attr`, `esc_url`); translations use text domain `wpheka-gateway-moneris`
 - Order meta access must stay HPOS-compatible (use the existing helper methods, not direct `get_post_meta`)
-- Minimum supported PHP is 5.6 — avoid newer-PHP-only syntax in plugin PHP code
+- `Requires PHP: 7.4` (header and readme) since 3.9.0, but the runtime minimum stays 5.6 so the gateway always registers: every file loaded before the `version_compare(PHP_VERSION, '7.4', '>=')` gate in the main file must parse on PHP 5.6 (`run.sh` lints them on 5.6 and 7.0). The admin page and the kit load only behind that gate.
+
+## Functional suite
+
+`bash tests/functional/run.sh` runs the full release suite (331 cases at 3.9.0) on the plugin's **own wp-env store** (`tests/env`, http://localhost:8894, admin/password), never on the shared MAMP site (Moneris Pro is active there). Start it once with `cd tests/env && npx -y @wordpress/env@11 start`; a `tests/env/.wp-env.override.json` (gitignored) can set `phpVersion` for one run. It covers the settings page and save, stats on HPOS and posts, a rollback to 3.8.1, the page in a browser, real sandbox checkouts (classic, block, autofilled) with a refund, log redaction and debug.log.
 
 ## Vendored Moneris Library
 
