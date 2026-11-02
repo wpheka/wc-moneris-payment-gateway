@@ -292,7 +292,7 @@ class WPHEKA_Deactivation_Tracker {
 
 						if ( inputType !== '' ) {
 							parent.append( $(reasonInputHtml) );
-							parent.find('input, textarea').attr('placeholder', inputPlaceholder).focus();
+							parent.find('input, textarea').attr('placeholder', inputPlaceholder).trigger('focus');
 						}
 					});
 

@@ -83,10 +83,14 @@ Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes 
 
 == Screenshots ==
 
-1. Plugin settings link.
-2. Plugin settings screen
+1. Settings in WPHEKA > Moneris: the payment method name, card logos, your Moneris account and sandbox mode.
+2. Card payment at the block checkout.
+3. Card payment at the classic checkout.
 
 == Changelog ==
+
+= Unreleased =
+* Tweak - The donation notice and the deactivation feedback dialog use `.on( 'click' )` and `.trigger( 'focus' )` instead of jQuery's deprecated `.click()` and `.focus()` shorthands, so jQuery Migrate no longer warns on every admin page.
 
 2026-10-29 - version 3.9.0
 * Update - Settings moved to their own page, WPHEKA > Moneris, with Settings, Transactions and Help tabs. The Moneris link under WooCommerce > Settings > Payments opens the new page. Your settings are kept as they are.
