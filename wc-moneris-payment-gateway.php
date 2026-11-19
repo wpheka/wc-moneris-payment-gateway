@@ -5,12 +5,12 @@
  * Description: Take credit card payments on your WooCommerce store using Moneris. <a href="https://www.wpheka.com" target="_blank">Get more plugins for your e-commerce on <strong>WPHEKA</strong></a>
  * Author: WPHEKA
  * Author URI: https://www.wpheka.com
- * Version: 3.9.0
+ * Version: 3.10.0
  * Requires at least: 4.9
- * Tested up to: 7.1.4
+ * Tested up to: 7.1.5
  * Requires Plugins: woocommerce
  * WC requires at least: 3.0
- * WC tested up to: 11.1.2
+ * WC tested up to: 11.3.0
  * Requires PHP: 7.4
  * Text Domain: wc-moneris-payment-gateway
  * Domain Path: /languages
@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
 /**
  * Required minimums and constants
  */
-define('WPHEKA_MONERIS_VERSION', '3.9.0');
+define('WPHEKA_MONERIS_VERSION', '3.10.0');
 define('WPHEKA_MONERIS_MIN_PHP_VER', '5.6.0');
 define('WPHEKA_MONERIS_MIN_WC_VER', '3.0');
 define('WPHEKA_MONERIS_FUTURE_MIN_WC_VER', '17.8');
@@ -354,7 +354,7 @@ function wpheka_gateway_moneris_init()
             {
                 if (plugin_basename(__FILE__) === $file) {
                     $row_meta = array(
-                        'support' => '<a href="' . esc_url(apply_filters('wpheka_gateway_moneris_support_url', 'https://www.wpheka.com/submit-ticket/')) . '" title="' . esc_attr(__('Open a support request at wpheka.com', 'wc-moneris-payment-gateway')) . '">' . __('Support', 'wc-moneris-payment-gateway') . '</a>',
+                        'support' => '<a href="' . esc_url(apply_filters('wpheka_gateway_moneris_support_url', 'https://www.wpheka.com/submit-ticket/')) . '" title="' . esc_attr(__('Open a support request at wpheka.com', 'wc-moneris-payment-gateway')) . '">' . esc_html__('Support', 'wc-moneris-payment-gateway') . '</a>',
                     );
                     return array_merge($links, $row_meta);
                 }

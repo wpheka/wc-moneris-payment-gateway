@@ -2,9 +2,9 @@
 Contributors: akshayaswaroop, wpheka
 Tags: moneris, woocommerce, payment gateway, credit card, canada
 Requires at least: 4.9
-Tested up to: 7.1.4
+Tested up to: 7.1.5
 Requires PHP: 7.4
-Stable tag: 3.9.0
+Stable tag: 3.10.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://paypal.me/swaroopakshaya
@@ -89,8 +89,14 @@ Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes 
 
 == Changelog ==
 
-= Unreleased =
-* Tweak - The donation notice and the deactivation feedback dialog use `.on( 'click' )` and `.trigger( 'focus' )` instead of jQuery's deprecated `.click()` and `.focus()` shorthands, so jQuery Migrate no longer warns on every admin page.
+2026-11-19 - version 3.10.0
+* Fix - Translations can now load. The plugin's text domain is now `wc-moneris-payment-gateway`, matching its WordPress.org slug. It was `wpheka-gateway-moneris`, so the translation files WordPress.org builds could never be found and every string stayed in English.
+* Important - If you translated this plugin yourself, with Loco Translate or by adding files to wp-content/languages, rename those files from `wpheka-gateway-moneris-<locale>` to `wc-moneris-payment-gateway-<locale>` or redo the translations. Otherwise they stop loading.
+* Fix - The reasons and prompts in the deactivation feedback box can be translated. They were English only.
+* Fix - The default checkout description can be translated and spells Moneris with a capital M. Stores that saved their own description keep it.
+* Tweak - The donation notice and the deactivation feedback dialog no longer use jQuery's deprecated `.click()` and `.focus()` shorthands, so jQuery Migrate stops warning on every admin page.
+* Tweak - Removed two unused 2020 translation files.
+* Update - Tested up to WordPress 7.1.5 and WooCommerce 11.3.0.
 
 2026-10-29 - version 3.9.0
 * Update - Settings moved to their own page, WPHEKA > Moneris, with Settings, Transactions and Help tabs. The Moneris link under WooCommerce > Settings > Payments opens the new page. Your settings are kept as they are.
