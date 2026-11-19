@@ -59,7 +59,7 @@ After modifying any PHP file, immediately run PHPCS on that file and fix the rep
 
 ## Functional suite
 
-`bash tests/functional/run.sh` runs the full release suite (331 cases at 3.9.0) on the plugin's **own wp-env store** (`tests/env`, http://localhost:8894, admin/password), never on the shared MAMP site (Moneris Pro is active there). Start it once with `cd tests/env && npx -y @wordpress/env@11 start`; a `tests/env/.wp-env.override.json` (gitignored) can set `phpVersion` for one run. It covers the settings page and save, stats on HPOS and posts, a rollback to 3.8.1, the page in a browser, real sandbox checkouts (classic, block, autofilled) with a refund, log redaction and debug.log.
+`bash tests/functional/run.sh` runs the full release suite (347 cases at 3.10.0) on the plugin's **own wp-env store** (`tests/env`, http://localhost:8894, admin/password), never on the shared MAMP site (Moneris Pro is active there). Start it once with `cd tests/env && npx -y @wordpress/env@11 start`; a `tests/env/.wp-env.override.json` (gitignored) can set `phpVersion` for one run. It covers the settings page and save, stats on HPOS and posts, a rollback to 3.8.1, the page in a browser, real sandbox checkouts (classic, block, autofilled) with a refund, translations under the slug text domain (a fr_CA pack, one request per stage), log redaction and debug.log.
 
 ## Vendored Moneris Library
 

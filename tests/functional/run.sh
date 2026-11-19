@@ -63,6 +63,8 @@ HPOS_WAS="$(wp wc hpos status 2>/dev/null | grep -i 'HPOS enabled' | grep -c yes
 cleanup() {
   echo "== Cleanup"
   php_check "$IN/setup.php" cleanup "$IN/.tmp/state"
+  # A run stopped inside the translation stages still puts the site language back.
+  wp option get wpheka_moneris_t_i18n_state >/dev/null 2>&1 && php_check "$IN/i18n.php" cleanup
   if [ "$HPOS_WAS" = 1 ]; then storage enable; else storage disable; fi
 }
 trap cleanup EXIT
@@ -90,6 +92,8 @@ php_check "$IN/setup.php" setup "$IN/.tmp/state"
 
 echo "== Settings page and save"
 php_check "$IN/settings.php"; ran "settings.php"
+echo "== Translations under the slug text domain (fr_CA, one request per stage)"
+for s in setup fr old old-fr cleanup en; do php_check "$IN/i18n.php" "$s"; done; ran "i18n.php fr"
 echo "== Existing checks"
 for f in supports.php refund-message.php; do
   out="$(wp eval-file "$IN/$f" 2>&1)"
