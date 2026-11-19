@@ -1,4 +1,4 @@
-﻿=== WC Moneris Payment Gateway ===
+=== WC Moneris Payment Gateway ===
 Contributors: akshayaswaroop, wpheka
 Tags: moneris, woocommerce, payment gateway, credit card, canada
 Requires at least: 4.9

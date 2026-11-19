@@ -433,7 +433,7 @@ class Fields {
 	 * @param string $placeholder Placeholder and accessible name.
 	 */
 	public static function kv_find( $target, $placeholder ) {
-		echo '<div class="w-find w-kv-find">' . Icons::get( 'search', '2' ) . '<input type="search" placeholder="' . esc_attr( $placeholder ) . '" aria-label="' . esc_attr( $placeholder ) . '" aria-controls="' . esc_attr( $target ) . '" data-w-kvfind="' . esc_attr( $target ) . '"></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+		echo '<div class="w-find w-kv-find">' . Icons::get( 'search', '2' ) . '<input type="search" placeholder="' . esc_attr( $placeholder ) . '" aria-label="' . esc_attr( $placeholder ) . '" aria-controls="' . esc_attr( $target ) . '" data-w-kvfind="' . esc_attr( $target ) . '" data-w-nodirty></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 	}
 
 	/**
@@ -450,6 +450,6 @@ class Fields {
 	 * The "No settings match" card shown when a search finds nothing.
 	 */
 	public static function find_empty() {
-		echo '<div class="w-card w-empty" data-w-find-empty hidden><span class="w-ico w-ico--lg">' . Icons::get( 'search' ) . '</span><h3>' . esc_html__( 'No settings match', 'wpheka-gateway-moneris' ) . '</h3><p>' . esc_html__( 'Try another word, or clear the search to see every setting.', 'wpheka-gateway-moneris' ) . '</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+		echo '<div class="w-card w-empty" data-w-find-empty hidden><span class="w-ico w-ico--lg">' . Icons::get( 'search' ) . '</span><h3>' . esc_html__( 'No settings match', 'wc-moneris-payment-gateway' ) . '</h3><p>' . esc_html__( 'Try another word, or clear the search to see every setting.', 'wc-moneris-payment-gateway' ) . '</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
 	}
 }

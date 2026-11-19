@@ -28,55 +28,55 @@ class Catalogue {
 			array(
 				'slug' => 'wpheka-edit-orders-for-woocommerce',
 				'file' => 'wpheka-edit-orders-for-woocommerce.php',
-				'name' => __( 'Edit Orders for WooCommerce', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Order management', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Edit paid orders and settle the difference with automatic refunds and pay links.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'Edit Orders for WooCommerce', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Order management', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Edit paid orders and settle the difference with automatic refunds and pay links.', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'slug' => 'wc-moneris-payment-gateway-pro',
 				'file' => 'wc-moneris-payment-gateway-pro.php',
 				'icon' => 'wc-moneris-payment-gateway',
-				'name' => __( 'Moneris Payment Gateway Pro', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Payments · Canada', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Subscriptions, saved cards, Moneris Checkout and 3-D Secure for Canadian stores.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'Moneris Payment Gateway Pro', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Payments · Canada', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Subscriptions, saved cards, Moneris Checkout and 3-D Secure for Canadian stores.', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: price. */
-				'paid' => sprintf( __( 'From %s/year', 'wpheka-gateway-moneris' ), '$79' ),
+				'paid' => sprintf( __( 'From %s/year', 'wc-moneris-payment-gateway' ), '$79' ),
 				'url'  => 'https://www.wpheka.com/product/wc-moneris-payment-gateway-pro/',
 			),
 			array(
 				'slug' => 'wc-search-orders-by-product',
 				'file' => 'wc-search-orders-by-product.php',
-				'name' => __( 'Search Orders By Product', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Order management', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Find every order that contains a product, variation, SKU or category.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'Search Orders By Product', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Order management', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Find every order that contains a product, variation, SKU or category.', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'slug' => 'wc-backorder-split',
 				'file' => 'wc-backorder-split.php',
-				'name' => __( 'WC Backorder Split', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Order management', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Ship what is in stock now and move backordered items to their own order.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'WC Backorder Split', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Order management', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Ship what is in stock now and move backordered items to their own order.', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'slug' => 'wpheka-request-for-quote',
 				'file' => 'wpheka-request-for-quote.php',
-				'name' => __( 'Request For Quote', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Sales', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Let customers ask for a price with a quote list. Hide prices when you need to.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'Request For Quote', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Sales', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Let customers ask for a price with a quote list. Hide prices when you need to.', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'slug' => 'wpheka-web-server-information',
 				'file' => 'wpheka-web-server-information.php',
-				'name' => __( 'Web Server Information', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Tools', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Your server, PHP and database details on one screen, ready for support.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'Web Server Information', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Tools', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Your server, PHP and database details on one screen, ready for support.', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'slug' => 'wc-moneris-payment-gateway',
 				'file' => 'wc-moneris-payment-gateway.php',
-				'name' => __( 'Moneris Payment Gateway', 'wpheka-gateway-moneris' ),
-				'cat'  => __( 'Payments · Canada', 'wpheka-gateway-moneris' ),
-				'text' => __( 'Take Moneris card payments on your own checkout, block or classic.', 'wpheka-gateway-moneris' ),
+				'name' => __( 'Moneris Payment Gateway', 'wc-moneris-payment-gateway' ),
+				'cat'  => __( 'Payments · Canada', 'wc-moneris-payment-gateway' ),
+				'text' => __( 'Take Moneris card payments on your own checkout, block or classic.', 'wc-moneris-payment-gateway' ),
 			),
 		);
 	}
@@ -118,28 +118,28 @@ class Catalogue {
 				$item['url']
 			);
 
-			return '<a class="w-btn w-btn--primary w-btn--sm" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html__( 'Learn more', 'wpheka-gateway-moneris' ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a>';
+			return '<a class="w-btn w-btn--primary w-btn--sm" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html__( 'Learn more', 'wc-moneris-payment-gateway' ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a>';
 		}
 
 		$basename = self::installed( $item['file'] );
 		if ( $basename && is_plugin_active( $basename ) ) {
-			return '<span class="w-installed">' . Icons::get( 'check', '2.4' ) . esc_html__( 'Installed', 'wpheka-gateway-moneris' ) . '</span>';
+			return '<span class="w-installed">' . Icons::get( 'check', '2.4' ) . esc_html__( 'Installed', 'wc-moneris-payment-gateway' ) . '</span>';
 		}
 		if ( $basename ) {
 			if ( ! current_user_can( 'activate_plugin', $basename ) ) {
-				return '<span class="w-plugin-cat">' . esc_html__( 'Installed, not active', 'wpheka-gateway-moneris' ) . '</span>';
+				return '<span class="w-plugin-cat">' . esc_html__( 'Installed, not active', 'wc-moneris-payment-gateway' ) . '</span>';
 			}
 			$url = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $basename ) ), 'activate-plugin_' . $basename );
 
-			return '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $url ) . '">' . esc_html__( 'Activate', 'wpheka-gateway-moneris' ) . '</a>';
+			return '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $url ) . '">' . esc_html__( 'Activate', 'wc-moneris-payment-gateway' ) . '</a>';
 		}
 		if ( current_user_can( 'install_plugins' ) ) {
 			$url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=' . rawurlencode( $item['slug'] ) ), 'install-plugin_' . $item['slug'] );
 
-			return '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $url ) . '">' . esc_html__( 'Install now', 'wpheka-gateway-moneris' ) . '</a>';
+			return '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $url ) . '">' . esc_html__( 'Install now', 'wc-moneris-payment-gateway' ) . '</a>';
 		}
 		$url = 'https://wordpress.org/plugins/' . $item['slug'] . '/';
 
-		return '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html__( 'View', 'wpheka-gateway-moneris' ) . '</a>';
+		return '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html__( 'View', 'wc-moneris-payment-gateway' ) . '</a>';
 	}
 }

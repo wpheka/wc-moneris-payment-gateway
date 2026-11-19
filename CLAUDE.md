@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-WC Moneris Payment Gateway (v3.9.0) — a WooCommerce credit card payment gateway for Moneris (Canada's payment processor), by WPHEKA. Text domain: `wpheka-gateway-moneris`. The plugin skips loading if the Pro version of the gateway is already active on the site.
+WC Moneris Payment Gateway (v3.9.0) — a WooCommerce credit card payment gateway for Moneris (Canada's payment processor), by WPHEKA. Text domain: `wc-moneris-payment-gateway`. The plugin skips loading if the Pro version of the gateway is already active on the site.
 
 ## Build Commands
 
@@ -12,7 +12,7 @@ WC Moneris Payment Gateway (v3.9.0) — a WooCommerce credit card payment gatewa
 npm install
 npm start          # dev build with hot reload (wp-scripts)
 npm run build      # production build
-npm run make-pot   # regenerate languages/wpheka-gateway-moneris.pot
+npm run make-pot   # regenerate languages/wc-moneris-payment-gateway.pot
 ```
 
 - Entry: `resources/js/frontend/payment-block.js`
@@ -34,7 +34,7 @@ The `vendor/` directory is committed; only run composer if changing the library.
 - `includes/class-wpheka-moneris-logger.php` — logging via WC logger, gated by the `wpheka_moneris_logging` filter/setting.
 - `includes/blocks/class-wpheka-gateway-moneris-blocks-support.php` — `AbstractPaymentMethodType` implementation for WooCommerce Blocks checkout (payment method name `moneris`). Its card-field stylesheet is attached to the `woocommerce/checkout` block via `wp_enqueue_block_style()`.
 - `includes/admin/` — deactivation feedback and donation notice classes (admin only), and `class-wpheka-gateway-moneris-admin-page.php`: the **WPHEKA > Moneris** page (3.9.0; Settings, Transactions, Help). It has no settings of its own: it renders the live gateway's options and saves through `process_admin_options()` on `WC()->payment_gateways()->payment_gateways()['moneris']`, firing WooCommerce's gateway save hook with complete values in `$_POST`. Cut-short posts (no end marker, a missing non-checkbox field) save nothing; fields other code adds keep their stored values. The old `section=moneris` redirects on GET only. Stats count orders by WooCommerce's paid date (any status), cached an hour and cleared on payment/refund/status change (`watch_stats()`, hooked on every request).
-- `includes/wpheka-ui/`, `assets/wpheka-ui/` — the vendored WPHEKA admin UI kit (namespace `WPHEKA_Gateway_Moneris\AdminUI`). Never edit here: change `wpheka-admin-ui/` at the WordPress root and re-vendor with `php wpheka-admin-ui/bin/vendor.php <plugin> 'WPHEKA_Gateway_Moneris\AdminUI' wpheka-gateway-moneris`.
+- `includes/wpheka-ui/`, `assets/wpheka-ui/` — the vendored WPHEKA admin UI kit (namespace `WPHEKA_Gateway_Moneris\AdminUI`). Never edit here: change `wpheka-admin-ui/` at the WordPress root and re-vendor with `php wpheka-admin-ui/bin/vendor.php <plugin> 'WPHEKA_Gateway_Moneris\AdminUI' wc-moneris-payment-gateway`.
 - `resources/js/frontend/` — React source for the blocks checkout card form. `card-format.mjs` formats the card fields (Cleave.js was removed in 3.9.0: it emptied fields filled without a key press, such as autofill); the server reads `"4242 4242 4242 4242"`, `MM/YY` and CVC digits.
 
 ## Conventions
@@ -53,7 +53,7 @@ After modifying any PHP file, immediately run PHPCS on that file and fix the rep
 
 - Guard every PHP file with `if (!defined('ABSPATH')) { exit; }`
 - Prefix functions/hooks/constants with `wpheka_moneris` / `WPHEKA_MONERIS`
-- Escape output (`esc_html__`, `esc_attr`, `esc_url`); translations use text domain `wpheka-gateway-moneris`
+- Escape output (`esc_html__`, `esc_attr`, `esc_url`); translations use text domain `wc-moneris-payment-gateway`
 - Order meta access must stay HPOS-compatible (use the existing helper methods, not direct `get_post_meta`)
 - `Requires PHP: 7.4` (header and readme) since 3.9.0, but the runtime minimum stays 5.6 so the gateway always registers: every file loaded before the `version_compare(PHP_VERSION, '7.4', '>=')` gate in the main file must parse on PHP 5.6 (`run.sh` lints them on 5.6 and 7.0). The admin page and the kit load only behind that gate.
 
@@ -101,7 +101,7 @@ Work through these in order for every release:
    * Update - ...
    ```
    User-facing changes only; group minor related fixes.
-5. **Regenerate the translation template** if any PHP strings changed: `npm run make-pot` (verify new strings actually appear in `languages/wpheka-gateway-moneris.pot`).
+5. **Regenerate the translation template** if any PHP strings changed: `npm run make-pot` (verify new strings actually appear in `languages/wc-moneris-payment-gateway.pot`).
 6. **Production build**: `npm install && npm run build` — the compiled `assets/js/block/frontend/payment-block.js` + `.asset.php` are committed to the repo.
 7. **Quality gates**: `php -l` on every changed PHP file; PHPCS per the rule above (never on `mpgClasses.php`); confirm no accidental edits to the vendored library beyond its two documented patches.
 8. **Functional verification (sandbox mode, test creds `store5`/`yesguy`, card 4242 4242 4242 4242)**:

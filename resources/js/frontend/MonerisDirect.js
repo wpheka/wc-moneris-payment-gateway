@@ -49,7 +49,7 @@ const CreditCardForm = ( props ) => {
 let Wpheka_Moneris_Gateway = {};
 
 if ( Object.keys( directSettings ).length ) {
-	const defaultLabel = __( 'Moneris', 'wpheka-gateway-moneris' );
+	const defaultLabel = __( 'Moneris', 'wc-moneris-payment-gateway' );
 	const label = decodeEntities( directSettings.title ) || defaultLabel;
 
 	const Label = ( { components } ) => {

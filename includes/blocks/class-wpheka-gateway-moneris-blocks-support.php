@@ -79,7 +79,7 @@ final class Woocommerce_Gateway_Moneris_Blocks_Support extends AbstractPaymentMe
         // Load the script's own translations; without this every __() in the
         // block checkout form stays in English. Needs WordPress 5.0.
         if (function_exists('wp_set_script_translations')) {
-            wp_set_script_translations('wpheka-gateway-moneris-payment-blocks', 'wpheka-gateway-moneris');
+            wp_set_script_translations('wpheka-gateway-moneris-payment-blocks', 'wc-moneris-payment-gateway');
         }
 
         return [ 'wpheka-gateway-moneris-payment-blocks' ];

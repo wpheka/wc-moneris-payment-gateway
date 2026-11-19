@@ -152,11 +152,11 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 	 * Register the page under the shared WPHEKA menu.
 	 */
 	public static function register_page() {
-		$hook = Menu::add_page( __( 'Moneris', 'wpheka-gateway-moneris' ), __( 'Moneris', 'wpheka-gateway-moneris' ), self::CAPABILITY, self::PAGE, array( __CLASS__, 'render' ), Icons::menu_icon() );
+		$hook = Menu::add_page( __( 'Moneris', 'wc-moneris-payment-gateway' ), __( 'Moneris', 'wc-moneris-payment-gateway' ), self::CAPABILITY, self::PAGE, array( __CLASS__, 'render' ), Icons::menu_icon() );
 		if ( ! $hook ) {
 			// A site hid the WPHEKA menu (wpheka_plugin_panel_menu_page_show): every link
 			// still points at this page, so it lives under WooCommerce instead.
-			$hook = add_submenu_page( 'woocommerce', __( 'Moneris', 'wpheka-gateway-moneris' ), __( 'Moneris', 'wpheka-gateway-moneris' ), self::CAPABILITY, self::PAGE, array( __CLASS__, 'render' ) );
+			$hook = add_submenu_page( 'woocommerce', __( 'Moneris', 'wc-moneris-payment-gateway' ), __( 'Moneris', 'wc-moneris-payment-gateway' ), self::CAPABILITY, self::PAGE, array( __CLASS__, 'render' ) );
 		}
 
 		self::$hook = is_string( $hook ) ? $hook : '';
@@ -216,7 +216,7 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 	 */
 	public static function post_data( $gateway, array $posted ) {
 		$data       = array();
-		$incomplete = new WP_Error( 'wpheka_moneris_incomplete', __( 'The settings did not arrive complete, so nothing was saved. Please try again.', 'wpheka-gateway-moneris' ) );
+		$incomplete = new WP_Error( 'wpheka_moneris_incomplete', __( 'The settings did not arrive complete, so nothing was saved. Please try again.', 'wc-moneris-payment-gateway' ) );
 
 		if ( empty( $posted[ self::FORM_END ] ) ) {
 			return $incomplete;
@@ -284,11 +284,11 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 	public static function handle_save() {
 		check_admin_referer( self::SAVE_ACTION );
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You are not allowed to change these settings.', 'wpheka-gateway-moneris' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You are not allowed to change these settings.', 'wc-moneris-payment-gateway' ), '', array( 'response' => 403 ) );
 		}
 
 		$gateway = self::gateway();
-		$data    = $gateway ? self::post_data( $gateway, $_POST ) : new WP_Error( 'wpheka_moneris_no_gateway', __( 'WooCommerce did not load the Moneris gateway, so nothing was saved.', 'wpheka-gateway-moneris' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated field by field by the gateway, as on WooCommerce's screen.
+		$data    = $gateway ? self::post_data( $gateway, $_POST ) : new WP_Error( 'wpheka_moneris_no_gateway', __( 'WooCommerce did not load the Moneris gateway, so nothing was saved.', 'wc-moneris-payment-gateway' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated field by field by the gateway, as on WooCommerce's screen.
 		$errors  = array();
 
 		if ( is_wp_error( $data ) ) {
@@ -360,29 +360,29 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 		$links   = self::links();
 		$tab     = self::current_tab();
 		$sandbox = $gateway && 'yes' === $gateway->get_option( 'sandbox' );
-		$badges  = array( array( __( 'Free', 'wpheka-gateway-moneris' ), 'mint' ) );
+		$badges  = array( array( __( 'Free', 'wc-moneris-payment-gateway' ), 'mint' ) );
 		if ( $sandbox ) {
-			$badges[] = array( __( 'Sandbox', 'wpheka-gateway-moneris' ), 'violet' );
+			$badges[] = array( __( 'Sandbox', 'wc-moneris-payment-gateway' ), 'violet' );
 		}
 
 		Page::open(
 			array(
 				'icon'     => plugins_url( 'assets/wpheka-ui/icons/' . self::SLUG . '.png', WPHEKA_MONERIS_MAIN_FILE ),
-				'name'     => __( 'Moneris Payment Gateway', 'wpheka-gateway-moneris' ),
+				'name'     => __( 'Moneris Payment Gateway', 'wc-moneris-payment-gateway' ),
 				'version'  => WPHEKA_MONERIS_VERSION,
 				'badges'   => $badges,
-				'subtitle' => __( 'Take card payments through your Moneris merchant account.', 'wpheka-gateway-moneris' ),
-				'crumb'    => __( 'Moneris', 'wpheka-gateway-moneris' ),
+				'subtitle' => __( 'Take card payments through your Moneris merchant account.', 'wc-moneris-payment-gateway' ),
+				'crumb'    => __( 'Moneris', 'wc-moneris-payment-gateway' ),
 				'links'    => array(
-					array( __( 'Docs', 'wpheka-gateway-moneris' ), $links['docs'], 'book' ),
-					array( __( 'Support', 'wpheka-gateway-moneris' ), $links['support'], 'chat' ),
-					array( __( "What's new", 'wpheka-gateway-moneris' ), $links['changes'], 'sparkle' ),
+					array( __( 'Docs', 'wc-moneris-payment-gateway' ), $links['docs'], 'book' ),
+					array( __( 'Support', 'wc-moneris-payment-gateway' ), $links['support'], 'chat' ),
+					array( __( "What's new", 'wc-moneris-payment-gateway' ), $links['changes'], 'sparkle' ),
 				),
-				'cta'      => array( __( 'Upgrade to Pro', 'wpheka-gateway-moneris' ), $links['pro'], 'bolt', 'pro' ),
+				'cta'      => array( __( 'Upgrade to Pro', 'wc-moneris-payment-gateway' ), $links['pro'], 'bolt', 'pro' ),
 				'tabs'     => array(
-					array( __( 'Settings', 'wpheka-gateway-moneris' ), self::url( 'settings' ), 'settings' === $tab ),
-					array( __( 'Transactions', 'wpheka-gateway-moneris' ), self::url( 'transactions' ), 'transactions' === $tab ),
-					array( __( 'Help', 'wpheka-gateway-moneris' ), self::url( 'help' ), 'help' === $tab ),
+					array( __( 'Settings', 'wc-moneris-payment-gateway' ), self::url( 'settings' ), 'settings' === $tab ),
+					array( __( 'Transactions', 'wc-moneris-payment-gateway' ), self::url( 'transactions' ), 'transactions' === $tab ),
+					array( __( 'Help', 'wc-moneris-payment-gateway' ), self::url( 'help' ), 'help' === $tab ),
 				),
 			)
 		);
@@ -407,14 +407,14 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 			$key   = 'wpheka_moneris_save_error_' . get_current_user_id();
 			$error = (string) get_transient( $key );
 			delete_transient( $key );
-			$error = '' !== $error ? $error : __( 'The settings were not saved. Please try again.', 'wpheka-gateway-moneris' );
+			$error = '' !== $error ? $error : __( 'The settings were not saved. Please try again.', 'wc-moneris-payment-gateway' );
 		}
 
 		Page::close(
 			array(
 				'slug'       => self::SLUG,
 				'icons_url'  => plugins_url( 'assets/wpheka-ui/icons/', WPHEKA_MONERIS_MAIN_FILE ),
-				'short_name' => __( 'Moneris', 'wpheka-gateway-moneris' ),
+				'short_name' => __( 'Moneris', 'wc-moneris-payment-gateway' ),
 				'review_url' => $links['review'],
 				'form'       => 'settings' === $tab && $gateway ? self::FORM : '',
 				'saved'      => 'settings' === $tab && isset( $_GET['w-saved'] ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display flag after our own redirect.
@@ -436,15 +436,15 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 			$notices[] = array(
 				'id'   => 'wpheka-moneris-no-gateway',
 				'kind' => 'warn',
-				'text' => esc_html__( 'WooCommerce did not load the Moneris gateway on this request, so its settings cannot be shown. Reload the page, and check that WooCommerce is active.', 'wpheka-gateway-moneris' ),
+				'text' => esc_html__( 'WooCommerce did not load the Moneris gateway on this request, so its settings cannot be shown. Reload the page, and check that WooCommerce is active.', 'wc-moneris-payment-gateway' ),
 			);
 		}
 		if ( class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) && WPHEKA_Gateway_Moneris_Donation::is_shown() ) {
 			$notices[] = array(
 				'id'      => 'wpheka-moneris-donation',
 				'kind'    => 'info',
-				'text'    => '<strong>' . esc_html__( 'Enjoying this plugin?', 'wpheka-gateway-moneris' ) . '</strong> ' . esc_html__( 'Support its development with a small donation.', 'wpheka-gateway-moneris' ),
-				'link'    => array( __( 'Make a donation', 'wpheka-gateway-moneris' ), WPHEKA_Gateway_Moneris_Donation::DONATION_URL ),
+				'text'    => '<strong>' . esc_html__( 'Enjoying this plugin?', 'wc-moneris-payment-gateway' ) . '</strong> ' . esc_html__( 'Support its development with a small donation.', 'wc-moneris-payment-gateway' ),
+				'link'    => array( __( 'Make a donation', 'wc-moneris-payment-gateway' ), WPHEKA_Gateway_Moneris_Donation::DONATION_URL ),
 				'dismiss' => WPHEKA_Gateway_Moneris_Donation::dismiss_url(),
 			);
 		}
@@ -593,32 +593,32 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 		Page::stats(
 			array(
 				array(
-					'label' => __( 'Moneris payments', 'wpheka-gateway-moneris' ),
+					'label' => __( 'Moneris payments', 'wc-moneris-payment-gateway' ),
 					'icon'  => 'card',
 					'value' => wp_strip_all_tags( wc_price( $stats['paid'] ) ),
 					/* translators: %s: number of payments. */
-					'meta'  => sprintf( _n( '%s payment in the last 30 days', '%s payments in the last 30 days', $stats['payments'], 'wpheka-gateway-moneris' ), number_format_i18n( $stats['payments'] ) ),
+					'meta'  => sprintf( _n( '%s payment in the last 30 days', '%s payments in the last 30 days', $stats['payments'], 'wc-moneris-payment-gateway' ), number_format_i18n( $stats['payments'] ) ),
 				),
 				array(
-					'label' => __( 'Refunds', 'wpheka-gateway-moneris' ),
+					'label' => __( 'Refunds', 'wc-moneris-payment-gateway' ),
 					'icon'  => 'refund',
 					'mint'  => true,
 					'value' => number_format_i18n( $stats['refunds'] ),
 					/* translators: %s: amount refunded. */
-					'meta'  => sprintf( __( '%s sent back through Moneris, last 30 days', 'wpheka-gateway-moneris' ), wp_strip_all_tags( wc_price( $stats['refunded'] ) ) ),
+					'meta'  => sprintf( __( '%s sent back through Moneris, last 30 days', 'wc-moneris-payment-gateway' ), wp_strip_all_tags( wc_price( $stats['refunded'] ) ) ),
 				),
 				array(
-					'label' => __( 'Mode', 'wpheka-gateway-moneris' ),
+					'label' => __( 'Mode', 'wc-moneris-payment-gateway' ),
 					'icon'  => 'shield',
-					'value' => $sandbox ? __( 'Sandbox', 'wpheka-gateway-moneris' ) : __( 'Live', 'wpheka-gateway-moneris' ),
-					'meta'  => $sandbox ? __( 'Test cards only. No real money moves.', 'wpheka-gateway-moneris' ) : __( 'Taking real payments', 'wpheka-gateway-moneris' ),
+					'value' => $sandbox ? __( 'Sandbox', 'wc-moneris-payment-gateway' ) : __( 'Live', 'wc-moneris-payment-gateway' ),
+					'meta'  => $sandbox ? __( 'Test cards only. No real money moves.', 'wc-moneris-payment-gateway' ) : __( 'Taking real payments', 'wc-moneris-payment-gateway' ),
 				),
 				array(
-					'label' => __( 'Card logos', 'wpheka-gateway-moneris' ),
+					'label' => __( 'Card logos', 'wc-moneris-payment-gateway' ),
 					'icon'  => 'card',
 					'mint'  => true,
 					'value' => number_format_i18n( count( $cards ) ),
-					'meta'  => $cards ? implode( ', ', $cards ) : __( 'None shown at checkout', 'wpheka-gateway-moneris' ),
+					'meta'  => $cards ? implode( ', ', $cards ) : __( 'None shown at checkout', 'wc-moneris-payment-gateway' ),
 				),
 			)
 		);
@@ -643,15 +643,15 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 
 		return array(
 			array(
-				'label' => __( 'Add your Store ID and API token', 'wpheka-gateway-moneris' ),
+				'label' => __( 'Add your Store ID and API token', 'wc-moneris-payment-gateway' ),
 				'done'  => '' !== trim( (string) $gateway->get_option( 'store_id' ) ) && '' !== trim( (string) $gateway->get_option( 'api_token' ) ),
 			),
 			array(
-				'label' => __( 'Take a test payment in sandbox mode', 'wpheka-gateway-moneris' ),
+				'label' => __( 'Take a test payment in sandbox mode', 'wc-moneris-payment-gateway' ),
 				'done'  => ! empty( $orders ),
 			),
 			array(
-				'label' => __( 'Switch to live', 'wpheka-gateway-moneris' ),
+				'label' => __( 'Switch to live', 'wc-moneris-payment-gateway' ),
 				'done'  => 'yes' !== $gateway->get_option( 'sandbox' ),
 			),
 		);
@@ -676,12 +676,12 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 		echo '<div class="w-card w-start"><svg class="w-ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" fill="none" stroke="#ede9fe" stroke-width="4"/>';
 		echo '<circle cx="18" cy="18" r="15" fill="none" stroke="#7c3aed" stroke-width="4" stroke-dasharray="' . esc_attr( $dash . ' 94.25' ) . '" stroke-linecap="round" transform="rotate(-90 18 18)"/>';
 		echo '<text x="18" y="21.5" text-anchor="middle" font-size="9" font-weight="700" fill="#0f172a">' . esc_html( $done . '/' . count( $steps ) ) . '</text></svg>';
-		echo '<div><h3>' . esc_html__( 'Getting started', 'wpheka-gateway-moneris' ) . '</h3><ol class="w-steps">';
+		echo '<div><h3>' . esc_html__( 'Getting started', 'wc-moneris-payment-gateway' ) . '</h3><ol class="w-steps">';
 		foreach ( $steps as $step ) {
-			echo '<li' . ( $step['done'] ? ' class="is-done"' : '' ) . '>' . esc_html( $step['label'] ) . '<span class="w-sr"> ' . esc_html( $step['done'] ? __( '(done)', 'wpheka-gateway-moneris' ) : __( '(to do)', 'wpheka-gateway-moneris' ) ) . '</span></li>';
+			echo '<li' . ( $step['done'] ? ' class="is-done"' : '' ) . '>' . esc_html( $step['label'] ) . '<span class="w-sr"> ' . esc_html( $step['done'] ? __( '(done)', 'wc-moneris-payment-gateway' ) : __( '(to do)', 'wc-moneris-payment-gateway' ) ) . '</span></li>';
 		}
 		echo '</ol></div><div class="w-start-actions">';
-		echo '<a class="w-close" data-w-dismiss=".w-start" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=' . self::DISMISS_ACTION ), self::DISMISS_ACTION ) ) . '" aria-label="' . esc_attr__( 'Hide getting started', 'wpheka-gateway-moneris' ) . '">' . Icons::get( 'xcircle' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+		echo '<a class="w-close" data-w-dismiss=".w-start" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=' . self::DISMISS_ACTION ), self::DISMISS_ACTION ) ) . '" aria-label="' . esc_attr__( 'Hide getting started', 'wc-moneris-payment-gateway' ) . '">' . Icons::get( 'xcircle' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
 		echo '</div></div>';
 	}
 
@@ -701,22 +701,22 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 		echo '<div class="w-layout"><div>';
 		Page::nav(
 			array(
-				array( 'checkout', 'cart', __( 'Checkout', 'wpheka-gateway-moneris' ) ),
-				array( 'account', 'key', __( 'Moneris account', 'wpheka-gateway-moneris' ) ),
-				array( 'troubleshooting', 'sliders', __( 'Troubleshooting', 'wpheka-gateway-moneris' ) ),
+				array( 'checkout', 'cart', __( 'Checkout', 'wc-moneris-payment-gateway' ) ),
+				array( 'account', 'key', __( 'Moneris account', 'wc-moneris-payment-gateway' ) ),
+				array( 'troubleshooting', 'sliders', __( 'Troubleshooting', 'wc-moneris-payment-gateway' ) ),
 			)
 		);
 		echo '</div><form id="' . esc_attr( self::FORM ) . '" method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" data-w-form autocomplete="off">';
 		echo '<input type="hidden" name="action" value="' . esc_attr( self::SAVE_ACTION ) . '">';
 		wp_nonce_field( self::SAVE_ACTION );
 
-		Fields::section_start( 'checkout', __( 'Checkout', 'wpheka-gateway-moneris' ), __( 'What customers see when they pay.', 'wpheka-gateway-moneris' ) );
+		Fields::section_start( 'checkout', __( 'Checkout', 'wc-moneris-payment-gateway' ), __( 'What customers see when they pay.', 'wc-moneris-payment-gateway' ) );
 		Fields::switch_row(
 			array(
 				'name'    => call_user_func( $name, 'enabled' ),
 				'checked' => 'yes' === call_user_func( $opt, 'enabled' ),
-				'label'   => __( 'Enable Moneris', 'wpheka-gateway-moneris' ),
-				'help'    => __( 'Show Moneris as a payment method at checkout.', 'wpheka-gateway-moneris' ),
+				'label'   => __( 'Enable Moneris', 'wc-moneris-payment-gateway' ),
+				'help'    => __( 'Show Moneris as a payment method at checkout.', 'wc-moneris-payment-gateway' ),
 				'off'     => null,
 			)
 		);
@@ -724,16 +724,16 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 			array(
 				'name'  => call_user_func( $name, 'title' ),
 				'value' => call_user_func( $opt, 'title' ),
-				'label' => __( 'Title', 'wpheka-gateway-moneris' ),
-				'help'  => __( 'The payment method name at checkout.', 'wpheka-gateway-moneris' ),
+				'label' => __( 'Title', 'wc-moneris-payment-gateway' ),
+				'help'  => __( 'The payment method name at checkout.', 'wc-moneris-payment-gateway' ),
 			)
 		);
 		Fields::text_row(
 			array(
 				'name'  => call_user_func( $name, 'description' ),
 				'value' => call_user_func( $opt, 'description' ),
-				'label' => __( 'Description', 'wpheka-gateway-moneris' ),
-				'help'  => __( 'Shown under the title at checkout.', 'wpheka-gateway-moneris' ),
+				'label' => __( 'Description', 'wc-moneris-payment-gateway' ),
+				'help'  => __( 'Shown under the title at checkout.', 'wc-moneris-payment-gateway' ),
 				'stack' => true,
 			)
 		);
@@ -742,19 +742,19 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 				'name'     => call_user_func( $name, 'preferred_cards' ),
 				'options'  => isset( $fields['preferred_cards']['options'] ) ? $fields['preferred_cards']['options'] : array(),
 				'selected' => array_filter( (array) call_user_func( $opt, 'preferred_cards' ) ),
-				'label'    => __( 'Card logos', 'wpheka-gateway-moneris' ),
-				'help'     => __( 'The logos shown next to the payment method.', 'wpheka-gateway-moneris' ),
+				'label'    => __( 'Card logos', 'wc-moneris-payment-gateway' ),
+				'help'     => __( 'The logos shown next to the payment method.', 'wc-moneris-payment-gateway' ),
 			)
 		);
 		Fields::section_end();
 
-		Fields::section_start( 'account', __( 'Moneris account', 'wpheka-gateway-moneris' ), __( 'Connect your Moneris merchant account. Sandbox uses test cards and moves no money.', 'wpheka-gateway-moneris' ) );
+		Fields::section_start( 'account', __( 'Moneris account', 'wc-moneris-payment-gateway' ), __( 'Connect your Moneris merchant account. Sandbox uses test cards and moves no money.', 'wc-moneris-payment-gateway' ) );
 		Fields::switch_row(
 			array(
 				'name'    => call_user_func( $name, 'sandbox' ),
 				'checked' => 'yes' === call_user_func( $opt, 'sandbox' ),
-				'label'   => __( 'Sandbox mode', 'wpheka-gateway-moneris' ),
-				'help'    => __( 'Use the Moneris test environment. Turn it off to take real payments.', 'wpheka-gateway-moneris' ),
+				'label'   => __( 'Sandbox mode', 'wc-moneris-payment-gateway' ),
+				'help'    => __( 'Use the Moneris test environment. Turn it off to take real payments.', 'wc-moneris-payment-gateway' ),
 				'off'     => null,
 			)
 		);
@@ -762,28 +762,28 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 			array(
 				'name'  => call_user_func( $name, 'store_id' ),
 				'value' => call_user_func( $opt, 'store_id' ),
-				'label' => __( 'Store ID', 'wpheka-gateway-moneris' ),
-				'help'  => __( 'From your Moneris Merchant Resource Centre.', 'wpheka-gateway-moneris' ),
+				'label' => __( 'Store ID', 'wc-moneris-payment-gateway' ),
+				'help'  => __( 'From your Moneris Merchant Resource Centre.', 'wc-moneris-payment-gateway' ),
 			)
 		);
 		Fields::text_row(
 			array(
 				'name'  => call_user_func( $name, 'api_token' ),
 				'value' => call_user_func( $opt, 'api_token' ),
-				'label' => __( 'API token', 'wpheka-gateway-moneris' ),
-				'help'  => __( 'From the same page in the Merchant Resource Centre.', 'wpheka-gateway-moneris' ),
+				'label' => __( 'API token', 'wc-moneris-payment-gateway' ),
+				'help'  => __( 'From the same page in the Merchant Resource Centre.', 'wc-moneris-payment-gateway' ),
 			)
 		);
 		Fields::section_end();
 
-		Fields::section_start( 'troubleshooting', __( 'Troubleshooting', 'wpheka-gateway-moneris' ) );
+		Fields::section_start( 'troubleshooting', __( 'Troubleshooting', 'wc-moneris-payment-gateway' ) );
 		Fields::switch_row(
 			array(
 				'name'    => call_user_func( $name, 'logging' ),
 				'checked' => 'yes' === call_user_func( $opt, 'logging' ),
-				'label'   => __( 'Log gateway events', 'wpheka-gateway-moneris' ),
+				'label'   => __( 'Log gateway events', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: URL of WooCommerce > Status > Logs. */
-				'help'    => sprintf( __( 'View the log in <a href="%s">WooCommerce › Status › Logs</a>, source wpheka-gateway-moneris. Turn it on only while you troubleshoot.', 'wpheka-gateway-moneris' ), esc_url( $links['logs'] ) ),
+				'help'    => sprintf( __( 'View the log in <a href="%s">WooCommerce › Status › Logs</a>, source wpheka-gateway-moneris. Turn it on only while you troubleshoot.', 'wc-moneris-payment-gateway' ), esc_url( $links['logs'] ) ),
 				'off'     => null,
 			)
 		);
@@ -793,13 +793,13 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 		// Last in the form on purpose: see FORM_END.
 		echo '<input type="hidden" name="' . esc_attr( self::FORM_END ) . '" value="1">';
 		// Without JavaScript the save bar never appears, so the form keeps a plain button.
-		echo '<noscript><p><button type="submit" class="w-btn w-btn--primary">' . esc_html__( 'Save changes', 'wpheka-gateway-moneris' ) . '</button></p></noscript>';
-		echo '</form><aside class="w-rail" aria-label="' . esc_attr__( 'Moneris Pro and help', 'wpheka-gateway-moneris' ) . '">';
+		echo '<noscript><p><button type="submit" class="w-btn w-btn--primary">' . esc_html__( 'Save changes', 'wc-moneris-payment-gateway' ) . '</button></p></noscript>';
+		echo '</form><aside class="w-rail" aria-label="' . esc_attr__( 'Moneris Pro and help', 'wc-moneris-payment-gateway' ) . '">';
 		self::render_pro_card( $links );
 		Page::help_card(
 			array(
-				array( __( 'Read the documentation', 'wpheka-gateway-moneris' ), $links['docs'], 'book' ),
-				array( __( 'Ask in the support forum', 'wpheka-gateway-moneris' ), $links['support'], 'chat' ),
+				array( __( 'Read the documentation', 'wc-moneris-payment-gateway' ), $links['docs'], 'book' ),
+				array( __( 'Ask in the support forum', 'wc-moneris-payment-gateway' ), $links['support'], 'chat' ),
 			)
 		);
 		echo '</aside></div></div>';
@@ -812,26 +812,26 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 	 */
 	private static function render_pro_card( array $links ) {
 		$groups = array(
-			__( 'Sell more', 'wpheka-gateway-moneris' )  => array(
-				array( __( 'Subscriptions', 'wpheka-gateway-moneris' ), __( 'Renewals are charged automatically through WooCommerce Subscriptions.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'Saved cards', 'wpheka-gateway-moneris' ), __( 'Returning customers pay with a saved card.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'Moneris Checkout', 'wpheka-gateway-moneris' ), __( 'Moneris\'s own secure payment form, so card details never touch your server.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'CAD and USD', 'wpheka-gateway-moneris' ), __( 'Send each currency to its own Moneris account.', 'wpheka-gateway-moneris' ) ),
+			__( 'Sell more', 'wc-moneris-payment-gateway' )  => array(
+				array( __( 'Subscriptions', 'wc-moneris-payment-gateway' ), __( 'Renewals are charged automatically through WooCommerce Subscriptions.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'Saved cards', 'wc-moneris-payment-gateway' ), __( 'Returning customers pay with a saved card.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'Moneris Checkout', 'wc-moneris-payment-gateway' ), __( 'Moneris\'s own secure payment form, so card details never touch your server.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'CAD and USD', 'wc-moneris-payment-gateway' ), __( 'Send each currency to its own Moneris account.', 'wc-moneris-payment-gateway' ) ),
 			),
-			__( 'Stop fraud', 'wpheka-gateway-moneris' ) => array(
-				array( __( '3-D Secure', 'wpheka-gateway-moneris' ), __( 'Extra card verification on eligible cards.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'Address and CVD checks', 'wpheka-gateway-moneris' ), __( 'You decide which mismatches to accept or decline.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'Card-testing protection', 'wpheka-gateway-moneris' ), __( 'Cap payment attempts per order and per IP address.', 'wpheka-gateway-moneris' ) ),
+			__( 'Stop fraud', 'wc-moneris-payment-gateway' ) => array(
+				array( __( '3-D Secure', 'wc-moneris-payment-gateway' ), __( 'Extra card verification on eligible cards.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'Address and CVD checks', 'wc-moneris-payment-gateway' ), __( 'You decide which mismatches to accept or decline.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'Card-testing protection', 'wc-moneris-payment-gateway' ), __( 'Cap payment attempts per order and per IP address.', 'wc-moneris-payment-gateway' ) ),
 			),
-			__( 'Save time', 'wpheka-gateway-moneris' )  => array(
-				array( __( 'Same-day refunds', 'wpheka-gateway-moneris' ), __( 'Refund right from the order screen, even on the day of the sale.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'Authorize and capture', 'wpheka-gateway-moneris' ), __( 'Authorize at checkout and capture when you complete the order.', 'wpheka-gateway-moneris' ) ),
-				array( __( 'Statement descriptor', 'wpheka-gateway-moneris' ), __( 'Show your own description on customers\' card statements.', 'wpheka-gateway-moneris' ) ),
+			__( 'Save time', 'wc-moneris-payment-gateway' )  => array(
+				array( __( 'Same-day refunds', 'wc-moneris-payment-gateway' ), __( 'Refund right from the order screen, even on the day of the sale.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'Authorize and capture', 'wc-moneris-payment-gateway' ), __( 'Authorize at checkout and capture when you complete the order.', 'wc-moneris-payment-gateway' ) ),
+				array( __( 'Statement descriptor', 'wc-moneris-payment-gateway' ), __( 'Show your own description on customers\' card statements.', 'wc-moneris-payment-gateway' ) ),
 			),
 		);
 
-		echo '<div class="w-procard"><h3>' . Icons::get( 'bolt', '2' ) . esc_html__( 'Moneris Pro', 'wpheka-gateway-moneris' ) . '</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
-		echo '<p>' . esc_html__( 'The free version handles one-off card payments. Pro adds the things growing stores ask us for most.', 'wpheka-gateway-moneris' ) . '</p>';
+		echo '<div class="w-procard"><h3>' . Icons::get( 'bolt', '2' ) . esc_html__( 'Moneris Pro', 'wc-moneris-payment-gateway' ) . '</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+		echo '<p>' . esc_html__( 'The free version handles one-off card payments. Pro adds the things growing stores ask us for most.', 'wc-moneris-payment-gateway' ) . '</p>';
 		foreach ( $groups as $group => $features ) {
 			echo '<h4 class="wpheka-moneris-pro-group">' . esc_html( $group ) . '</h4><ul class="w-ticks">';
 			foreach ( $features as $feature ) {
@@ -839,8 +839,8 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 			}
 			echo '</ul>';
 		}
-		echo '<a class="w-btn w-btn--pro w-btn--block" href="' . esc_url( $links['pro'] ) . '" target="_blank" rel="noopener">' . esc_html__( 'Upgrade to Pro', 'wpheka-gateway-moneris' ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a>';
-		echo '<small>' . esc_html__( 'From $79. Includes a year of updates and support.', 'wpheka-gateway-moneris' ) . '</small></div>';
+		echo '<a class="w-btn w-btn--pro w-btn--block" href="' . esc_url( $links['pro'] ) . '" target="_blank" rel="noopener">' . esc_html__( 'Upgrade to Pro', 'wc-moneris-payment-gateway' ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a>';
+		echo '<small>' . esc_html__( 'From $79. Includes a year of updates and support.', 'wc-moneris-payment-gateway' ) . '</small></div>';
 	}
 
 	/**
@@ -858,16 +858,16 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 		);
 
 		echo '<div class="w-stack">';
-		Fields::section_start( 'transactions', __( 'Recent Moneris orders', 'wpheka-gateway-moneris' ), __( 'The 20 newest orders paid or attempted with Moneris. Open an order to refund it or see its notes.', 'wpheka-gateway-moneris' ) );
+		Fields::section_start( 'transactions', __( 'Recent Moneris orders', 'wc-moneris-payment-gateway' ), __( 'The 20 newest orders paid or attempted with Moneris. Open an order to refund it or see its notes.', 'wc-moneris-payment-gateway' ) );
 
 		if ( ! $orders ) {
-			echo '<div class="w-empty"><h3>' . esc_html__( 'No Moneris orders yet.', 'wpheka-gateway-moneris' ) . '</h3><p>' . esc_html__( 'Orders paid with Moneris show here, newest first.', 'wpheka-gateway-moneris' ) . '</p></div>';
+			echo '<div class="w-empty"><h3>' . esc_html__( 'No Moneris orders yet.', 'wc-moneris-payment-gateway' ) . '</h3><p>' . esc_html__( 'Orders paid with Moneris show here, newest first.', 'wc-moneris-payment-gateway' ) . '</p></div>';
 			Fields::section_end();
 			echo '</div>';
 			return;
 		}
 
-		echo '<div class="w-table-wrap"><table class="w-table wpheka-moneris-orders"><thead><tr><th>' . esc_html__( 'Order', 'wpheka-gateway-moneris' ) . '</th><th>' . esc_html__( 'Date', 'wpheka-gateway-moneris' ) . '</th><th>' . esc_html__( 'Status', 'wpheka-gateway-moneris' ) . '</th><th>' . esc_html__( 'Total', 'wpheka-gateway-moneris' ) . '</th><th>' . esc_html__( 'Refunded', 'wpheka-gateway-moneris' ) . '</th><th>' . esc_html__( 'Moneris transaction', 'wpheka-gateway-moneris' ) . '</th></tr></thead><tbody>';
+		echo '<div class="w-table-wrap"><table class="w-table wpheka-moneris-orders"><thead><tr><th>' . esc_html__( 'Order', 'wc-moneris-payment-gateway' ) . '</th><th>' . esc_html__( 'Date', 'wc-moneris-payment-gateway' ) . '</th><th>' . esc_html__( 'Status', 'wc-moneris-payment-gateway' ) . '</th><th>' . esc_html__( 'Total', 'wc-moneris-payment-gateway' ) . '</th><th>' . esc_html__( 'Refunded', 'wc-moneris-payment-gateway' ) . '</th><th>' . esc_html__( 'Moneris transaction', 'wc-moneris-payment-gateway' ) . '</th></tr></thead><tbody>';
 		foreach ( $orders as $order ) {
 			$created  = $order->get_date_created();
 			$refunded = (float) $order->get_total_refunded();
@@ -896,13 +896,13 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 	 */
 	private static function render_help( array $links ) {
 		$cards = array(
-			array( 'book', __( 'Documentation', 'wpheka-gateway-moneris' ), __( 'Setup, settings and answers to common issues.', 'wpheka-gateway-moneris' ), $links['docs'] ),
-			array( 'chat', __( 'Support forum', 'wpheka-gateway-moneris' ), __( 'Ask a question. The developers who built the plugin answer.', 'wpheka-gateway-moneris' ), $links['support'] ),
-			array( 'sparkle', __( "What's new", 'wpheka-gateway-moneris' ), __( 'Every change in each version, in plain words.', 'wpheka-gateway-moneris' ), $links['changes'] ),
+			array( 'book', __( 'Documentation', 'wc-moneris-payment-gateway' ), __( 'Setup, settings and answers to common issues.', 'wc-moneris-payment-gateway' ), $links['docs'] ),
+			array( 'chat', __( 'Support forum', 'wc-moneris-payment-gateway' ), __( 'Ask a question. The developers who built the plugin answer.', 'wc-moneris-payment-gateway' ), $links['support'] ),
+			array( 'sparkle', __( "What's new", 'wc-moneris-payment-gateway' ), __( 'Every change in each version, in plain words.', 'wc-moneris-payment-gateway' ), $links['changes'] ),
 		);
 		echo '<div class="w-stack"><div class="w-flow">';
 		foreach ( $cards as $card ) {
-			echo '<a class="w-card w-flow-step" href="' . esc_url( $card[3] ) . '" target="_blank" rel="noopener"><span class="w-ico w-ico--lg">' . Icons::get( $card[0] ) . '</span><h3>' . esc_html( $card[1] ) . '</h3><p>' . esc_html( $card[2] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></p></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+			echo '<a class="w-card w-flow-step" href="' . esc_url( $card[3] ) . '" target="_blank" rel="noopener"><span class="w-ico w-ico--lg">' . Icons::get( $card[0] ) . '</span><h3>' . esc_html( $card[1] ) . '</h3><p>' . esc_html( $card[2] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></p></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
 		}
 		echo '</div>';
 
@@ -914,17 +914,17 @@ class WPHEKA_Gateway_Moneris_Admin_Page {
 			),
 		);
 		$notes = array(
-			__( 'Your Store ID and API token are in the Moneris Merchant Resource Centre. Sandbox and live use different ones.', 'wpheka-gateway-moneris' ),
+			__( 'Your Store ID and API token are in the Moneris Merchant Resource Centre. Sandbox and live use different ones.', 'wc-moneris-payment-gateway' ),
 			/* translators: %s: URL of the Moneris testing page. */
-			sprintf( __( 'In sandbox mode, pay with the card number 4242424242424242, any CVC and a future expiry date, or see the <a href="%s" target="_blank" rel="noopener">Moneris testing guide</a> for more test cards.', 'wpheka-gateway-moneris' ), esc_url( $links['testing'] ) ),
-			__( 'Refunds are sent to Moneris from the order screen, from the day after the payment. On the day of the payment itself Moneris needs a different request (a Purchase Correction), which Moneris Pro sends.', 'wpheka-gateway-moneris' ),
+			sprintf( __( 'In sandbox mode, pay with the card number 4242424242424242, any CVC and a future expiry date, or see the <a href="%s" target="_blank" rel="noopener">Moneris testing guide</a> for more test cards.', 'wc-moneris-payment-gateway' ), esc_url( $links['testing'] ) ),
+			__( 'Refunds are sent to Moneris from the order screen, from the day after the payment. On the day of the payment itself Moneris needs a different request (a Purchase Correction), which Moneris Pro sends.', 'wc-moneris-payment-gateway' ),
 			/* translators: %s: URL of WooCommerce > Status > Logs. */
-			sprintf( __( 'With logging on, each request and reply is written to <a href="%s">WooCommerce › Status › Logs</a> under the source wpheka-gateway-moneris. Card numbers are masked to the last four digits; the expiry date, CVD, API token and customer details are left out.', 'wpheka-gateway-moneris' ), esc_url( $links['logs'] ) ),
-			__( 'Moneris works on the classic checkout and the block checkout.', 'wpheka-gateway-moneris' ),
-			__( 'Moving to Moneris Pro keeps your Moneris account: Pro takes over the same Store ID and API token.', 'wpheka-gateway-moneris' ),
+			sprintf( __( 'With logging on, each request and reply is written to <a href="%s">WooCommerce › Status › Logs</a> under the source wpheka-gateway-moneris. Card numbers are masked to the last four digits; the expiry date, CVD, API token and customer details are left out.', 'wc-moneris-payment-gateway' ), esc_url( $links['logs'] ) ),
+			__( 'Moneris works on the classic checkout and the block checkout.', 'wc-moneris-payment-gateway' ),
+			__( 'Moving to Moneris Pro keeps your Moneris account: Pro takes over the same Store ID and API token.', 'wc-moneris-payment-gateway' ),
 		);
 
-		Fields::section_start( 'good-to-know', __( 'Good to know', 'wpheka-gateway-moneris' ) );
+		Fields::section_start( 'good-to-know', __( 'Good to know', 'wc-moneris-payment-gateway' ) );
 		echo '<ul class="wpheka-moneris-notes">';
 		foreach ( $notes as $note ) {
 			echo '<li>' . wp_kses( $note, $link ) . '</li>';

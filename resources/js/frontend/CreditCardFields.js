@@ -38,7 +38,7 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
 
             {/* Card Number */}
             <label style={ { display: 'block', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-number` }>
-                { __( 'Card Number', 'wpheka-gateway-moneris' ) }
+                { __( 'Card Number', 'wc-moneris-payment-gateway' ) }
             </label>
             <input
                 type="text"
@@ -59,7 +59,7 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
 
             {/* Expiry */}
             <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-expiry` }>
-                { __( 'Expiry (MM/YY)', 'wpheka-gateway-moneris' ) }
+                { __( 'Expiry (MM/YY)', 'wc-moneris-payment-gateway' ) }
             </label>
             <input
                 type="text"
@@ -80,7 +80,7 @@ const CreditCardFields = ( { handleInputChange, METHOD_NAME, directSettings } ) 
 
             {/* CVC */}
             <label style={ { display: 'block', marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: '600' } } htmlFor={ `${METHOD_NAME}-card-cvc` }>
-                { __( 'CVC', 'wpheka-gateway-moneris' ) }
+                { __( 'CVC', 'wc-moneris-payment-gateway' ) }
             </label>
             <input
                 type="text"

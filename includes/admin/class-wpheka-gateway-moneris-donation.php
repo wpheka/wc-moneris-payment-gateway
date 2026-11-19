@@ -62,11 +62,11 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 			?>
 			<div class="notice wpheka-plugin-donation-notice">
 				<p>
-					<span class="wpheka-plugin-donation-plugin-name"><?php esc_html_e( 'WC Moneris Payment Gateway', 'wpheka-gateway-moneris' ); ?></span>
-					<span class="wpheka-plugin-donation-text"><?php esc_html_e( 'Enjoying this plugin? Support its development with a small donation.', 'wpheka-gateway-moneris' ); ?></span>
-					<a href="<?php echo esc_url( self::DONATION_URL ); ?>" target="_blank" class="wpheka-plugin-donation-button"><span class="dashicons dashicons-heart"></span><?php esc_html_e( 'Make a donation', 'wpheka-gateway-moneris' ); ?></a>
+					<span class="wpheka-plugin-donation-plugin-name"><?php esc_html_e( 'WC Moneris Payment Gateway', 'wc-moneris-payment-gateway' ); ?></span>
+					<span class="wpheka-plugin-donation-text"><?php esc_html_e( 'Enjoying this plugin? Support its development with a small donation.', 'wc-moneris-payment-gateway' ); ?></span>
+					<a href="<?php echo esc_url( self::DONATION_URL ); ?>" target="_blank" class="wpheka-plugin-donation-button"><span class="dashicons dashicons-heart"></span><?php esc_html_e( 'Make a donation', 'wc-moneris-payment-gateway' ); ?></a>
 				</p>
-				<button type="button" class="notice-dismiss wpheka-plugin-donation-button-notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'wpheka-gateway-moneris' ); ?></span></button>
+				<button type="button" class="notice-dismiss wpheka-plugin-donation-button-notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'wc-moneris-payment-gateway' ); ?></span></button>
 			</div>
 			<?php
 		}
@@ -131,7 +131,7 @@ if ( ! class_exists( 'WPHEKA_Gateway_Moneris_Donation' ) ) {
 
 		public static function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data ) {
 			if ( strpos( $plugin_file, basename( WPHEKA_MONERIS_MAIN_FILE ) ) ) {
-				$plugin_meta['wpheka_gateway_moneris_donation'] = sprintf( '<a href="%s" target="_blank" class="wpheka-plugin-donation-button"><span class="dashicons dashicons-heart"></span> %s</a>', self::DONATION_URL, esc_html__( 'Make a donation', 'wpheka-gateway-moneris' ) );
+				$plugin_meta['wpheka_gateway_moneris_donation'] = sprintf( '<a href="%s" target="_blank" class="wpheka-plugin-donation-button"><span class="dashicons dashicons-heart"></span> %s</a>', self::DONATION_URL, esc_html__( 'Make a donation', 'wc-moneris-payment-gateway' ) );
 			}
 
 			return $plugin_meta;

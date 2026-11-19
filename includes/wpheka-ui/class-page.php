@@ -37,17 +37,17 @@ class Page {
 			'wphekaUiL10n',
 			array(
 				/* translators: %s: number of minutes. */
-				'minute'  => __( '%s minute', 'wpheka-gateway-moneris' ),
+				'minute'  => __( '%s minute', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: number of minutes. */
-				'minutes' => __( '%s minutes', 'wpheka-gateway-moneris' ),
+				'minutes' => __( '%s minutes', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: number of hours. */
-				'hour'    => __( '%s hour', 'wpheka-gateway-moneris' ),
+				'hour'    => __( '%s hour', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: number of hours. */
-				'hours'   => __( '%s hours', 'wpheka-gateway-moneris' ),
+				'hours'   => __( '%s hours', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: number of days. */
-				'day'     => __( '%s day', 'wpheka-gateway-moneris' ),
+				'day'     => __( '%s day', 'wc-moneris-payment-gateway' ),
 				/* translators: %s: number of days. */
-				'days'    => __( '%s days', 'wpheka-gateway-moneris' ),
+				'days'    => __( '%s days', 'wc-moneris-payment-gateway' ),
 			)
 		);
 	}
@@ -126,10 +126,10 @@ class Page {
 			if ( $n['link'] || $n['dismiss'] ) {
 				echo '<span class="w-notice-actions">';
 				if ( $n['link'] ) {
-					echo '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $n['link'][1] ) . '" target="_blank" rel="noopener">' . esc_html( $n['link'][0] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a>';
+					echo '<a class="w-btn w-btn--secondary w-btn--sm" href="' . esc_url( $n['link'][1] ) . '" target="_blank" rel="noopener">' . esc_html( $n['link'][0] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a>';
 				}
 				if ( $n['dismiss'] ) {
-					echo '<a class="w-close" data-w-dismiss="#' . esc_attr( $id ) . '" href="' . esc_url( $n['dismiss'] ) . '" aria-label="' . esc_attr__( 'Dismiss this notice', 'wpheka-gateway-moneris' ) . '">' . Icons::get( 'xcircle' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+					echo '<a class="w-close" data-w-dismiss="#' . esc_attr( $id ) . '" href="' . esc_url( $n['dismiss'] ) . '" aria-label="' . esc_attr__( 'Dismiss this notice', 'wc-moneris-payment-gateway' ) . '">' . Icons::get( 'xcircle' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
 				}
 				echo '</span>';
 			}
@@ -164,9 +164,9 @@ class Page {
 		if ( $args['crumb'] ) {
 			echo ' <span class="w-crumb">/ ' . esc_html( $args['crumb'] ) . '</span>';
 		}
-		echo '</span><nav class="w-toplinks" aria-label="' . esc_attr__( 'Help', 'wpheka-gateway-moneris' ) . '">';
+		echo '</span><nav class="w-toplinks" aria-label="' . esc_attr__( 'Help', 'wc-moneris-payment-gateway' ) . '">';
 		foreach ( $args['links'] as $link ) {
-			echo '<a href="' . esc_url( $link[1] ) . '" target="_blank" rel="noopener">' . Icons::get( isset( $link[2] ) ? $link[2] : 'book' ) . '<span class="w-lbl">' . esc_html( $link[0] ) . '</span><span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+			echo '<a href="' . esc_url( $link[1] ) . '" target="_blank" rel="noopener">' . Icons::get( isset( $link[2] ) ? $link[2] : 'book' ) . '<span class="w-lbl">' . esc_html( $link[0] ) . '</span><span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 		}
 		echo '</nav></div><div class="w-title-row"><div class="w-title">';
 		if ( $args['icon'] ) {
@@ -186,7 +186,7 @@ class Page {
 		echo '</div></div>';
 		if ( $args['cta'] ) {
 			$cta = $args['cta'];
-			echo '<a class="w-btn ' . ( 'pro' === $cta[3] ? 'w-btn--pro' : 'w-btn--ghost-inv' ) . '" href="' . esc_url( $cta[1] ) . '" target="_blank" rel="noopener">' . Icons::get( $cta[2], '2' ) . esc_html( $cta[0] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+			echo '<a class="w-btn ' . ( 'pro' === $cta[3] ? 'w-btn--pro' : 'w-btn--ghost-inv' ) . '" href="' . esc_url( $cta[1] ) . '" target="_blank" rel="noopener">' . Icons::get( $cta[2], '2' ) . esc_html( $cta[0] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 		}
 		echo '</div>';
 		if ( $args['tabs'] ) {
@@ -213,7 +213,7 @@ class Page {
 	 * @param array[] $stats Each { label, icon, value, meta, up, mint }; value may hold <small>.
 	 */
 	public static function stats( array $stats ) {
-		echo '<section class="w-stats" aria-label="' . esc_attr__( 'At a glance', 'wpheka-gateway-moneris' ) . '">';
+		echo '<section class="w-stats" aria-label="' . esc_attr__( 'At a glance', 'wc-moneris-payment-gateway' ) . '">';
 		foreach ( $stats as $s ) {
 			$s = wp_parse_args(
 				$s,
@@ -243,9 +243,9 @@ class Page {
 	 * @param bool    $find  Show the search box.
 	 */
 	public static function nav( array $links, $find = true ) {
-		echo '<nav class="w-nav" aria-label="' . esc_attr__( 'Settings sections', 'wpheka-gateway-moneris' ) . '">';
+		echo '<nav class="w-nav" aria-label="' . esc_attr__( 'Settings sections', 'wc-moneris-payment-gateway' ) . '">';
 		if ( $find ) {
-			echo '<div class="w-find">' . Icons::get( 'search', '2' ) . '<input type="search" placeholder="' . esc_attr__( 'Search settings', 'wpheka-gateway-moneris' ) . '" aria-label="' . esc_attr__( 'Search settings', 'wpheka-gateway-moneris' ) . '" data-w-find><kbd aria-hidden="true">/</kbd></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+			echo '<div class="w-find">' . Icons::get( 'search', '2' ) . '<input type="search" placeholder="' . esc_attr__( 'Search settings', 'wc-moneris-payment-gateway' ) . '" aria-label="' . esc_attr__( 'Search settings', 'wc-moneris-payment-gateway' ) . '" data-w-find><kbd aria-hidden="true">/</kbd></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 		}
 		foreach ( $links as $i => $link ) {
 			echo '<a class="w-nav-link' . ( 0 === $i ? ' is-active' : '' ) . '" href="#' . esc_attr( $link[0] ) . '">' . Icons::get( $link[1] ) . esc_html( $link[2] ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
@@ -262,8 +262,8 @@ class Page {
 	 */
 	public static function review_card( $title, $text, $url ) {
 		echo '<div class="w-procard"><h3>' . Icons::get( 'star', '2' ) . esc_html( $title ) . '</h3><p>' . esc_html( $text ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
-		echo '<a class="w-btn w-btn--pro w-btn--block" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html__( 'Leave a review', 'wpheka-gateway-moneris' ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a>';
-		echo '<small>' . esc_html__( 'Takes about a minute on WordPress.org', 'wpheka-gateway-moneris' ) . '</small></div>';
+		echo '<a class="w-btn w-btn--pro w-btn--block" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html__( 'Leave a review', 'wc-moneris-payment-gateway' ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a>';
+		echo '<small>' . esc_html__( 'Takes about a minute on WordPress.org', 'wc-moneris-payment-gateway' ) . '</small></div>';
 	}
 
 	/**
@@ -273,9 +273,9 @@ class Page {
 	 */
 	public static function help_card( array $links ) {
 		$arrow = Icons::get( 'arrow', '2', 'w-arrow' );
-		echo '<div class="w-card w-helpcard"><h3>' . esc_html__( 'Need a hand?', 'wpheka-gateway-moneris' ) . '</h3>';
+		echo '<div class="w-card w-helpcard"><h3>' . esc_html__( 'Need a hand?', 'wc-moneris-payment-gateway' ) . '</h3>';
 		foreach ( $links as $link ) {
-			echo '<a class="w-helplink" href="' . esc_url( $link[1] ) . '" target="_blank" rel="noopener">' . Icons::get( $link[2] ) . esc_html( $link[0] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span>' . $arrow . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icons are static SVG.
+			echo '<a class="w-helplink" href="' . esc_url( $link[1] ) . '" target="_blank" rel="noopener">' . Icons::get( $link[2] ) . esc_html( $link[0] ) . '<span class="w-sr"> ' . esc_html__( '(opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span>' . $arrow . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icons are static SVG.
 		}
 		echo '</div>';
 	}
@@ -299,10 +299,10 @@ class Page {
 			)
 		);
 
-		echo '<section class="w-more" aria-labelledby="w-more-t"><div class="w-more-head"><div><h2 id="w-more-t">' . esc_html__( 'More from WPHEKA', 'wpheka-gateway-moneris' ) . '</h2>';
-		echo '<p>' . esc_html__( 'WooCommerce plugins trusted since 2017, with 64,000+ downloads.', 'wpheka-gateway-moneris' ) . '</p></div>';
-		echo '<div class="w-more-tools"><button type="button" class="w-iconbtn" data-w-prev aria-label="' . esc_attr__( 'Previous plugins', 'wpheka-gateway-moneris' ) . '">' . Icons::get( 'arrow', '2.2' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
-		echo '<button type="button" class="w-iconbtn" data-w-next aria-label="' . esc_attr__( 'Next plugins', 'wpheka-gateway-moneris' ) . '">' . Icons::get( 'arrow', '2.2' ) . '</button></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+		echo '<section class="w-more" aria-labelledby="w-more-t"><div class="w-more-head"><div><h2 id="w-more-t">' . esc_html__( 'More from WPHEKA', 'wc-moneris-payment-gateway' ) . '</h2>';
+		echo '<p>' . esc_html__( 'WooCommerce plugins trusted since 2017, with 64,000+ downloads.', 'wc-moneris-payment-gateway' ) . '</p></div>';
+		echo '<div class="w-more-tools"><button type="button" class="w-iconbtn" data-w-prev aria-label="' . esc_attr__( 'Previous plugins', 'wc-moneris-payment-gateway' ) . '">' . Icons::get( 'arrow', '2.2' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+		echo '<button type="button" class="w-iconbtn" data-w-next aria-label="' . esc_attr__( 'Next plugins', 'wc-moneris-payment-gateway' ) . '">' . Icons::get( 'arrow', '2.2' ) . '</button></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 		echo '<div class="w-more-body"><div class="w-track">';
 		foreach ( Catalogue::items() as $item ) {
 			if ( $item['slug'] === $args['slug'] ) {
@@ -311,7 +311,7 @@ class Page {
 			$icon = isset( $item['icon'] ) ? $item['icon'] : $item['slug'];
 			echo '<article class="w-plugin"><div class="w-plugin-head"><img src="' . esc_url( $args['icons_url'] . $icon . '.png' ) . '" alt="" width="48" height="48" loading="lazy"><div><h3>' . esc_html( $item['name'] ) . '</h3><div class="w-plugin-cat">' . esc_html( $item['cat'] ) . '</div></div></div>';
 			echo '<p>' . esc_html( $item['text'] ) . '</p><div class="w-plugin-foot">';
-			echo empty( $item['paid'] ) ? '<span class="w-price">' . esc_html__( 'Free', 'wpheka-gateway-moneris' ) . '</span>' : '<span class="w-price w-price--paid">' . esc_html( $item['paid'] ) . '</span>';
+			echo empty( $item['paid'] ) ? '<span class="w-price">' . esc_html__( 'Free', 'wc-moneris-payment-gateway' ) . '</span>' : '<span class="w-price w-price--paid">' . esc_html( $item['paid'] ) . '</span>';
 			echo Catalogue::action( $item, $args['slug'] ) . '</div></article>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from escaped parts.
 		}
 		echo '</div><div class="w-dots" data-w-dots aria-hidden="true"></div></div></section>';
@@ -324,29 +324,29 @@ class Page {
 			),
 		);
 		/* translators: %s: WPHEKA link. */
-		$made = sprintf( __( 'Made with care by %s · WooCommerce plugins since 2017', 'wpheka-gateway-moneris' ), '<a href="https://www.wpheka.com/" target="_blank" rel="noopener">WPHEKA</a>' );
+		$made = sprintf( __( 'Made with care by %s · WooCommerce plugins since 2017', 'wc-moneris-payment-gateway' ), '<a href="https://www.wpheka.com/" target="_blank" rel="noopener">WPHEKA</a>' );
 		echo '<footer class="w-foot"><span>' . wp_kses( $made, $link ) . '</span>';
 		if ( $args['review_url'] ) {
 			/* translators: %s: plugin name. */
-			echo '<span>' . esc_html( sprintf( __( 'Enjoying %s?', 'wpheka-gateway-moneris' ), $args['short_name'] ) ) . ' <a href="' . esc_url( $args['review_url'] ) . '" target="_blank" rel="noopener">' . esc_html__( 'Rate it', 'wpheka-gateway-moneris' ) . ' <span class="w-stars" aria-hidden="true">★★★★★</span><span class="w-sr">' . esc_html__( 'five stars on WordPress.org (opens in a new tab)', 'wpheka-gateway-moneris' ) . '</span></a></span>';
+			echo '<span>' . esc_html( sprintf( __( 'Enjoying %s?', 'wc-moneris-payment-gateway' ), $args['short_name'] ) ) . ' <a href="' . esc_url( $args['review_url'] ) . '" target="_blank" rel="noopener">' . esc_html__( 'Rate it', 'wc-moneris-payment-gateway' ) . ' <span class="w-stars" aria-hidden="true">★★★★★</span><span class="w-sr">' . esc_html__( 'five stars on WordPress.org (opens in a new tab)', 'wc-moneris-payment-gateway' ) . '</span></a></span>';
 		}
 		echo '</footer></div>';
 
 		if ( $args['form'] ) {
-			echo '<div class="w-savebar" role="region" aria-label="' . esc_attr__( 'Unsaved changes', 'wpheka-gateway-moneris' ) . '"><span class="w-savebar-text">' . esc_html__( 'Unsaved changes', 'wpheka-gateway-moneris' ) . '</span>';
-			echo '<button type="reset" form="' . esc_attr( $args['form'] ) . '" class="w-btn w-btn--ghost-inv w-btn--sm" data-w-discard>' . esc_html__( 'Discard', 'wpheka-gateway-moneris' ) . '</button>';
-			echo '<button type="submit" form="' . esc_attr( $args['form'] ) . '" class="w-btn w-btn--primary w-btn--sm">' . esc_html__( 'Save changes', 'wpheka-gateway-moneris' ) . '</button></div>';
+			echo '<div class="w-savebar" role="region" aria-label="' . esc_attr__( 'Unsaved changes', 'wc-moneris-payment-gateway' ) . '"><span class="w-savebar-text">' . esc_html__( 'Unsaved changes', 'wc-moneris-payment-gateway' ) . '</span>';
+			echo '<button type="reset" form="' . esc_attr( $args['form'] ) . '" class="w-btn w-btn--ghost-inv w-btn--sm" data-w-discard>' . esc_html__( 'Discard', 'wc-moneris-payment-gateway' ) . '</button>';
+			echo '<button type="submit" form="' . esc_attr( $args['form'] ) . '" class="w-btn w-btn--primary w-btn--sm">' . esc_html__( 'Save changes', 'wc-moneris-payment-gateway' ) . '</button></div>';
 		}
 		if ( '' !== (string) $args['error'] ) {
 			// A failed save must never be followed by "Settings saved".
 			$args['saved'] = false;
 			echo '<div class="w-toast w-toast--error is-shown" role="alert">';
 			echo '<span class="w-toast-err">' . Icons::get( 'warn', '2' ) . '</span><span class="w-toast-msg">' . esc_html( $args['error'] ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
-			echo '<button type="button" class="w-toast-close" data-w-toast-close aria-label="' . esc_attr__( 'Dismiss', 'wpheka-gateway-moneris' ) . '">' . Icons::get( 'xcircle', '2' ) . '</button></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+			echo '<button type="button" class="w-toast-close" data-w-toast-close aria-label="' . esc_attr__( 'Dismiss', 'wc-moneris-payment-gateway' ) . '">' . Icons::get( 'xcircle', '2' ) . '</button></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 		}
 		echo '<div class="w-toast' . ( $args['saved'] ? ' is-shown' : '' ) . '" role="status" aria-live="polite">';
 		if ( $args['saved'] ) {
-			echo '<span class="w-toast-ok">' . Icons::get( 'check', '3' ) . '</span>' . esc_html__( 'Settings saved', 'wpheka-gateway-moneris' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
+			echo '<span class="w-toast-ok">' . Icons::get( 'check', '3' ) . '</span>' . esc_html__( 'Settings saved', 'wc-moneris-payment-gateway' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icon is static SVG.
 		}
 		echo '</div></div>';
 	}

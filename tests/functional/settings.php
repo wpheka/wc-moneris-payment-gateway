@@ -73,7 +73,7 @@ wpheka_moneris_t_save( $wpheka_moneris_t_post );
 $wpheka_moneris_t_saved = wpheka_moneris_t_option();
 wpheka_moneris_t_check(
 	'never-saved store: first save stores the same defaults WooCommerce would',
-	is_array( $wpheka_moneris_t_saved ) && 'yes' === $wpheka_moneris_t_saved['enabled'] && 'yes' === $wpheka_moneris_t_saved['sandbox'] && 'no' === $wpheka_moneris_t_saved['logging'] && array( 'visa' ) === $wpheka_moneris_t_saved['preferred_cards'] && 'Moneris' === $wpheka_moneris_t_saved['title'] && 'Pay with your credit card via moneris.' === $wpheka_moneris_t_saved['description'] && '' === $wpheka_moneris_t_saved['store_id'],
+	is_array( $wpheka_moneris_t_saved ) && 'yes' === $wpheka_moneris_t_saved['enabled'] && 'yes' === $wpheka_moneris_t_saved['sandbox'] && 'no' === $wpheka_moneris_t_saved['logging'] && array( 'visa' ) === $wpheka_moneris_t_saved['preferred_cards'] && 'Moneris' === $wpheka_moneris_t_saved['title'] && 'Pay with your credit card via Moneris.' === $wpheka_moneris_t_saved['description'] && '' === $wpheka_moneris_t_saved['store_id'],
 	wpheka_moneris_t_dump( $wpheka_moneris_t_saved )
 );
 

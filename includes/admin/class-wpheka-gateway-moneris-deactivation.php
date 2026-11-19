@@ -56,7 +56,7 @@ class WPHEKA_Deactivation_Tracker {
 		check_ajax_referer( 'wpheka_moneris_deactivation_nonce', 'nonce' );
 
 		if ( empty( $_POST['deactivation_domain'] ) ) {
-			wp_send_json_error( array( 'error' => __( 'Something went wrong. Please try again later.', 'wpheka-gateway-moneris' ) ) );
+			wp_send_json_error( array( 'error' => __( 'Something went wrong. Please try again later.', 'wc-moneris-payment-gateway' ) ) );
 			wp_die( -1 );
 		}
 
@@ -133,45 +133,45 @@ class WPHEKA_Deactivation_Tracker {
 		$reasons = array(
 			array(
 				'id'          => 'could-not-understand',
-				'text'        => 'I couldn\'t understand how to make it work',
+				'text'        => __( 'I couldn\'t understand how to make it work', 'wc-moneris-payment-gateway' ),
 				'type'        => 'textarea',
-				'placeholder' => 'Would you like us to assist you?',
+				'placeholder' => __( 'Would you like us to assist you?', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'id'          => 'found-better-plugin',
-				'text'        => 'I found a better plugin',
+				'text'        => __( 'I found a better plugin', 'wc-moneris-payment-gateway' ),
 				'type'        => 'text',
-				'placeholder' => 'Which plugin?',
+				'placeholder' => __( 'Which plugin?', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'id'          => 'not-have-that-feature',
-				'text'        => 'The plugin is great, but I need specific feature that you don\'t support',
+				'text'        => __( 'The plugin is great, but I need specific feature that you don\'t support', 'wc-moneris-payment-gateway' ),
 				'type'        => 'textarea',
-				'placeholder' => 'Could you tell us more about that feature?',
+				'placeholder' => __( 'Could you tell us more about that feature?', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'id'          => 'is-not-working',
-				'text'        => 'The plugin is not working',
+				'text'        => __( 'The plugin is not working', 'wc-moneris-payment-gateway' ),
 				'type'        => 'textarea',
-				'placeholder' => 'Could you tell us a bit more whats not working?',
+				'placeholder' => __( 'Could you tell us a bit more whats not working?', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'id'          => 'looking-for-other',
-				'text'        => 'It\'s not what I was looking for',
+				'text'        => __( 'It\'s not what I was looking for', 'wc-moneris-payment-gateway' ),
 				'type'        => '',
 				'placeholder' => '',
 			),
 			array(
 				'id'          => 'did-not-work-as-expected',
-				'text'        => 'The plugin didn\'t work as expected',
+				'text'        => __( 'The plugin didn\'t work as expected', 'wc-moneris-payment-gateway' ),
 				'type'        => 'textarea',
-				'placeholder' => 'What did you expect?',
+				'placeholder' => __( 'What did you expect?', 'wc-moneris-payment-gateway' ),
 			),
 			array(
 				'id'          => 'other',
-				'text'        => 'Other',
+				'text'        => __( 'Other', 'wc-moneris-payment-gateway' ),
 				'type'        => 'textarea',
-				'placeholder' => 'Could you tell us a bit more?',
+				'placeholder' => __( 'Could you tell us a bit more?', 'wc-moneris-payment-gateway' ),
 			),
 		);
 
@@ -180,7 +180,7 @@ class WPHEKA_Deactivation_Tracker {
 		<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>" id="<?php echo esc_attr( $deactivation_modal_id ); ?>">
 			<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-wrap">
 				<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-header">
-					<h3><?php esc_html_e( 'If you have a moment, please let us know why you are deactivating:', 'wpheka-gateway-moneris' ); ?></h3>
+					<h3><?php esc_html_e( 'If you have a moment, please let us know why you are deactivating:', 'wc-moneris-payment-gateway' ); ?></h3>
 				</div>
 
 				<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-body">
@@ -197,13 +197,13 @@ class WPHEKA_Deactivation_Tracker {
 
 					<input type="hidden" name="email" value="<?php echo esc_attr( $license_email ); ?>">
 
-					<p class="description"><?php esc_html_e( 'Along with your feedback, your site URL and admin email will be sent to wpheka.com so we can follow up.', 'wpheka-gateway-moneris' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Along with your feedback, your site URL and admin email will be sent to wpheka.com so we can follow up.', 'wc-moneris-payment-gateway' ); ?></p>
 				</div>
 
 				<div class="<?php echo esc_attr( self::$deactivation_modal ); ?>-footer">
-					<a href="#" class="dont-bother-me"><?php esc_html_e( 'I rather wouldn\'t say', 'wpheka-gateway-moneris' ); ?></a>
-					<button class="button-secondary"><?php esc_html_e( 'Submit & Deactivate', 'wpheka-gateway-moneris' ); ?></button>
-					<button class="button-primary"><?php esc_html_e( 'Cancel', 'wpheka-gateway-moneris' ); ?></button>
+					<a href="#" class="dont-bother-me"><?php esc_html_e( 'I rather wouldn\'t say', 'wc-moneris-payment-gateway' ); ?></a>
+					<button class="button-secondary"><?php esc_html_e( 'Submit & Deactivate', 'wc-moneris-payment-gateway' ); ?></button>
+					<button class="button-primary"><?php esc_html_e( 'Cancel', 'wc-moneris-payment-gateway' ); ?></button>
 				</div>
 			</div>
 		</div>
@@ -328,7 +328,7 @@ class WPHEKA_Deactivation_Tracker {
 							},
 							beforeSend: function() {
 								button.addClass('disabled');
-								button.text('Processing...');
+								button.text( '<?php echo esc_js( __( 'Processing...', 'wc-moneris-payment-gateway' ) ); ?>' );
 							},
 							success: function( response ) {
 								if ( response.success ) {
