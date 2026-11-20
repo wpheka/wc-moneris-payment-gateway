@@ -89,7 +89,7 @@ Yes. Free support is given in the plugin's forum on WordPress.org. Pro includes 
 
 == Changelog ==
 
-2026-11-19 - version 3.10.0
+2026-11-20 - version 3.10.0
 * Fix - Translations can now load. The plugin's text domain is now `wc-moneris-payment-gateway`, matching its WordPress.org slug. It was `wpheka-gateway-moneris`, so the translation files WordPress.org builds could never be found and every string stayed in English.
 * Important - If you translated this plugin yourself, with Loco Translate or by adding files to wp-content/languages, rename those files from `wpheka-gateway-moneris-<locale>` to `wc-moneris-payment-gateway-<locale>` or redo the translations. Otherwise they stop loading.
 * Fix - The reasons and prompts in the deactivation feedback box can be translated. They were English only.
